@@ -1,6 +1,7 @@
 # Dev Plan 00: Data-Driven Cards (Overview)
 
-**Status:** DRAFT, awaiting approval
+**Status:** APPROVED with the recommended option for every decision (D1–D7).
+Amendment proposed in plan 01: D4 extends structured `effects` to skills as well as upgrades, because skills also carry hard-coded stat changes.
 **Branch:** `claude/project-phone-support-y0h17l`
 
 ## Goal
