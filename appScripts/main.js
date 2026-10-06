@@ -1,14 +1,19 @@
-﻿var app = angular.module("myApp", ['ui.bootstrap', 'ngAnimate', 'ngRoute', 'ui.uploader']);
+﻿var app = angular.module("myApp", ['ui.bootstrap', 'ngAnimate', 'ngRoute', 'ui.uploader', 'djCards']);
 
 app.config(function ($routeProvider) {
+    // Routes wait for the card data so templates never render half-loaded.
+    var loadCards = ['cardService', function (cardService) { return cardService.ready(); }];
+
     $routeProvider
         .when('/', {
             templateUrl: 'main.html',
-            controller: 'MainCtrl'
+            controller: 'MainCtrl',
+            resolve: { cards: loadCards }
         })
         .when('/char/:id', {
             templateUrl: 'character.html',
-            controller: 'CharCtrl'
+            controller: 'CharCtrl',
+            resolve: { cards: loadCards }
         });
 });
 
@@ -185,93 +190,6 @@ app.factory("appData", function () {
             { type: 'Gold', qty: 1, src: 'Images/Items/Gold/', isItemTapped: false, name: "Treasure Cache 3" },
             { type: 'Gold', qty: 1, src: 'Images/Items/Gold/', isItemTapped: false, name: "Treasure Cache 4" },
             { type: 'Gold', qty: 1, src: 'Images/Items/Gold/', isItemTapped: false, name: "Treasure Cache 5" }],
-        fighterSkills: [
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Able Warrior" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Battle Cry" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Bear Tattoo" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Berserker" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Brawler" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Brawny" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Captain" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Cleaving" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Counter Attack" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Defender" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Die Hard" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Enduring" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Furr the Spirit Wolf" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Knight" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Leadership" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Mighty" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Nimble" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Ox Tattoo" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Parry" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Relentless" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Runner" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Shark Tattoo" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Swashbuckler" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Taunt" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Tiger Tattoo" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Tough" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Unmovable" },
-            { type: 'Fighter', qty: 1, src: 'Images/Skills/Fighter/', name: "Weapon Mastery" }],
-        subterfugeSkills: [
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Acrobat" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Alertness" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Ambidextrous" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Appraiser" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Born to the Bow" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Burglar" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Cautious" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Crackshot" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Dead Eye" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Eagle Eye" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Evasion" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Gunner" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Keen Sight" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Lightfinger" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Lucky" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Marksman" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Master Archer" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Pickpocket" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Piercing Shot" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Precision" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Ranger" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Rapid Fire" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Shadow Soul" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Skilled" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Spry" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Swift" },
-            { type: 'Subterfuge', qty: 1, src: 'Images/Skills/Subterfuge/', name: "Trickster" }],
-        wizardrySkills: [
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Alchemist" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Alex the Wise" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Bardic Lore" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Blessing" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Boggs the Rat" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Brins Mark" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Divine Retribution" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Draggy" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Earth Pact" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Fire Pact" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Hand of Death" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Holy Aura" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Inner Fire" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Kans Mark" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Kolls Mark" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Mage Cloak" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Mata and Kata" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Necromancy" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Prodigy" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Quick Casting" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Sajs Mark" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Sharr the Brightwing" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Spiritwalker" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Telekinesis" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Vampiric Blood" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Water Pact" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Wild Talent" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Willpower" },
-            { type: 'Wizardry', qty: 1, src: 'Images/Skills/Wizardry/', name: "Wind Pact" }],
         fighterFeats: [
             { type: 'Fighter', qty: 2, src: 'Images/Feats/Fighting/', name: "Blocked" },
             { type: 'Fighter', qty: 3, src: 'Images/Feats/Fighting/', name: "Fend" },

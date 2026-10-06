@@ -1,6 +1,6 @@
 # Dev Plan 01: Foundation + Skills
 
-**Status:** DRAFT, awaiting approval
+**Status:** DONE (see "Build notes" at the end)
 **Depends on:** Plan 00 (approved with the recommended options)
 **Style mock:** [`mockups/01-card-style.html`](mockups/01-card-style.html) (screenshot: [`mockups/01-card-style.png`](mockups/01-card-style.png))
 
@@ -127,3 +127,18 @@ Feats, items, upgrades and heroes. Restyling the rest of the page. Deleting the 
 ## Deliverables
 
 `data/skills.json`, `appScripts/cardService.js`, `cardText.js`, `cardDirective.js`, `saveService.js`, `Content/cards.css`, `proof.html`, `tools/check-data.js`, edits to `index.html`, `character.html`, `main.js`, `charctrl.js`, `mainctrl.js` and `navctrl.js`, and this plan marked DONE with notes.
+
+---
+
+## Build notes (what differed from the plan)
+
+- **Card names now use the printed titles.** Five app names didn't match the cards: Crackshot → **Crack Shot**, Brins Mark → **Brin's Mark**, Kans Mark → **Ran's Mark**, Kolls Mark → **Koll's Mark**, Sajs Mark → **Saj's Mark**. Each of these cards has an `aliases` field holding the old name, so v1 saves still match. Name matching also ignores case and punctuation.
+- **The markup has italics too.** `*italic*` and `***bold italic***` were added because several cards print item types in bold italic (e.g. ***Shield***, ***Trap***, ***Rune***).
+- **"view original" opens the scan in a new tab** rather than the modal mentioned in 01-C. That's simpler, and it works the same on a phone.
+- **Unknown cards** (removed from the JSON, or a legacy name that can't be matched) show as a grey "missing card" with a remove button. The v1 fixture has none.
+- **Save:** `angular.toJson` is used, so saves no longer contain Angular's `$$hashKey` noise. Old saves with that noise still load.
+- **Deck membership is unchanged from the old app.** Some cards' background colours suggest a different deck (e.g. Ambidextrous sits in Subterfuge on a yellow fighter-style background). I kept the app's existing assignment; it's a one-word change in the JSON if it's wrong.
+- **Removed:** about 90 lines of skill arrays from `main.js` and about 270 lines of duplicated switch logic from `charctrl.js`.
+- **Tests:** `tests/e2e-skills.js` has 18 checks, run at phone and desktop size, and all pass. A deliberate break (Spry without its speed effect) was confirmed to fail the test. The v1 fixture is `tests/fixtures/v1-save.json`; it was generated from the pre-change app and also captured the old Spry bug (speed not raised).
+
+**Your review:** open `proof.html` on the live site and report any wording that doesn't match the scan.

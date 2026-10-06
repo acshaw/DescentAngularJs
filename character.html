@@ -213,8 +213,9 @@
                             {{appData.currentSkillDeck}}
                         </button>
                     </span>
-                    <select class="form-control" ng-model="newSkill" ng-change="addSkill()">
-                        <option ng-repeat="item in skillDeck" value="{{item}}" ng-if="item.qty > 0">{{item.name}}</option>
+                    <select class="form-control" ng-model="pick.skill" ng-change="addSkill(pick.skill)"
+                            ng-options="card as card.name for card in skillChoices() track by card.id">
+                        <option value="">Add a skill…</option>
                     </select>
                     <span class="input-group-btn">
                         <!--<button type="button" class="btn btn-primary" ng-disabled="!newSkill" ng-click="addSkill()"><i class="fa fa-plus"></i></button>-->
@@ -225,15 +226,9 @@
                 </div>
             </div>
             <br />
-            <div class="DocumentList">
-                <ul class="list-inline">
-                    <li class="DocumentItem" ng-repeat="item in character.skills">
-                        <div ng-class="{'fighter': item.type === 'Fighter', 'subterfuge': item.type === 'Subterfuge', 'wizardry': item.type === 'Wizardry'}" class="text-left">
-                            <i class="fa fa-remove" style="cursor:pointer; font-size: x-large; color:white;  margin: 3px 14px 3px 7px;" ng-click="removeItemFromSkills($index)"></i><br />
-                            <img class="img-rounded" src="{{item.src + item.name + '.jpg'}}" height="350" />
-                        </div>
-                    </li>
-                </ul>
+            <div class="dj-card-row">
+                <dj-card ng-repeat="id in character.skills track by $index" card="cards.byId(id)" on-remove="removeItemFromSkills($index)"></dj-card>
+                <p class="text-muted" ng-if="!character.skills.length">No skills yet.</p>
             </div>
         </div>
     </div>

@@ -1,7 +1,9 @@
-﻿app.controller('CharCtrl', function ($scope, $routeParams, appData, $location) {
+﻿app.controller('CharCtrl', function ($scope, $routeParams, appData, $location, cardService, saveService) {
     var charId = $routeParams.id;
     $scope.appData = appData;
     $scope.statusSwitch = 'bleed';
+    $scope.pick = {};
+    $scope.cards = cardService;
     $scope.upgradeDeck = $scope.appData.upgradeItems;
     if ($scope.appData.characters.length < 1) {
         $location.path('/');
@@ -22,38 +24,8 @@
             $location.path('char/' + (parseInt(charId) + 1));
     };
     $scope.exportToFile = function () {
-        $scope.partyName = 'Descent Party';
-        var saveFile = {};
-        saveFile.characters = $scope.appData.characters;
-        saveFile.partyGold = $scope.appData.partyGold;
-        saveFile.partyConquest = $scope.appData.partyConquest;
-        saveFile.storeItems = $scope.appData.storeItems;
-        saveFile.copperItems = $scope.appData.copperItems;
-        saveFile.silverItems = $scope.appData.silverItems;
-        saveFile.goldItems = $scope.appData.goldItems;
-        saveFile.fighterSkills = $scope.appData.fighterSkills;
-        saveFile.subterfugeSkills = $scope.appData.subterfugeSkills;
-        saveFile.wizardrySkills = $scope.appData.wizardrySkills;
-        saveFile.fighterFeats = $scope.appData.fighterFeats;
-        saveFile.subterfugeFeats = $scope.appData.subterfugeFeats;
-        saveFile.wizardryFeats = $scope.appData.wizardryFeats;
-        saveFile.upgradeItems = $scope.appData.upgradeItems;
-
-        var blob = new Blob([JSON.stringify(saveFile)], { type: 'text/plain' });
-
-        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-            window.navigator.msSaveOrOpenBlob(blob, $scope.partyName);
-        } else {
-            var e = document.createEvent('MouseEvents'),
-                a = document.createElement('a');
-            a.download = $scope.partyName;
-            a.href = window.URL.createObjectURL(blob);
-            a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
-            e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-            a.dispatchEvent(e);
-            // window.URL.revokeObjectURL(url); // clean the url.createObjectURL resource
-        }
-    }
+        saveService.download('Descent Party');
+    };
     $scope.tapCharacter = function () {
         $scope.isCharTapped = !$scope.isCharTapped;
     };
@@ -98,79 +70,8 @@
     };
 
     $scope.removeItemFromSkills = function (index) {
-        var removedItem = $scope.character.skills.splice(index, 1);
-        switch (removedItem[0].type) {
-            case 'Fighter':
-                for (i = 0; i < $scope.appData.fighterSkills.length; i++) {
-                    if ($scope.appData.fighterSkills[i].name === removedItem[0].name) {
-                        $scope.appData.fighterSkills[i].qty++;
-
-                        switch (removedItem[0].name) {
-                            case 'Bear Tattoo':
-                                $scope.character.woundsCap = $scope.character.woundsCap - 2;
-                                if ($scope.character.wounds > $scope.character.woundsCap)
-                                    $scope.character.wounds = $scope.character.woundsCap;
-                                break;
-                            case 'Tough':
-                                $scope.character.woundsCap = $scope.character.woundsCap - 4;
-                                if ($scope.character.wounds > $scope.character.woundsCap)
-                                    $scope.character.wounds = $scope.character.woundsCap;
-                                break;
-                            case 'Nimble':
-                                $scope.character.fatigueCap = $scope.character.fatigueCap - 1;
-                                if ($scope.character.fatigue > $scope.character.fatigueCap)
-                                    $scope.character.fatigue = $scope.character.fatigueCap;
-                                break;
-                            case 'Shark Tattoo':
-                                $scope.character.woundsCap = $scope.character.woundsCap - 2;
-                                if ($scope.character.wounds > $scope.character.woundsCap)
-                                    $scope.character.wounds = $scope.character.woundsCap;
-                                break;
-                            case 'Tiger Tattoo':
-                                $scope.character.fatigueCap = $scope.character.fatigueCap - 1;
-                                if ($scope.character.fatigue > $scope.character.fatigueCap)
-                                    $scope.character.fatigue = $scope.character.fatigueCap;
-                                $scope.character.speed = $scope.character.speed - 1;
-                                break;
-                            default:
-                                break;
-                        };
-                    };
-                };
-                break;
-            case 'Subterfuge':
-                for (i = 0; i < $scope.appData.subterfugeSkills.length; i++) {
-                    if ($scope.appData.subterfugeSkills[i].name === removedItem[0].name) {
-                        $scope.appData.subterfugeSkills[i].qty++;
-
-                        switch (removedItem[0].name) {
-                            case 'Skilled':
-                                $scope.character.fatigueCap = $scope.character.fatigueCap - 2;
-                                if ($scope.character.fatigue > $scope.character.fatigueCap)
-                                    $scope.character.fatigue = $scope.character.fatigueCap;
-                                break;
-                            case 'Spry':
-                                $scope.character.fatigueCap = $scope.character.fatigueCap - 2;
-                                if ($scope.character.fatigue > $scope.character.fatigueCap)
-                                    $scope.character.fatigue = $scope.character.fatigueCap;
-                                break;
-                            case 'Swift':
-                                $scope.character.speed = $scope.character.speed - 2;
-                                break;
-                            default:
-                                break;
-                        };
-                    };
-                };
-                break;
-            case 'Wizardry':
-                for (i = 0; i < $scope.appData.wizardrySkills.length; i++) {
-                    if ($scope.appData.wizardrySkills[i].name === removedItem[0].name) {
-                        $scope.appData.wizardrySkills[i].qty++;
-                    };
-                };
-                break;
-        }
+        var removedId = $scope.character.skills.splice(index, 1)[0];
+        cardService.applyEffects($scope.character, cardService.byId(removedId), -1);
     };
     $scope.removeItemFromEquipment = function (index) {
         var removedItem = $scope.character.equipped.splice(index, 1);
@@ -390,90 +291,13 @@
     };
 
     $scope.addRandomSkill = function () {
-        var deckName = $scope.currentSkillDeck;
-        var cardCount = 0;
-        var newItem
-        for (i = 0; i < $scope.skillDeck.length; i++)
-            cardCount = cardCount + $scope.skillDeck[i].qty;
-
-        var randomNumber = Math.floor(Math.random() * cardCount);
-
-        for (i = 0; i < $scope.skillDeck.length; i++) {
-            randomNumber = randomNumber - $scope.skillDeck[i].qty;
-
-            if (randomNumber < 1) {
-                newItem = $scope.skillDeck[i];
-
-                switch (newItem.type) {
-                    case "Fighter":
-                        for (i = 0; i < $scope.appData.fighterSkills.length; i++) {
-                            if ($scope.appData.fighterSkills[i].name === newItem.name) {
-                                $scope.appData.fighterSkills[i].qty--;
-
-                                switch (newItem.name) {
-                                    case 'Bear Tattoo':
-                                        $scope.character.woundsCap = $scope.character.woundsCap + 2;
-                                        $scope.character.wounds = $scope.character.wounds + 2;
-                                        break;
-                                    case 'Tough':
-                                        $scope.character.woundsCap = $scope.character.woundsCap + 4;
-                                        $scope.character.wounds = $scope.character.wounds + 4;
-                                        break;
-                                    case 'Nimble':
-                                        $scope.character.fatigueCap = $scope.character.fatigueCap + 1;
-                                        $scope.character.fatigue = $scope.character.fatigue + 1;
-                                        break;
-                                    case 'Shark Tattoo':
-                                        $scope.character.woundsCap = $scope.character.woundsCap + 2;
-                                        $scope.character.wounds = $scope.character.wounds + 2;
-                                        break;
-                                    case 'Tiger Tattoo':
-                                        $scope.character.fatigueCap = $scope.character.fatigueCap + 1;
-                                        $scope.character.fatigue = $scope.character.fatigue + 1;
-                                        $scope.character.speed = $scope.character.speed + 1;
-                                        break;
-                                    default:
-                                        break;
-                                };
-                            };
-                        };
-                        break;
-                    case "Subterfuge":
-                        for (i = 0; i < $scope.appData.subterfugeSkills.length; i++) {
-                            if ($scope.appData.subterfugeSkills[i].name === newItem.name) {
-                                $scope.appData.subterfugeSkills[i].qty--;
-
-                                switch (newItem.name) {
-                                    case 'Skilled':
-                                        $scope.character.fatigueCap = $scope.character.fatigueCap + 2;
-                                        $scope.character.fatigue = $scope.character.fatigue + 2;
-                                        break;
-                                    case 'Spry':
-                                        $scope.character.fatigueCap = $scope.character.fatigueCap + 1;
-                                        $scope.character.fatigue = $scope.character.fatigue + 1;
-                                        break;
-                                    case 'Swift':
-                                        $scope.character.speed = $scope.character.speed + 2;
-                                        break;
-                                    default:
-                                        break;
-                                };
-                            };
-                        };
-                        break;
-                    case "Wizardry":
-                        for (i = 0; i < $scope.appData.wizardrySkills.length; i++) {
-                            if ($scope.appData.wizardrySkills[i].name === newItem.name) {
-                                $scope.appData.wizardrySkills[i].qty--;
-                            };
-                            break;
-                        };
-
-                }
-                $scope.character.skills.push(newItem);
-                return;
-            }
-        }
+        // Weighted by copies left, so every remaining card is equally likely.
+        var pool = [];
+        $scope.skillChoices().forEach(function (card) {
+            for (var n = $scope.skillsLeft(card); n > 0; n--) pool.push(card);
+        });
+        if (pool.length)
+            $scope.addSkill(pool[Math.floor(Math.random() * pool.length)]);
     };
     $scope.addRandomFeat = function () {
         var deckName = $scope.currentFeatDeck;
@@ -692,75 +516,20 @@
         };
         $scope.character.bag.push(newItem);
     };
-    $scope.addSkill = function () {
-        var newItem = JSON.parse($scope.newSkill);
-        switch (newItem.type) {
-            case 'Fighter':
-                for (i = 0; i < $scope.appData.fighterSkills.length; i++) {
-                    if ($scope.appData.fighterSkills[i].name === newItem.name) {
-                        $scope.appData.fighterSkills[i].qty--;
-
-                        switch (newItem.name) {
-                            case 'Bear Tattoo':
-                                $scope.character.woundsCap = $scope.character.woundsCap + 2;
-                                $scope.character.wounds = $scope.character.wounds + 2;
-                                break;
-                            case 'Tough':
-                                $scope.character.woundsCap = $scope.character.woundsCap + 4;
-                                $scope.character.wounds = $scope.character.wounds + 4;
-                                break;
-                            case 'Nimble':
-                                $scope.character.fatigueCap = $scope.character.fatigueCap + 1;
-                                $scope.character.fatigue = $scope.character.fatigue + 1;
-                                break;
-                            case 'Shark Tattoo':
-                                $scope.character.woundsCap = $scope.character.woundsCap + 2;
-                                $scope.character.wounds = $scope.character.wounds + 2;
-                                break;
-                            case 'Tiger Tattoo':
-                                $scope.character.fatigueCap = $scope.character.fatigueCap + 1;
-                                $scope.character.fatigue = $scope.character.fatigue + 1;
-                                $scope.character.speed = $scope.character.speed + 1;
-                                break;
-                            default:
-                                break;
-                        };
-                    };
-                };
-                break;
-            case 'Subterfuge':
-                for (i = 0; i < $scope.appData.subterfugeSkills.length; i++) {
-                    if ($scope.appData.subterfugeSkills[i].name === newItem.name) {
-                        $scope.appData.subterfugeSkills[i].qty--;
-
-                        switch (newItem.name) {
-                            case 'Skilled':
-                                $scope.character.fatigueCap = $scope.character.fatigueCap + 2;
-                                $scope.character.fatigue = $scope.character.fatigue + 2;
-                                break;
-                            case 'Spry':
-                                $scope.character.fatigueCap = $scope.character.fatigueCap + 1;
-                                $scope.character.fatigue = $scope.character.fatigue + 1;
-                                break;
-                            case 'Swift':
-                                $scope.character.speed = $scope.character.speed + 2;
-                                break;
-                            default:
-                                break;
-                        };
-                    };
-                };
-                break;
-            case 'Wizardry':
-                for (i = 0; i < $scope.appData.wizardrySkills.length; i++) {
-                    if ($scope.appData.wizardrySkills[i].name === newItem.name) {
-                        $scope.appData.wizardrySkills[i].qty--;
-                    };
-                };
-                break;
-        };
-        $scope.character.skills.push(newItem);
-        return;
+    $scope.addSkill = function (card) {
+        if (!card) return;
+        $scope.character.skills.push(card.id);
+        cardService.applyEffects($scope.character, card, +1);
+        $scope.pick.skill = null;
+    };
+    $scope.skillsLeft = function (card) {
+        return cardService.remaining(card, $scope.appData.characters, 'skills');
+    };
+    $scope.skillChoices = function () {
+        var deck = ($scope.currentSkillDeck || 'Fighter').toLowerCase();
+        return cardService.deck('skills', deck).filter(function (card) {
+            return $scope.skillsLeft(card) > 0;
+        });
     };
     $scope.addFeat = function () {
         var newItem = JSON.parse($scope.newFeat);
@@ -986,20 +755,7 @@
         }
     };
     $scope.switchSkillDeck = function () {
-        switch ($scope.currentSkillDeck) {
-            case 'Subterfuge':
-                $scope.skillDeck = $scope.appData.subterfugeSkills;
-                break;
-            case 'Wizardry':
-                $scope.skillDeck = $scope.appData.wizardrySkills;
-                break;
-            case 'Fighter':
-                $scope.skillDeck = $scope.appData.fighterSkills;
-                break;
-            default:
-                $scope.skillDeck = $scope.appData.fighterSkills;
-                break;
-        }
+        // Skill choices are computed from currentSkillDeck by skillChoices().
     };
     $scope.switchFeatDeck = function () {
         switch ($scope.currentFeatDeck) {
