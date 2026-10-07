@@ -6,7 +6,7 @@
             $scope.appData.characters[i].isCharTapped = false;
 
             for (j = 0; j < $scope.appData.characters[i].equipped.length; j++) {
-                $scope.appData.characters[i].equipped[j].isItemTapped = false;
+                $scope.appData.characters[i].equipped[j].tapped = false;
             };
 
         };

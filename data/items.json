@@ -1,0 +1,1337 @@
+[
+  {
+    "id": "healing-potion",
+    "name": "Healing Potion",
+    "deck": "store",
+    "qty": 12,
+    "category": "Potion",
+    "text": "Discard after using. Healing potions allow the hero to recover **3** wounds, not to exceed the maximum.",
+    "art": "Images/Art/items/healing-potion.jpg",
+    "aliases": [
+      "Potion of Health"
+    ],
+    "scan": "Images/Items/Store/Potion of Health.jpg"
+  },
+  {
+    "id": "vitality-potion",
+    "name": "Vitality Potion",
+    "deck": "store",
+    "qty": 12,
+    "category": "Potion",
+    "text": "Discard after using. Vitality potions allow the hero to restore all fatigue.",
+    "art": "Images/Art/items/vitality-potion.jpg",
+    "aliases": [
+      "Potion of Vitality"
+    ],
+    "scan": "Images/Items/Store/Potion of Vitality.jpg"
+  },
+  {
+    "id": "power-potion",
+    "name": "Power Potion",
+    "deck": "store",
+    "qty": 12,
+    "category": "Potion",
+    "text": "Grants the hero 5 power dice on his next attack. The attack does not have to be made on this turn, but the effect is canceled if the hero is killed or drinks another potion.",
+    "cost": 50,
+    "art": "Images/Art/items/power-potion.jpg",
+    "aliases": [
+      "Potion of Power"
+    ],
+    "scan": "Images/Items/Store/Potion of Power.jpg"
+  },
+  {
+    "id": "invisibility-potion",
+    "name": "Invisibility Potion",
+    "deck": "store",
+    "qty": 12,
+    "category": "Potion",
+    "subtitle": "Stealth Potion",
+    "text": "This potion grants the hero the Stealth ability. At the start the turn, that hero must roll a power die. If the result is a surge, the potion wears off, and it is discarded.",
+    "cost": 50,
+    "art": "Images/Art/items/invisibility-potion.jpg",
+    "aliases": [
+      "Potion of Invisibility"
+    ],
+    "scan": "Images/Items/Store/Potion of Invisibility.jpg"
+  },
+  {
+    "id": "axe",
+    "name": "Axe",
+    "deck": "store",
+    "qty": 2,
+    "category": "Weapon",
+    "attack": "Melee",
+    "surges": [
+      {
+        "cost": 1,
+        "effect": "+1 Damage"
+      }
+    ],
+    "cost": 100,
+    "hands": 2,
+    "dice": [
+      "red",
+      "green"
+    ],
+    "art": "Images/Art/items/axe.jpg",
+    "scan": "Images/Items/Store/Axe.jpg"
+  },
+  {
+    "id": "blinding-light",
+    "name": "Blinding Light",
+    "deck": "store",
+    "qty": 2,
+    "category": "Weapon",
+    "rune": true,
+    "attack": "Magic",
+    "surges": [
+      {
+        "cost": 2,
+        "effect": "+1 Damage"
+      },
+      {
+        "cost": 2,
+        "effect": "**Stun**"
+      }
+    ],
+    "cost": 150,
+    "hands": 2,
+    "dice": [
+      "white",
+      "yellow"
+    ],
+    "art": "Images/Art/items/blinding-light.jpg",
+    "scan": "Images/Items/Store/Blinding Light.jpg"
+  },
+  {
+    "id": "bow",
+    "name": "Bow",
+    "deck": "store",
+    "qty": 2,
+    "category": "Weapon",
+    "attack": "Ranged",
+    "abilities": [
+      "Pierce 1"
+    ],
+    "surges": [
+      {
+        "cost": 2,
+        "effect": "+1 Range"
+      },
+      {
+        "cost": 3,
+        "effect": "+1 Damage"
+      }
+    ],
+    "cost": 75,
+    "hands": 2,
+    "dice": [
+      "blue",
+      "yellow"
+    ],
+    "art": "Images/Art/items/bow.jpg",
+    "scan": "Images/Items/Store/Bow.jpg"
+  },
+  {
+    "id": "chain-mail",
+    "name": "Chain Mail",
+    "deck": "store",
+    "qty": 2,
+    "category": "Armor",
+    "abilities": [
+      "+2 Armor"
+    ],
+    "text": "Your base speed is reduced to 4.\n\nYou may not equip ***Runes***.",
+    "cost": 100,
+    "art": "Images/Art/items/chain-mail.jpg",
+    "scan": "Images/Items/Store/Chain Mail.jpg"
+  },
+  {
+    "id": "crossbow",
+    "name": "Crossbow",
+    "deck": "store",
+    "qty": 2,
+    "category": "Weapon",
+    "attack": "Ranged",
+    "surges": [
+      {
+        "cost": 2,
+        "effect": "+1 Damage"
+      },
+      {
+        "cost": 3,
+        "effect": "+1 Range"
+      }
+    ],
+    "cost": 150,
+    "hands": 1,
+    "dice": [
+      "blue",
+      "green"
+    ],
+    "art": "Images/Art/items/crossbow.jpg",
+    "scan": "Images/Items/Store/Crossbow.jpg"
+  },
+  {
+    "id": "curse-doll",
+    "name": "Curse Doll",
+    "deck": "store",
+    "qty": 2,
+    "category": "Other",
+    "text": "Discard after equipping at the start of your turn to remove up to 3 effect tokens that have been placed on you.",
+    "cost": 200,
+    "art": "Images/Art/items/curse-doll.jpg",
+    "scan": "Images/Items/Store/Curse Doll.jpg"
+  },
+  {
+    "id": "dagger",
+    "name": "Dagger",
+    "deck": "store",
+    "qty": 2,
+    "category": "Weapon",
+    "attack": "Melee",
+    "surges": [
+      {
+        "cost": 2,
+        "effect": "+1 Damage"
+      }
+    ],
+    "text": "Off-Hand Bonus: 1 Free Surge",
+    "cost": 25,
+    "hands": 1,
+    "dice": [
+      "red",
+      "yellow"
+    ],
+    "art": "Images/Art/items/dagger.jpg",
+    "scan": "Images/Items/Store/Dagger.jpg"
+  },
+  {
+    "id": "ghost-armor",
+    "name": "Ghost Armor",
+    "deck": "store",
+    "qty": 1,
+    "category": "Other",
+    "rune": true,
+    "text": "Spend 1 fatigue to cancel 1 wound being dealt to you. You may use this ability multiple times, paying its cost each time.",
+    "cost": 150,
+    "art": "Images/Art/items/ghost-armor.jpg",
+    "scan": "Images/Items/Store/Ghost Armor.jpg"
+  },
+  {
+    "id": "hammer",
+    "name": "Hammer",
+    "deck": "store",
+    "qty": 1,
+    "category": "Weapon",
+    "attack": "Melee",
+    "abilities": [
+      "Knockback"
+    ],
+    "surges": [
+      {
+        "cost": 2,
+        "effect": "+1 Damage"
+      }
+    ],
+    "cost": 100,
+    "hands": 2,
+    "dice": [
+      "red",
+      "green"
+    ],
+    "art": "Images/Art/items/hammer.jpg",
+    "scan": "Images/Items/Store/Hammer.jpg"
+  },
+  {
+    "id": "immolation",
+    "name": "Immolation",
+    "deck": "store",
+    "qty": 2,
+    "category": "Weapon",
+    "rune": true,
+    "attack": "Magic",
+    "surges": [
+      {
+        "cost": 2,
+        "effect": "+1 Damage"
+      },
+      {
+        "cost": 2,
+        "effect": "+1 Range"
+      }
+    ],
+    "cost": 200,
+    "hands": 2,
+    "dice": [
+      "white",
+      "green"
+    ],
+    "art": "Images/Art/items/immolation.jpg",
+    "scan": "Images/Items/Store/Immolation.jpg"
+  },
+  {
+    "id": "iron-shield",
+    "name": "Iron Shield",
+    "deck": "store",
+    "qty": 2,
+    "category": "Shield",
+    "text": "Exhaust to cancel 1 wound being dealt to you. You cannot use this item to cancel wounds dealt by attacks that ignore armor.",
+    "cost": 25,
+    "hands": 1,
+    "art": "Images/Art/items/iron-shield.jpg",
+    "scan": "Images/Items/Store/Iron Shield.jpg"
+  },
+  {
+    "id": "leather-armor",
+    "name": "Leather Armor",
+    "deck": "store",
+    "qty": 3,
+    "category": "Armor",
+    "abilities": [
+      "+1 Armor"
+    ],
+    "cost": 50,
+    "art": "Images/Art/items/leather-armor.jpg",
+    "scan": "Images/Items/Store/Leather Armor.jpg"
+  },
+  {
+    "id": "mage-staff",
+    "name": "Mage Staff",
+    "deck": "store",
+    "qty": 3,
+    "category": "Weapon",
+    "attack": "Magic",
+    "surges": [
+      {
+        "cost": 2,
+        "effect": "+1 Damage"
+      },
+      {
+        "cost": 2,
+        "effect": "+1 Range"
+      }
+    ],
+    "cost": 150,
+    "hands": 2,
+    "dice": [
+      "white",
+      "yellow"
+    ],
+    "art": "Images/Art/items/mage-staff.jpg",
+    "scan": "Images/Items/Store/Mage Staff.jpg"
+  },
+  {
+    "id": "morning-star",
+    "name": "Morning Star",
+    "deck": "store",
+    "qty": 1,
+    "category": "Weapon",
+    "attack": "Melee",
+    "surges": [
+      {
+        "cost": 3,
+        "effect": "+1 Damage"
+      }
+    ],
+    "text": "Off-hand Bonus: +1 Damage and 1 Free Surge",
+    "cost": 75,
+    "hands": 1,
+    "dice": [
+      "red",
+      "yellow",
+      "yellow"
+    ],
+    "art": "Images/Art/items/morning-star.jpg",
+    "scan": "Images/Items/Store/Morning Star.jpg"
+  },
+  {
+    "id": "remove-curse",
+    "name": "Remove Curse",
+    "deck": "store",
+    "qty": 1,
+    "category": "Other",
+    "rune": true,
+    "text": "Discard after equipping at the start of your turn to discard one dark relic that you have equipped.",
+    "cost": 500,
+    "art": "Images/Art/items/remove-curse.jpg",
+    "scan": "Images/Items/Store/Remove Curse.jpg"
+  },
+  {
+    "id": "ring-of-protection",
+    "name": "Ring of Protection",
+    "deck": "store",
+    "qty": 1,
+    "category": "Other",
+    "abilities": [
+      "+1 Armor"
+    ],
+    "cost": 250,
+    "art": "Images/Art/items/ring-of-protection.jpg",
+    "scan": "Images/Items/Store/Ring of Protection.jpg"
+  },
+  {
+    "id": "sling",
+    "name": "Sling",
+    "deck": "store",
+    "qty": 2,
+    "category": "Weapon",
+    "attack": "Ranged",
+    "surges": [
+      {
+        "cost": 2,
+        "effect": "+1 Range"
+      },
+      {
+        "cost": 3,
+        "effect": "+1 Damage"
+      }
+    ],
+    "cost": 100,
+    "hands": 2,
+    "dice": [
+      "blue",
+      "green"
+    ],
+    "art": "Images/Art/items/sling.jpg",
+    "scan": "Images/Items/Store/Sling.jpg"
+  },
+  {
+    "id": "sunburst",
+    "name": "Sunburst",
+    "deck": "store",
+    "qty": 2,
+    "category": "Weapon",
+    "rune": true,
+    "attack": "Magic",
+    "surges": [
+      {
+        "cost": 3,
+        "effect": "+1 Damage"
+      },
+      {
+        "cost": 3,
+        "effect": "**Blast 1**"
+      }
+    ],
+    "cost": 175,
+    "hands": 2,
+    "dice": [
+      "white",
+      "green"
+    ],
+    "art": "Images/Art/items/sunburst.jpg",
+    "scan": "Images/Items/Store/Sunburst.jpg"
+  },
+  {
+    "id": "sword",
+    "name": "Sword",
+    "deck": "store",
+    "qty": 3,
+    "category": "Weapon",
+    "attack": "Melee",
+    "surges": [
+      {
+        "cost": 2,
+        "effect": "+1 Damage"
+      }
+    ],
+    "text": "Off-Hand Bonus: +1 Damage",
+    "cost": 75,
+    "hands": 1,
+    "dice": [
+      "red",
+      "green"
+    ],
+    "art": "Images/Art/items/sword.jpg",
+    "scan": "Images/Items/Store/Sword.jpg"
+  },
+  {
+    "id": "throwing-knife",
+    "name": "Throwing Knife",
+    "deck": "store",
+    "qty": 2,
+    "category": "Weapon",
+    "attack": "Ranged",
+    "surges": [
+      {
+        "cost": 3,
+        "effect": "+1 Range"
+      },
+      {
+        "cost": 2,
+        "effect": "+1 Damage"
+      }
+    ],
+    "cost": 50,
+    "hands": 1,
+    "dice": [
+      "blue",
+      "yellow"
+    ],
+    "art": "Images/Art/items/throwing-knife.jpg",
+    "scan": "Images/Items/Store/Throwing Knife.jpg"
+  },
+  {
+    "id": "tunic",
+    "name": "Tunic",
+    "deck": "store",
+    "qty": 2,
+    "category": "Armor",
+    "abilities": [
+      "+0 Armor"
+    ],
+    "text": "When you suffer 1 or more wounds, roll 1 power die for each wound suffered. Cancel 1 wound for each blank you roll.",
+    "cost": 50,
+    "art": "Images/Art/items/tunic.jpg",
+    "scan": "Images/Items/Store/Tunic.jpg"
+  },
+  {
+    "id": "walking-stick",
+    "name": "Walking Stick",
+    "deck": "store",
+    "qty": 2,
+    "category": "Weapon",
+    "attack": "Melee",
+    "abilities": [
+      "Reach"
+    ],
+    "surges": [
+      {
+        "cost": 1,
+        "effect": "+1 Damage"
+      }
+    ],
+    "cost": 75,
+    "hands": 2,
+    "dice": [
+      "red",
+      "yellow"
+    ],
+    "art": "Images/Art/items/walking-stick.jpg",
+    "scan": "Images/Items/Store/Walking Stick.jpg"
+  },
+  {
+    "id": "wizards-robe",
+    "name": "Wizard's Robe",
+    "deck": "store",
+    "qty": 2,
+    "category": "Armor",
+    "abilities": [
+      "+2 Armor vs. Ranged/Magic",
+      "+0 Armor vs. Melee"
+    ],
+    "text": "You may equip 1 extra ***Other*** item.",
+    "cost": 75,
+    "art": "Images/Art/items/wizards-robe.jpg",
+    "aliases": [
+      "Wizards Robe"
+    ],
+    "scan": "Images/Items/Store/Wizards Robe.jpg"
+  },
+  {
+    "id": "archers-charm",
+    "name": "Archers Charm",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Archers Charm.jpg"
+  },
+  {
+    "id": "axe-of-returning",
+    "name": "Axe of Returning",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Axe of Returning.jpg"
+  },
+  {
+    "id": "backbiter",
+    "name": "Backbiter",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Backbiter.jpg"
+  },
+  {
+    "id": "bane",
+    "name": "Bane",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Bane.jpg"
+  },
+  {
+    "id": "belt-of-strength",
+    "name": "Belt of Strength",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Belt of Strength.jpg"
+  },
+  {
+    "id": "bone-blade",
+    "name": "Bone Blade",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Bone Blade.jpg"
+  },
+  {
+    "id": "cloak-of-deception",
+    "name": "Cloak of Deception",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Cloak of Deception.jpg"
+  },
+  {
+    "id": "cone-of-fire",
+    "name": "Cone of Fire",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Cone of Fire.jpg"
+  },
+  {
+    "id": "crystal-of-tival",
+    "name": "Crystal of Tival",
+    "deck": "copper",
+    "qty": 2,
+    "scan": "Images/Items/Copper/Crystal of Tival.jpg"
+  },
+  {
+    "id": "crystal-shield",
+    "name": "Crystal Shield",
+    "deck": "copper",
+    "qty": 2,
+    "scan": "Images/Items/Copper/Crystal Shield.jpg"
+  },
+  {
+    "id": "crystalize",
+    "name": "Crystalize",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Crystalize.jpg"
+  },
+  {
+    "id": "dragontooth-hammer",
+    "name": "Dragontooth Hammer",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Dragontooth Hammer.jpg"
+  },
+  {
+    "id": "dwarven-fire-bombs",
+    "name": "Dwarven Fire Bombs",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Dwarven Fire Bombs.jpg"
+  },
+  {
+    "id": "elven-robe",
+    "name": "Elven Robe",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Elven Robe.jpg"
+  },
+  {
+    "id": "falcons-claw",
+    "name": "Falcons Claw",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Falcons Claw.jpg"
+  },
+  {
+    "id": "gauntlets-of-power",
+    "name": "Gauntlets of Power",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Gauntlets of Power.jpg"
+  },
+  {
+    "id": "great-bow",
+    "name": "Great Bow",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Great Bow.jpg"
+  },
+  {
+    "id": "heavy-leather-armor",
+    "name": "Heavy Leather Armor",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Heavy Leather Armor.jpg"
+  },
+  {
+    "id": "knuckle-dagger",
+    "name": "Knuckle Dagger",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Knuckle Dagger.jpg"
+  },
+  {
+    "id": "leviathan",
+    "name": "Leviathan",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Leviathan.jpg"
+  },
+  {
+    "id": "mace-of-aver",
+    "name": "Mace of Aver",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Mace of Aver.jpg"
+  },
+  {
+    "id": "magic-bow",
+    "name": "Magic Bow",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Magic Bow.jpg"
+  },
+  {
+    "id": "mana-weave",
+    "name": "Mana Weave",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Mana Weave.jpg"
+  },
+  {
+    "id": "minor-healing",
+    "name": "Minor Healing",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Minor Healing.jpg"
+  },
+  {
+    "id": "pacify",
+    "name": "Pacify",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Pacify.jpg"
+  },
+  {
+    "id": "pack-of-holding",
+    "name": "Pack of Holding",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Pack of Holding.jpg"
+  },
+  {
+    "id": "plate-mail",
+    "name": "Plate Mail",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Plate Mail.jpg"
+  },
+  {
+    "id": "ring-of-quickness",
+    "name": "Ring of Quickness",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Ring of Quickness.jpg"
+  },
+  {
+    "id": "ripper",
+    "name": "Ripper",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Ripper.jpg"
+  },
+  {
+    "id": "screaming-eagle-staff",
+    "name": "Screaming Eagle Staff",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Screaming Eagle Staff.jpg"
+  },
+  {
+    "id": "shadow-blade",
+    "name": "Shadow Blade",
+    "deck": "copper",
+    "qty": 1,
+    "text": "*No scan of this card is available. Text to be added.*"
+  },
+  {
+    "id": "shillelagh",
+    "name": "Shillelagh",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Shillelagh.jpg"
+  },
+  {
+    "id": "skull-shield",
+    "name": "Skull Shield",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Skull Shield.jpg"
+  },
+  {
+    "id": "staff-of-punishment",
+    "name": "Staff of Punishment",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Staff of Punishment.jpg"
+  },
+  {
+    "id": "staff-of-the-grave",
+    "name": "Staff of the Grave",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Staff of the Grave.jpg"
+  },
+  {
+    "id": "treasure-cache-1-copper",
+    "name": "Treasure Cache 1",
+    "deck": "copper",
+    "qty": 2,
+    "scan": "Images/Items/Copper/Treasure Cache 1.jpg"
+  },
+  {
+    "id": "treasure-cache-2-copper",
+    "name": "Treasure Cache 2",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Treasure Cache 2.jpg"
+  },
+  {
+    "id": "treasure-cache-3-copper",
+    "name": "Treasure Cache 3",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Treasure Cache 3.jpg"
+  },
+  {
+    "id": "treasure-cache-4-copper",
+    "name": "Treasure Cache 4",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Treasure Cache 4.jpg"
+  },
+  {
+    "id": "treasure-cache-5-copper",
+    "name": "Treasure Cache 5",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Treasure Cache 5.jpg"
+  },
+  {
+    "id": "treasure-cache-6-copper",
+    "name": "Treasure Cache 6",
+    "deck": "copper",
+    "qty": 1,
+    "scan": "Images/Items/Copper/Treasure Cache 6.jpg"
+  },
+  {
+    "id": "aldars-mirror",
+    "name": "Aldars Mirror",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Aldars Mirror.jpg"
+  },
+  {
+    "id": "amulet-of-healing",
+    "name": "Amulet of Healing",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Amulet of Healing.jpg"
+  },
+  {
+    "id": "barbed-dagger",
+    "name": "Barbed Dagger",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Barbed Dagger.jpg"
+  },
+  {
+    "id": "beastman-fetish",
+    "name": "Beastman Fetish",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Beastman Fetish.jpg"
+  },
+  {
+    "id": "black-widows-web",
+    "name": "Black Widows Web",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Black Widows Web.jpg"
+  },
+  {
+    "id": "bo-stick",
+    "name": "Bo Stick",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Bo Stick.jpg"
+  },
+  {
+    "id": "bottle-imp",
+    "name": "Bottle Imp",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Bottle Imp.jpg"
+  },
+  {
+    "id": "bow-of-bones",
+    "name": "Bow of Bones",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Bow of Bones.jpg"
+  },
+  {
+    "id": "bow-of-the-hawk",
+    "name": "Bow of the Hawk",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Bow of the Hawk.jpg"
+  },
+  {
+    "id": "bracers-of-might",
+    "name": "Bracers of Might",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Bracers of Might.jpg"
+  },
+  {
+    "id": "cloak-of-mists",
+    "name": "Cloak of Mists",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Cloak of Mists.jpg"
+  },
+  {
+    "id": "dragons-breath",
+    "name": "Dragons Breath",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Dragons Breath.jpg"
+  },
+  {
+    "id": "drain-life",
+    "name": "Drain Life",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Drain Life.jpg"
+  },
+  {
+    "id": "elven-boots",
+    "name": "Elven Boots",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Elven Boots.jpg"
+  },
+  {
+    "id": "enchanted-breastplate",
+    "name": "Enchanted Breastplate",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Enchanted Breastplate.jpg"
+  },
+  {
+    "id": "eyes-of-thara",
+    "name": "Eyes of Thara",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Eyes of Thara.jpg"
+  },
+  {
+    "id": "flute-of-repose",
+    "name": "Flute of Repose",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Flute of Repose.jpg"
+  },
+  {
+    "id": "flying-death",
+    "name": "Flying Death",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Flying Death.jpg"
+  },
+  {
+    "id": "golden-armor",
+    "name": "Golden Armor",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Golden Armor.jpg"
+  },
+  {
+    "id": "greater-healing",
+    "name": "Greater Healing",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Greater Healing.jpg"
+  },
+  {
+    "id": "grinding-axe",
+    "name": "Grinding Axe",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Grinding Axe.jpg"
+  },
+  {
+    "id": "ice-storm",
+    "name": "Ice Storm",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Ice Storm.jpg"
+  },
+  {
+    "id": "lifedrinker",
+    "name": "Lifedrinker",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Lifedrinker.jpg"
+  },
+  {
+    "id": "mace-of-kellos",
+    "name": "Mace of Kellos",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Mace of Kellos.jpg"
+  },
+  {
+    "id": "mirror-shield",
+    "name": "Mirror Shield",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Mirror Shield.jpg"
+  },
+  {
+    "id": "petrify",
+    "name": "Petrify",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Petrify.jpg"
+  },
+  {
+    "id": "ring-of-freedom",
+    "name": "Ring of Freedom",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Ring of Freedom.jpg"
+  },
+  {
+    "id": "robe-of-kellos",
+    "name": "Robe of Kellos",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Robe of Kellos.jpg"
+  },
+  {
+    "id": "scorpion-helmet",
+    "name": "Scorpion Helmet",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Scorpion Helmet.jpg"
+  },
+  {
+    "id": "scythe-of-reaping",
+    "name": "Scythe of Reaping",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Scythe of Reaping.jpg"
+  },
+  {
+    "id": "serpent-blade",
+    "name": "Serpent Blade",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Serpent Blade.jpg"
+  },
+  {
+    "id": "shield-of-light",
+    "name": "Shield of Light",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Shield of Light.jpg"
+  },
+  {
+    "id": "skullcracker",
+    "name": "Skullcracker",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Skullcracker.jpg"
+  },
+  {
+    "id": "staff-of-fire",
+    "name": "Staff of Fire",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Staff of Fire.jpg"
+  },
+  {
+    "id": "treasure-cache-1-silver",
+    "name": "Treasure Cache 1",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Treasure Cache 1.jpg"
+  },
+  {
+    "id": "treasure-cache-2-silver",
+    "name": "Treasure Cache 2",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Treasure Cache 2.jpg"
+  },
+  {
+    "id": "treasure-cache-3-silver",
+    "name": "Treasure Cache 3",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Treasure Cache 3.jpg"
+  },
+  {
+    "id": "treasure-cache-4-silver",
+    "name": "Treasure Cache 4",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Treasure Cache 4.jpg"
+  },
+  {
+    "id": "treasure-cache-5-silver",
+    "name": "Treasure Cache 5",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Treasure Cache 5.jpg"
+  },
+  {
+    "id": "treasure-cache-6-silver",
+    "name": "Treasure Cache 6",
+    "deck": "silver",
+    "qty": 1,
+    "scan": "Images/Items/Silver/Treasure Cache 6.jpg"
+  },
+  {
+    "id": "bloody-dagger",
+    "name": "Bloody Dagger",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Bloody Dagger.jpg"
+  },
+  {
+    "id": "bracers-of-accuracy",
+    "name": "Bracers of Accuracy",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Bracers of Accuracy.jpg"
+  },
+  {
+    "id": "curse-of-rot",
+    "name": "Curse of Rot",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Curse of Rot.jpg"
+  },
+  {
+    "id": "deflect",
+    "name": "Deflect",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Deflect.jpg"
+  },
+  {
+    "id": "dragon-scale-mail",
+    "name": "Dragon Scale Mail",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Dragon Scale Mail.jpg"
+  },
+  {
+    "id": "elven-bow",
+    "name": "Elven Bow",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Elven Bow.jpg"
+  },
+  {
+    "id": "elven-cloak",
+    "name": "Elven Cloak",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Elven Cloak.jpg"
+  },
+  {
+    "id": "flame-strike",
+    "name": "Flame Strike",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Flame Strike.jpg"
+  },
+  {
+    "id": "frost-axe",
+    "name": "Frost Axe",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Frost Axe.jpg"
+  },
+  {
+    "id": "hammer-of-doom",
+    "name": "Hammer of Doom",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Hammer of Doom.jpg"
+  },
+  {
+    "id": "jinns-lamp",
+    "name": "Jinns Lamp",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Jinns Lamp.jpg"
+  },
+  {
+    "id": "longspear",
+    "name": "Longspear",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Longspear.jpg"
+  },
+  {
+    "id": "mithril-breastplate",
+    "name": "Mithril Breastplate",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Mithril Breastplate.jpg"
+  },
+  {
+    "id": "rage-blade",
+    "name": "Rage Blade",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Rage Blade.jpg"
+  },
+  {
+    "id": "ring-of-the-arcane",
+    "name": "Ring of the Arcane",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Ring of the Arcane.jpg"
+  },
+  {
+    "id": "robe-of-shadows",
+    "name": "Robe of Shadows",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Robe of Shadows.jpg"
+  },
+  {
+    "id": "scarab-of-death",
+    "name": "Scarab of Death",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Scarab of Death.jpg"
+  },
+  {
+    "id": "sheath-of-might",
+    "name": "Sheath of Might",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Sheath of Might.jpg"
+  },
+  {
+    "id": "shield-of-the-warrior",
+    "name": "Shield of the Warrior",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Shield of the Warrior.jpg"
+  },
+  {
+    "id": "sorcerous-orb",
+    "name": "Sorcerous Orb",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Sorcerous Orb.jpg"
+  },
+  {
+    "id": "spirit-spear",
+    "name": "Spirit Spear",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Spirit Spear.jpg"
+  },
+  {
+    "id": "staff-of-knowledge",
+    "name": "Staff of Knowledge",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Staff of Knowledge.jpg"
+  },
+  {
+    "id": "star-of-kellos",
+    "name": "Star of Kellos",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Star of Kellos.jpg"
+  },
+  {
+    "id": "stone-cutter",
+    "name": "Stone Cutter",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Stone Cutter.jpg"
+  },
+  {
+    "id": "superior-healing",
+    "name": "Superior Healing",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Superior Healing.jpg"
+  },
+  {
+    "id": "the-knights-ring",
+    "name": "The Knights Ring",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/The Knights Ring.jpg"
+  },
+  {
+    "id": "wings-of-regiroth",
+    "name": "Wings of Regiroth",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Wings of Regiroth.jpg"
+  },
+  {
+    "id": "wishing-ring",
+    "name": "Wishing Ring",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Wishing Ring.jpg"
+  },
+  {
+    "id": "word-of-vaal",
+    "name": "Word of Vaal",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Word of Vaal.jpg"
+  },
+  {
+    "id": "treasure-cache-1-gold",
+    "name": "Treasure Cache 1",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Treasure Cache 1.jpg"
+  },
+  {
+    "id": "treasure-cache-2-gold",
+    "name": "Treasure Cache 2",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Treasure Cache 2.jpg"
+  },
+  {
+    "id": "treasure-cache-3-gold",
+    "name": "Treasure Cache 3",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Treasure Cache 3.jpg"
+  },
+  {
+    "id": "treasure-cache-4-gold",
+    "name": "Treasure Cache 4",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Treasure Cache 4.jpg"
+  },
+  {
+    "id": "treasure-cache-5-gold",
+    "name": "Treasure Cache 5",
+    "deck": "gold",
+    "qty": 1,
+    "scan": "Images/Items/Gold/Treasure Cache 5.jpg"
+  }
+]

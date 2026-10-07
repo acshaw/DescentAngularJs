@@ -56,9 +56,12 @@
                         $scope.groups.push({ title: deck + ' ' + kind, cards: cardService.deck(kind, deck) });
                     });
                 });
+                // Treasure decks join once transcribed (plan 04); until then their cards are just the scan.
+                $scope.groups.push({ title: 'store items', cards: cardService.deck('items', 'store') });
                 var unknown = {};
-                cardService.all('skills').concat(cardService.all('feats')).forEach(function (card) {
-                    (card.text.match(/\{(\w+)\}/g) || []).forEach(function (token) {
+                cardService.all('skills').concat(cardService.all('feats'), cardService.all('items')).forEach(function (card) {
+                    var text = (card.text || '') + ' ' + (card.surges || []).map(function (s) { return s.effect; }).join(' ');
+                    (text.match(/\{(\w+)\}/g) || []).forEach(function (token) {
                         if (!CARD_ICONS[token.slice(1, -1)]) unknown[card.name + ' ' + token] = true;
                     });
                 });

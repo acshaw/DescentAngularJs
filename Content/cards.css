@@ -23,7 +23,9 @@
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
 }
-.dj-card-row > dj-card { flex: 0 0 240px; scroll-snap-align: start; display: block; }
+.dj-card-row > dj-card, .dj-card-row > .dj-held { flex: 0 0 240px; scroll-snap-align: start; display: block; }
+.dj-held { display: flex; flex-direction: column; }
+.dj-held > dj-card { display: block; flex: 1; }
 
 .dj-card {
     --dj-deck: var(--dj-store);
@@ -69,7 +71,40 @@
 }
 .dj-card-x:hover, .dj-card-x:focus { opacity: 1; }
 
-.dj-card-text { padding: 10px 12px; font-size: 14px; line-height: 1.4; flex: 1; }
+.dj-card-text { padding: 10px 12px; font-size: 14px; line-height: 1.4; }
+.dj-card-spacer { flex: 1; }
+
+/* Item layout */
+.dj-card-art, .dj-card-scanonly { display: block; width: 100%; }
+.dj-card-art { height: 130px; object-fit: cover; }
+.dj-card-type { padding: 8px 12px 0; font-weight: 700; font-size: 14px; }
+.dj-card-type small { font-weight: 400; color: var(--dj-muted); font-size: 13px; }
+.dj-card-abilities { padding: 6px 12px 0; font-weight: 700; font-size: 14px; }
+.dj-card-surges { padding: 6px 12px 0; font-size: 14px; line-height: 1.6; }
+.dj-surge-cost { white-space: nowrap; }
+.dj-card-foot {
+    border-top: 1px solid var(--dj-line);
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+}
+.dj-cost { font-weight: 700; }
+.dj-cost .fa { color: #d4a72c; }
+.dj-hands .fa { margin-right: 1px; }
+.dj-dice { margin-left: auto; display: flex; gap: 3px; }
+.dj-dice .dj-die { width: 16px; height: 16px; }
+
+/* Tapped (exhausted) items */
+.dj-tappable .dj-card-head, .dj-tappable .dj-card-art, .dj-tappable .dj-card-scanonly { cursor: pointer; }
+.dj-tapped { filter: grayscale(100%); opacity: .75; }
+
+/* Actions under a held card: give to another hero, move, etc. */
+.dj-held-actions { display: flex; align-items: center; gap: 6px; padding: 6px 2px 0; flex-wrap: wrap; }
+.dj-held-actions .dj-give { border: 0; padding: 0; background: none; }
+.dj-held-actions .dj-give img { width: 34px; height: 34px; border-radius: 6px; object-fit: cover; }
+.dj-held-actions .dj-move { margin-left: auto; }
 .dj-card-text p { margin: 0 0 8px; }
 
 .dj-card-effects { margin: 0 12px 10px; display: flex; gap: 6px; flex-wrap: wrap; }
@@ -93,8 +128,13 @@
 /* Inline icons used by the cardText filter. */
 .dj-ico-fatigue { color: #b8860b; }
 .dj-ico-wound { color: #a3262a; }
-.dj-ico-surge { font-style: normal; color: #b8860b; }
-.dj-ico-surge::before { content: "\26A1"; }
+.dj-ico-surge {
+    display: inline-block;
+    width: 1.15em;
+    height: 1.15em;
+    vertical-align: -3px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolygon fill='%23111' points='12,0 14,4 18,1.6 18,6 22.4,6 20,10 24,12 20,14 22.4,18 18,18 18,22.4 14,20 12,24 10,20 6,22.4 6,18 1.6,18 4,14 0,12 4,10 1.6,6 6,6 6,1.6 10,4'/%3E%3Cpolygon fill='%23fff' points='14.5,5 8,13 11.5,13 9.5,19 16,11 12.5,11'/%3E%3C/svg%3E") center / contain no-repeat;
+}
 .dj-die {
     display: inline-block;
     width: .9em;
@@ -105,7 +145,7 @@
 }
 .dj-die-power { background: #3a3a3a; }
 .dj-die-red { background: #d63a2f; }
-.dj-die-blue { background: #2f6fd6; }
+.dj-die-blue { background: #6a4fd1; }
 .dj-die-white { background: #fff; }
 .dj-die-green { background: #2e9a3e; }
 .dj-die-yellow { background: #e8c21c; }

@@ -1,4 +1,4 @@
-// End-to-end tests for the data-driven cards (plans 01 and 02: skills, feats).
+// End-to-end tests for the data-driven cards (plans 01-03: skills, feats, items).
 // Needs Playwright and the site served at BASE, e.g. from the parent directory:
 //   python3 -m http.server 8765   (with this repo at ./DescentAngularJs)
 //   BASE=http://localhost:8765/DescentAngularJs/ node tests/e2e-cards.js
@@ -10,6 +10,7 @@ var playwright = require('playwright');
 var BASE = process.env.BASE || 'http://localhost:8765/DescentAngularJs/';
 var V1_SAVE = path.join(__dirname, 'fixtures', 'v1-save.json');
 var V2_SAVE = path.join(__dirname, 'fixtures', 'v2-save.json');
+var V3_SAVE = path.join(__dirname, 'fixtures', 'v3-save.json');
 var failures = 0;
 
 function check(label, ok, detail) {
@@ -32,10 +33,11 @@ async function run(device) {
     var hero = function (n) {
         return page.evaluate(function (n) {
             var c = angular.element(document.body).injector().get('appData').characters[n || 0];
-            return { w: c.wounds, wc: c.woundsCap, f: c.fatigue, fc: c.fatigueCap, s: c.speed, skills: c.skills.slice(), feats: c.feats.slice() };
+            return JSON.parse(JSON.stringify({ w: c.wounds, wc: c.woundsCap, f: c.fatigue, fc: c.fatigueCap, s: c.speed, skills: c.skills, feats: c.feats, equipped: c.equipped, bag: c.bag }));
         }, n);
     };
-    var picker = function (kind) { return 'dj-deck-picker[kind=' + kind + '] '; };
+    // kind is 'skills', 'feats', or an item field: 'equipped' / 'bag'.
+    var picker = function (kind) { return kind === 'equipped' || kind === 'bag' ? 'dj-deck-picker[field=' + kind + '] ' : 'dj-deck-picker[kind=' + kind + '] '; };
     var choices = function (kind) {
         return page.$$eval(picker(kind || 'skills') + 'select option', function (os) { return os.map(function (o) { return o.textContent.trim(); }); });
     };
@@ -48,7 +50,11 @@ async function run(device) {
         await page.selectOption(picker(kind) + 'select', { label: name });
     };
     var addSkill = function (deck, name) { return addCard('skills', deck, name); };
-    var held = function (kind) { return page.locator('dj-card[ng-repeat^="id in character.' + kind + '"]'); };
+    var held = function (kind) {
+        return kind === 'equipped' || kind === 'bag'
+            ? page.locator('.dj-held[ng-repeat^="entry in character.' + kind + '"]')
+            : page.locator('dj-card[ng-repeat^="id in character.' + kind + '"]');
+    };
     var loadSave = async function (file) {
         await page.goto(BASE);
         await page.reload();
@@ -121,7 +127,51 @@ async function run(device) {
     check('feat cards render', (await held('feats').count()) === feats.length + 1);
     await page.click('button[ng-click="handBtn(0)"]');
 
-    // 4. Save, reload, load: same skills and feats.
+    // 3c. Items: Equipped and Backpack share the four item decks.
+    await page.click('button[ng-click="handBtn(1)"]');
+    await page.waitForSelector(picker('equipped') + 'select', { state: 'visible' });
+    await addCard('equipped', 'Store', 'Sword');
+    await addCard('equipped', 'Store', 'Sword');
+    var me = await hero();
+    check('items added as {id, tapped}', JSON.stringify(me.equipped) === '[{"id":"sword","tapped":false},{"id":"sword","tapped":false}]', me.equipped);
+    check('item card renders art, type, surges and footer', (await held('equipped').first().locator('.dj-card-art, .dj-card-type, .dj-card-surges .dj-ico-surge, .dj-card-foot').count()) >= 5);
+    await page.click('button[ng-click="handBtn(2)"]');
+    await page.waitForSelector(picker('bag') + 'select', { state: 'visible' });
+    await addCard('bag', 'Store', 'Sword');
+    check('Sword (3 copies) gone once 2 equipped + 1 in backpack', (await choices('bag')).indexOf('Sword') === -1);
+    await addCard('bag', 'Store', 'Healing Potion');
+    await addCard('bag', 'Store', 'Healing Potion');
+    check('potions (12 copies) still offered after taking 2', (await choices('bag')).indexOf('Healing Potion') !== -1);
+    await page.click('button[ng-click="handBtn(1)"]');
+    await held('equipped').first().locator('.dj-card-head').click();
+    // ngAnimate applies the class on the next frame, so wait for it.
+    var rendered = await held('equipped').first().locator('.dj-tapped').waitFor({ timeout: 2000 }).then(function () { return 1; }, function () { return 0; });
+    var tapState = { data: (await hero()).equipped[0].tapped, rendered: rendered };
+    check('tapping an item marks it tapped', tapState.data === true && tapState.rendered === 1, tapState);
+    await page.locator('img[ng-click="unTapAll()"]:visible').click();
+    check('"untap all" clears tapped items', (await hero()).equipped[0].tapped === false);
+    await held('equipped').first().locator('.dj-card-head').click();
+    await held('equipped').first().locator('.dj-move').click();
+    me = await hero();
+    check('moving to the backpack keeps tapped state', me.equipped.length === 1 && me.bag[me.bag.length - 1].id === 'sword' && me.bag[me.bag.length - 1].tapped === true, me);
+    var giveButtons = await held('equipped').first().locator('.dj-give').count();
+    check('give-to buttons only for other heroes (1 in a 2-hero party)', giveButtons === 1, giveButtons);
+    await held('equipped').first().locator('button[aria-label="Give to Lyssa"]').click();
+    var lyssa = await hero(1);
+    check('given item lands in the other hero\'s backpack', lyssa.bag.length === 1 && lyssa.bag[0].id === 'sword' && (await hero()).equipped.length === 0, lyssa);
+    await page.click('button[ng-click="handBtn(2)"]');
+    check('giving doesn\'t return Sword to the deck', (await choices('bag')).indexOf('Sword') === -1);
+    await showDeck('Copper', 'bag');
+    await page.click(picker('bag') + '.dj-random');
+    var drawn = (await hero()).bag;
+    check('random copper item drawn into the backpack', drawn.length === 5 && drawn[4].id !== 'sword', drawn);
+    check('untranscribed treasure shows its scan', (await held('bag').last().locator('.dj-card-scanonly').count()) === 1);
+    await held('bag').last().locator('.dj-card-x').click();
+    check('removing an item takes it out of the backpack', (await hero()).bag.length === 4);
+    await showDeck('Store', 'bag');
+    await page.click('button[ng-click="handBtn(0)"]');
+
+    // 4. Save, reload, load: same skills, feats and items.
     await addSkill('Fighter', 'Tough');
     var saved = await hero();
     var download = await Promise.all([page.waitForEvent('download'), page.evaluate(function () {
@@ -130,11 +180,11 @@ async function run(device) {
     var savePath = path.join(os.tmpdir(), 'dj-v2-save-' + device.name + '.json');
     await download.saveAs(savePath);
     var v2 = JSON.parse(fs.readFileSync(savePath, 'utf8'));
-    check('save is version 3 without skill or feat decks', v2.version === 3 && !v2.fighterSkills && !v2.fighterFeats && Array.isArray(v2.characters[0].skills) && typeof v2.characters[0].skills[0] === 'string', Object.keys(v2));
+    check('save is version 4 without card decks', v2.version === 4 && !v2.fighterSkills && !v2.fighterFeats && !v2.storeItems && Array.isArray(v2.characters[0].skills) && typeof v2.characters[0].skills[0] === 'string', Object.keys(v2));
     check('save has no $$hashKey noise', fs.readFileSync(savePath, 'utf8').indexOf('$$hashKey') === -1);
     await loadSave(savePath);
     var reloaded = await hero();
-    check('save round-trips skills, feats and stats', JSON.stringify(reloaded) === JSON.stringify(saved), { saved: saved, reloaded: reloaded });
+    check('save round-trips skills, feats, items and stats', JSON.stringify(reloaded) === JSON.stringify(saved), { saved: saved, reloaded: reloaded });
 
     // 5. Old v1 save: migrated, stats untouched, deck counts derived.
     await loadSave(V1_SAVE);
@@ -160,6 +210,14 @@ async function run(device) {
     var sub = await choices('feats');
     check('v2 held Subterfuge feats not offered', sub.indexOf('Second Wind') === -1 && sub.indexOf('Chink in the Armor') === -1, sub);
     check('no missing-card placeholders after v2 load', (await page.locator('.dj-missing').count()) === 0);
+
+    // 6b. Phase 02 (v3) save with items stored as objects: migrated with tapped state.
+    await loadSave(V3_SAVE);
+    a = await hero(0); l = await hero(1);
+    check('v3 equipped items migrated with tapped state', JSON.stringify(a.equipped) === '[{"id":"sword","tapped":true},{"id":"chain-mail","tapped":false},{"id":"archers-charm","tapped":false}]', a.equipped);
+    check('v3 backpack and renamed items migrated', JSON.stringify(a.bag) === '[{"id":"healing-potion","tapped":false},{"id":"healing-potion","tapped":false}]' && JSON.stringify(l.equipped) === '[{"id":"bow","tapped":true},{"id":"wizards-robe","tapped":false}]' && JSON.stringify(l.bag) === '[{"id":"aldars-mirror","tapped":false}]', { a: a.bag, l: l });
+    check('v3 skills and feats kept', JSON.stringify(a.skills) === '["tough"]' && JSON.stringify(a.feats) === '["hurry"]');
+    check('no missing-card placeholders after v3 load', (await page.locator('.dj-missing').count()) === 0);
 
     // 7. A card that's not in the data: shown as a removable placeholder.
     var oddPath = path.join(os.tmpdir(), 'dj-unknown-card.json');

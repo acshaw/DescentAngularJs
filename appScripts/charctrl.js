@@ -68,75 +68,19 @@
             $scope.appData.partyConquest = $scope.appData.partyConquest - 1;
     };
 
-    $scope.removeCard = function (kind, index) {
-        cardService.take($scope.character, kind, index);
+    // field is where the card is held: 'skills', 'feats', 'equipped' or 'bag'.
+    $scope.removeCard = function (field, index) {
+        cardService.take($scope.character, field, index);
     };
-    $scope.removeItemFromEquipment = function (index) {
-        var removedItem = $scope.character.equipped.splice(index, 1);
-        switch (removedItem[0].type) {
-            case 'store':
-                for (i = 0; i < $scope.appData.storeItems.length; i++) {
-                    if ($scope.appData.storeItems[i].name === removedItem[0].name) {
-                        $scope.appData.storeItems[i].qty++;
-                    };
-                };
-                break;
-            case 'Copper':
-                for (i = 0; i < $scope.appData.copperItems.length; i++) {
-                    if ($scope.appData.copperItems[i].name === removedItem[0].name) {
-                        $scope.appData.copperItems[i].qty++;
-                    };
-                };
-                break;
-            case 'Silver':
-                for (i = 0; i < $scope.appData.silverItems.length; i++) {
-                    if ($scope.appData.silverItems[i].name === removedItem[0].name) {
-                        $scope.appData.silverItems[i].qty++;
-                    };
-                };
-                break;
-            case 'Gold':
-                for (i = 0; i < $scope.appData.goldItems.length; i++) {
-                    if ($scope.appData.goldItems[i].name === removedItem[0].name) {
-                        $scope.appData.goldItems[i].qty++;
-                    };
-                };
-                break;
-        };
+    $scope.moveCard = function (field, index, toField) {
+        cardService.move($scope.character, field, index, $scope.character, toField);
     };
-    $scope.removeItemFromBag = function (index) {
-        var removedItem = $scope.character.bag.splice(index, 1);
-        switch (removedItem[0].type) {
-            case 'store':
-                for (i = 0; i < $scope.appData.storeItems.length; i++) {
-                    if ($scope.appData.storeItems[i].name === removedItem[0].name) {
-                        $scope.appData.storeItems[i].qty++;
-                    };
-                };
-                break;
-            case 'Copper':
-                for (i = 0; i < $scope.appData.copperItems.length; i++) {
-                    if ($scope.appData.copperItems[i].name === removedItem[0].name) {
-                        $scope.appData.copperItems[i].qty++;
-                    };
-                };
-                break;
-            case 'Silver':
-                for (i = 0; i < $scope.appData.silverItems.length; i++) {
-                    if ($scope.appData.silverItems[i].name === removedItem[0].name) {
-                        $scope.appData.silverItems[i].qty++;
-                    };
-                };
-                break;
-            case 'Gold':
-                for (i = 0; i < $scope.appData.goldItems.length; i++) {
-                    if ($scope.appData.goldItems[i].name === removedItem[0].name) {
-                        $scope.appData.goldItems[i].qty++;
-                    };
-                };
-                break;
-        };
-
+    // Given items go into the other hero's backpack.
+    $scope.giveCard = function (field, index, hero) {
+        cardService.move($scope.character, field, index, hero, 'bag');
+    };
+    $scope.otherHeroes = function () {
+        return $scope.appData.characters.filter(function (hero) { return hero !== $scope.character; });
     };
     $scope.removeItemFromUpgrades = function (index) {
         var original = angular.copy($scope.character.upgrades);
@@ -253,189 +197,6 @@
         };
     };
 
-    $scope.moveItemToBag = function (index) {
-        $scope.character.bag.push($scope.character.equipped[index]);
-        $scope.character.equipped.splice(index, 1);
-    };
-    $scope.moveItemToEquipment = function (index) {
-        $scope.character.equipped.push($scope.character.bag[index]);
-        $scope.character.bag.splice(index, 1);
-    };
-
-    $scope.addRandomItemToEquipment = function () {
-        var deckName = $scope.currentDeck;
-        var cardCount = 0;
-        var deck = $scope.itemDeck;
-        var newItem
-
-        for (i = 0; i < $scope.itemDeck.length; i++)
-            cardCount = cardCount + $scope.itemDeck[i].qty;
-
-        var randomNumber = Math.floor(Math.random() * cardCount);
-
-        for (i = 0; i < $scope.itemDeck.length; i++) {
-            randomNumber = randomNumber - $scope.itemDeck[i].qty;
-
-            if (randomNumber < 1) {
-                newItem = $scope.itemDeck[i];
-
-                switch (newItem.type) {
-                    case "store":
-                        for (i = 0; i < $scope.appData.storeItems.length; i++) {
-                            if ($scope.appData.storeItems[i].name === newItem.name) {
-                                $scope.appData.storeItems[i].qty--;
-                            };
-                        };
-                        break;
-                    case "Copper":
-                        for (i = 0; i < $scope.appData.copperItems.length; i++) {
-                            if ($scope.appData.copperItems[i].name === newItem.name) {
-                                $scope.appData.copperItems[i].qty--;
-                            };
-                        };
-                        break;
-                    case "Silver":
-                        for (i = 0; i < $scope.appData.silverItems.length; i++) {
-                            if ($scope.appData.silverItems[i].name === newItem.name) {
-                                $scope.appData.silverItems[i].qty--;
-                            };
-                        };
-                        break;
-                    case "Gold":
-                        for (i = 0; i < $scope.appData.goldItems.length; i++) {
-                            if ($scope.appData.goldItems[i].name === newItem.name) {
-                                $scope.appData.goldItems[i].qty--;
-                            };
-                        };
-                        break;
-                };
-                $scope.character.equipped.push(newItem);
-                return;
-            }
-        }
-
-    };
-    $scope.addRandomItemToBag = function () {
-        var deckName = $scope.currentDeck;
-        var cardCount = 0;
-        var deck = $scope.itemDeck;
-        var newItem
-
-        for (i = 0; i < $scope.itemDeck.length; i++)
-            cardCount = cardCount + $scope.itemDeck[i].qty;
-
-        var randomNumber = Math.floor(Math.random() * cardCount);
-
-        for (i = 0; i < $scope.itemDeck.length; i++) {
-            randomNumber = randomNumber - $scope.itemDeck[i].qty;
-
-            if (randomNumber < 1) {
-                newItem = $scope.itemDeck[i];
-
-                switch (newItem.type) {
-                    case "store":
-                        for (i = 0; i < $scope.appData.storeItems.length; i++) {
-                            if ($scope.appData.storeItems[i].name === newItem.name) {
-                                $scope.appData.storeItems[i].qty--;
-                            };
-                        };
-                        break;
-                    case "Copper":
-                        for (i = 0; i < $scope.appData.copperItems.length; i++) {
-                            if ($scope.appData.copperItems[i].name === newItem.name) {
-                                $scope.appData.copperItems[i].qty--;
-                            };
-                        };
-                        break;
-                    case "Silver":
-                        for (i = 0; i < $scope.appData.silverItems.length; i++) {
-                            if ($scope.appData.silverItems[i].name === newItem.name) {
-                                $scope.appData.silverItems[i].qty--;
-                            };
-                        };
-                        break;
-                    case "Gold":
-                        for (i = 0; i < $scope.appData.goldItems.length; i++) {
-                            if ($scope.appData.goldItems[i].name === newItem.name) {
-                                $scope.appData.goldItems[i].qty--;
-                            };
-                        };
-                        break;
-                };
-                $scope.character.bag.push(newItem);
-                return;
-            }
-        }
-    };
-
-    $scope.addItemToEquipment = function () {
-        var newItem = JSON.parse($scope.newEquipment);
-        switch (newItem.type) {
-            case 'store':
-                for (i = 0; i < $scope.appData.storeItems.length; i++) {
-                    if ($scope.appData.storeItems[i].name === newItem.name) {
-                        $scope.appData.storeItems[i].qty--;
-                    };
-                };
-                break;
-            case 'Copper':
-                for (i = 0; i < $scope.appData.copperItems.length; i++) {
-                    if ($scope.appData.copperItems[i].name === newItem.name) {
-                        $scope.appData.copperItems[i].qty--;
-                    };
-                };
-                break;
-            case 'Silver':
-                for (i = 0; i < $scope.appData.silverItems.length; i++) {
-                    if ($scope.appData.silverItems[i].name === newItem.name) {
-                        $scope.appData.silverItems[i].qty--;
-                    };
-                };
-                break;
-            case 'Gold':
-                for (i = 0; i < $scope.appData.goldItems.length; i++) {
-                    if ($scope.appData.goldItems[i].name === newItem.name) {
-                        $scope.appData.goldItems[i].qty--;
-                    };
-                };
-                break;
-        }
-        $scope.character.equipped.push(newItem);
-    };
-    $scope.addItemToBag = function () {
-        var newItem = JSON.parse($scope.newEquipment);
-        switch (newItem.type) {
-            case 'store':
-                for (i = 0; i < $scope.appData.storeItems.length; i++) {
-                    if ($scope.appData.storeItems[i].name === newItem.name) {
-                        $scope.appData.storeItems[i].qty--;
-                    };
-                };
-                break;
-            case 'Copper':
-                for (i = 0; i < $scope.appData.copperItems.length; i++) {
-                    if ($scope.appData.copperItems[i].name === newItem.name) {
-                        $scope.appData.copperItems[i].qty--;
-                    };
-                };
-                break;
-            case 'Silver':
-                for (i = 0; i < $scope.appData.silverItems.length; i++) {
-                    if ($scope.appData.silverItems[i].name === newItem.name) {
-                        $scope.appData.silverItems[i].qty--;
-                    };
-                };
-                break;
-            case 'Gold':
-                for (i = 0; i < $scope.appData.goldItems.length; i++) {
-                    if ($scope.appData.goldItems[i].name === newItem.name) {
-                        $scope.appData.goldItems[i].qty--;
-                    };
-                };
-                break;
-        };
-        $scope.character.bag.push(newItem);
-    };
     $scope.addUpgrade = function () {
         var newItem = JSON.parse($scope.newUpgrade);
         for (i = 0; i < $scope.appData.upgradeItems.length; i++) {
@@ -559,15 +320,6 @@
         return;
     };
 
-    $scope.giveBaggedItemAway = function (index, heroIndex) {
-        $scope.appData.characters[heroIndex].bag.push($scope.character.bag[index]);
-        $scope.character.bag.splice(index, 1);
-    };
-    $scope.giveEquippedItemAway = function (index, heroIndex) {
-        $scope.appData.characters[heroIndex].bag.push($scope.character.equipped[index]);
-        $scope.character.equipped.splice(index, 1);
-    };
-
     $scope.switchFeatLabel = function (val) {
         switch (val) {
             case 'Fighter':
@@ -608,31 +360,10 @@
         }
         $scope.currentSkillDeck = $scope.appData.currentSkillDeck;
         $scope.currentDeck = $scope.appData.currentDeck;
-        $scope.switchItemDeck();
-    };
-    $scope.switchItemDeck = function () {
-        switch ($scope.currentDeck) {
-            case 'Copper':
-                $scope.itemDeck = $scope.appData.copperItems;
-                break;
-            case 'Silver':
-                $scope.itemDeck = $scope.appData.silverItems;
-                break;
-            case 'Gold':
-                $scope.itemDeck = $scope.appData.goldItems;
-                break;
-            case 'Store':
-                $scope.itemDeck = $scope.appData.storeItems;
-                break;
-            default:
-                $scope.itemDeck = $scope.appData.storeItems;
-                break;
-        }
     };
     $scope.getNumber = function (num) {
         return new Array(num);
     };
 
-    $scope.switchItemDeck();
 
 });
