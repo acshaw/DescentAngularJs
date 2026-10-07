@@ -18,10 +18,9 @@ var SCHEMAS = {
         decks: ['fighter', 'subterfuge', 'wizardry'],
         effectKeys: []
     },
-    // Treasure items may be scan-only until transcribed (no text/category).
     items: {
         required: ['id', 'name', 'deck', 'qty'],
-        optional: ['category', 'rune', 'attack', 'subtitle', 'abilities', 'surges', 'text', 'cost', 'hands', 'dice', 'art', 'artBox', 'aliases', 'scan'],
+        optional: ['category', 'rune', 'cursed', 'attack', 'subtitle', 'abilities', 'surges', 'text', 'grants', 'cost', 'hands', 'dice', 'art', 'artBox', 'aliases', 'scan'],
         decks: ['store', 'copper', 'silver', 'gold'],
         effectKeys: [],
         categories: ['Weapon', 'Armor', 'Shield', 'Other', 'Potion'],
@@ -31,6 +30,7 @@ var SCHEMAS = {
 var DICE = ['red', 'blue', 'white', 'green', 'yellow', 'black', 'power', 'silver', 'gold'];
 
 var problems = [];
+var pendingGrants = []; // checked once every id is known
 var seenIds = {};
 
 // GitHub Pages is case-sensitive, so check each path segment exactly.
@@ -76,7 +76,14 @@ Object.keys(SCHEMAS).forEach(function (kind) {
         if ((String(card.text || '').match(/\*/g) || []).length % 2) problems.push(where + ': unbalanced * in text');
         if (card.scan && !existsExact(card.scan)) problems.push(where + ': scan not found (check exact case): ' + card.scan);
         if (card.art && !existsExact(card.art)) problems.push(where + ': art not found (check exact case): ' + card.art);
-        if (!card.text && !card.category && !card.scan) problems.push(where + ': needs text, a category, or a scan');
+        if (kind === 'items' && !card.text && !card.category) problems.push(where + ': needs text or a category (scan-only cards are not allowed)');
+        if (card.grants) {
+            Object.keys(card.grants).forEach(function (key) {
+                if (['coins', 'items'].indexOf(key) === -1) problems.push(where + ': unknown grant ' + key);
+            });
+            if (card.grants.coins !== undefined && !(Number.isInteger(card.grants.coins) && card.grants.coins > 0)) problems.push(where + ': grants.coins must be a positive whole number');
+            pendingGrants.push({ where: where, items: card.grants.items || [] });
+        }
         if (card.category && schema.categories && schema.categories.indexOf(card.category) === -1) problems.push(where + ': unknown category ' + card.category);
         if (card.attack && schema.attacks.indexOf(card.attack) === -1) problems.push(where + ': unknown attack ' + card.attack);
         (card.dice || []).forEach(function (d) { if (DICE.indexOf(d) === -1) problems.push(where + ': unknown die ' + d); });
@@ -86,6 +93,10 @@ Object.keys(SCHEMAS).forEach(function (kind) {
         if (card.hands !== undefined && [1, 2].indexOf(card.hands) === -1) problems.push(where + ': hands must be 1 or 2');
     });
     console.log(kind + ': ' + cards.length + ' cards');
+});
+
+pendingGrants.forEach(function (g) {
+    g.items.forEach(function (id) { if (!seenIds[id]) problems.push(g.where + ': grants unknown card ' + id); });
 });
 
 if (problems.length) {

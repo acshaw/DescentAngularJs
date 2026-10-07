@@ -225,7 +225,7 @@
             <br />
             <div class="dj-card-row">
                 <div class="dj-held" ng-repeat="entry in character.equipped track by $index">
-                    <dj-card card="cards.byId(entry.id)" tapped="entry.tapped" on-tap="entry.tapped = !entry.tapped" on-remove="removeCard('equipped', $index)"></dj-card>
+                    <dj-card card="cards.byId(entry.id)" tapped="entry.tapped" on-tap="entry.tapped = !entry.tapped" on-remove="removeCard('equipped', $index)" on-collect="collect('equipped', $index)"></dj-card>
                     <div class="dj-held-actions">
                         <button type="button" class="dj-give" ng-repeat="hero in otherHeroes()" ng-click="giveCard('equipped', $parent.$index, hero)" title="Give to {{hero.name}}" aria-label="Give to {{hero.name}}">
                             <img ng-src="{{'Images/Face Portraits/' + hero.name + '.JPG'}}" alt="" />
@@ -247,7 +247,7 @@
             <br />
             <div class="dj-card-row">
                 <div class="dj-held" ng-repeat="entry in character.bag track by $index">
-                    <dj-card card="cards.byId(entry.id)" tapped="entry.tapped" on-tap="entry.tapped = !entry.tapped" on-remove="removeCard('bag', $index)"></dj-card>
+                    <dj-card card="cards.byId(entry.id)" tapped="entry.tapped" on-tap="entry.tapped = !entry.tapped" on-remove="removeCard('bag', $index)" on-collect="collect('bag', $index)"></dj-card>
                     <div class="dj-held-actions">
                         <button type="button" class="dj-give" ng-repeat="hero in otherHeroes()" ng-click="giveCard('bag', $parent.$index, hero)" title="Give to {{hero.name}}" aria-label="Give to {{hero.name}}">
                             <img ng-src="{{'Images/Face Portraits/' + hero.name + '.JPG'}}" alt="" />

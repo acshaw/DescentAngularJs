@@ -56,8 +56,9 @@
                         $scope.groups.push({ title: deck + ' ' + kind, cards: cardService.deck(kind, deck) });
                     });
                 });
-                // Treasure decks join once transcribed (plan 04); until then their cards are just the scan.
-                $scope.groups.push({ title: 'store items', cards: cardService.deck('items', 'store') });
+                ['store', 'copper', 'silver', 'gold'].forEach(function (deck) {
+                    $scope.groups.push({ title: deck + ' items', cards: cardService.deck('items', deck) });
+                });
                 var unknown = {};
                 cardService.all('skills').concat(cardService.all('feats'), cardService.all('items')).forEach(function (card) {
                     var text = (card.text || '') + ' ' + (card.surges || []).map(function (s) { return s.effect; }).join(' ');

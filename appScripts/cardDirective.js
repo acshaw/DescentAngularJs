@@ -1,5 +1,6 @@
-// <dj-card card="card" on-remove="remove()" tapped="entry.tapped" on-tap="..."></dj-card>
-// The one renderer for every card type. on-remove, tapped and on-tap are optional.
+// <dj-card card="card" on-remove="remove()" tapped="entry.tapped" on-tap="..." on-collect="..."></dj-card>
+// The one renderer for every card type. on-remove, tapped, on-tap and on-collect
+// (shown on cards that grant a reward, e.g. Treasure Caches) are optional.
 djCards.constant('CARD_KIND_LABELS', {
     skills: 'skill',
     feats: 'feat',
@@ -15,7 +16,7 @@ djCards.constant('EFFECT_LABELS', {
 djCards.directive('djCard', function (CARD_KIND_LABELS, EFFECT_LABELS) {
     return {
         restrict: 'E',
-        scope: { card: '<', onRemove: '&?', tapped: '<?', onTap: '&?' },
+        scope: { card: '<', onRemove: '&?', tapped: '<?', onTap: '&?', onCollect: '&?' },
         template:
             '<div class="dj-card" ng-class="[\'dj-deck-\' + card.deck, {\'dj-missing\': card.missing, \'dj-tapped\': tapped, \'dj-tappable\': onTap}]">' +
             '  <div class="dj-card-head" ng-click="onTap && onTap()">' +
@@ -26,7 +27,7 @@ djCards.directive('djCard', function (CARD_KIND_LABELS, EFFECT_LABELS) {
             '  <img class="dj-card-art" ng-if="card.art" ng-src="{{card.art}}" alt="" ng-click="onTap && onTap()" />' +
             '  <img class="dj-card-scanonly" ng-if="scanOnly()" ng-src="{{card.scan}}" alt="Scan of {{card.name}}" ng-click="onTap && onTap()" />' +
             '  <div class="dj-card-type" ng-if="card.category">' +
-            '    {{card.category}}<span ng-if="card.rune"> — Rune</span>' +
+            '    {{card.category}}<span ng-if="card.rune"> — Rune</span><span ng-if="card.cursed"> — Cursed</span>' +
             '    <small ng-if="card.attack || card.subtitle"> · {{card.attack || card.subtitle}}</small>' +
             '  </div>' +
             '  <div class="dj-card-abilities" ng-if="card.abilities.length"><div ng-repeat="a in card.abilities track by $index">{{a}}</div></div>' +
@@ -34,6 +35,7 @@ djCards.directive('djCard', function (CARD_KIND_LABELS, EFFECT_LABELS) {
             '    <div ng-repeat="s in card.surges track by $index"><span class="dj-surge-cost" aria-label="{{s.cost}} surge"><i class="dj-ico dj-ico-surge" ng-repeat="n in surgeRange(s.cost) track by $index"></i></span>: <span ng-bind-html="s.effect | cardInline"></span></div>' +
             '  </div>' +
             '  <div class="dj-card-text" ng-if="card.text" ng-bind-html="card.text | cardText"></div>' +
+            '  <div class="dj-card-collect" ng-if="card.grants && onCollect"><button type="button" class="btn btn-warning btn-sm" ng-click="onCollect()"><i class="fa fa-circle"></i> Collect</button></div>' +
             '  <div class="dj-card-spacer"></div>' +
             '  <div class="dj-card-effects" ng-if="card.effects">' +
             '    <span class="dj-chip" ng-repeat="(key, value) in card.effects"><i class="fa {{effectLabels[key].icon}}"></i> {{value > 0 ? \'+\' : \'\'}}{{value}} {{effectLabels[key].label}}</span>' +
@@ -78,7 +80,7 @@ djCards.directive('djDeckPicker', function (cardService, CARD_KIND_LABELS) {
             '    <button type="button" class="btn btn-default dj-deck-button" ng-class="deckId()" ng-click="onSwitch()">{{deck}}</button>' +
             '  </span>' +
             '  <select class="form-control" ng-model="pick.card" ng-change="add(pick.card)"' +
-            '          ng-options="card as card.name for card in choices() track by card.id">' +
+            '          ng-options="card as pickerLabel(card) for card in choices() track by card.id">' +
             '    <option value="">Add {{article}} {{label}}…</option>' +
             '  </select>' +
             '  <span class="input-group-btn">' +
@@ -90,6 +92,7 @@ djCards.directive('djDeckPicker', function (cardService, CARD_KIND_LABELS) {
             scope.label = CARD_KIND_LABELS[scope.kind];
             scope.article = /^[aeiou]/.test(scope.label) ? 'an' : 'a';
             scope.deckId = function () { return String(scope.deck || '').toLowerCase(); };
+            scope.pickerLabel = cardService.pickerLabel;
             scope.choices = function () {
                 return cardService.choices(scope.kind, scope.deckId(), scope.party);
             };

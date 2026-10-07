@@ -49,6 +49,16 @@ djCards.factory('cardService', function ($http, $q) {
             return readyPromise;
         },
 
+        // Name shown in pickers. Cards that grant a reward (Treasure Caches all
+        // share a name) say what they grant so they can be told apart.
+        pickerLabel: function (card) {
+            if (!card.grants) return card.name;
+            var parts = [];
+            if (card.grants.coins) parts.push(card.grants.coins + ' coins');
+            (card.grants.items || []).forEach(function (id) { parts.push(service.byId(id).name); });
+            return card.name + (parts.length ? ' (' + parts.join(' + ') + ')' : '');
+        },
+
         all: function (kind) {
             return byKind[kind] || [];
         },
