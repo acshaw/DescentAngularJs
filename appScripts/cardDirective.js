@@ -4,7 +4,17 @@
 djCards.constant('CARD_KIND_LABELS', {
     skills: 'skill',
     feats: 'feat',
-    items: 'item'
+    items: 'item',
+    upgrades: 'upgrade'
+});
+
+// Shows why the rules refused a change (sweetalert when the page has it).
+djCards.factory('cardNotice', function ($window) {
+    return function (reason) {
+        if (!reason) return;
+        if ($window.swal) $window.swal('Not allowed', reason, 'info');
+        else $window.alert(reason);
+    };
 });
 
 djCards.constant('EFFECT_LABELS', {
@@ -18,7 +28,7 @@ djCards.directive('djCard', function (CARD_KIND_LABELS, EFFECT_LABELS) {
         restrict: 'E',
         scope: { card: '<', onRemove: '&?', tapped: '<?', onTap: '&?', onCollect: '&?' },
         template:
-            '<div class="dj-card" ng-class="[\'dj-deck-\' + card.deck, {\'dj-missing\': card.missing, \'dj-tapped\': tapped, \'dj-tappable\': onTap}]">' +
+            '<div class="dj-card" ng-class="[\'dj-deck-\' + (card.deck || card.tier), {\'dj-missing\': card.missing, \'dj-tapped\': tapped, \'dj-tappable\': onTap, \'dj-upgrade\': card.kind === \'upgrades\'}]">' +
             '  <div class="dj-card-head" ng-click="onTap && onTap()">' +
             '    <div class="dj-card-kind">{{kindLabel()}}<span ng-if="tapped"> · tapped</span></div>' +
             '    <div class="dj-card-name">{{card.name}}</div>' +
@@ -37,10 +47,11 @@ djCards.directive('djCard', function (CARD_KIND_LABELS, EFFECT_LABELS) {
             '  <div class="dj-card-text" ng-if="card.text" ng-bind-html="card.text | cardText"></div>' +
             '  <div class="dj-card-collect" ng-if="card.grants && onCollect"><button type="button" class="btn btn-warning btn-sm" ng-click="onCollect()"><i class="fa fa-circle"></i> Collect</button></div>' +
             '  <div class="dj-card-spacer"></div>' +
-            '  <div class="dj-card-effects" ng-if="card.effects">' +
-            '    <span class="dj-chip" ng-repeat="(key, value) in card.effects"><i class="fa {{effectLabels[key].icon}}"></i> {{value > 0 ? \'+\' : \'\'}}{{value}} {{effectLabels[key].label}}</span>' +
+            '  <div class="dj-card-effects" ng-if="hasChips()">' +
+            '    <span class="dj-chip" ng-repeat="(key, value) in card.effects" ng-if="effectLabels[key]"><i class="fa {{effectLabels[key].icon}}"></i> {{value > 0 ? \'+\' : \'\'}}{{value}} {{effectLabels[key].label}}</span>' +
             '  </div>' +
-            '  <div class="dj-card-foot" ng-if="card.cost || card.hands || card.dice.length">' +
+            '  <div class="dj-card-foot" ng-if="card.cost || card.hands || card.dice.length || card.xp">' +
+            '    <span class="dj-xp" ng-if="card.xp">{{card.xp}} XP</span>' +
             '    <span class="dj-cost" ng-if="card.cost"><i class="fa fa-circle"></i> {{card.cost}}</span>' +
             '    <span class="dj-hands" ng-if="card.hands" title="{{card.hands}}-handed"><i class="fa fa-hand-paper-o" ng-repeat="n in surgeRange(card.hands) track by $index"></i></span>' +
             '    <span class="dj-dice"><i class="dj-die dj-die-{{d}}" title="{{d}} die" ng-repeat="d in card.dice track by $index"></i></span>' +
@@ -50,6 +61,11 @@ djCards.directive('djCard', function (CARD_KIND_LABELS, EFFECT_LABELS) {
         link: function (scope) {
             scope.effectLabels = EFFECT_LABELS;
             scope.surgeRange = function (n) { return new Array(n || 0); };
+            // Chips only for effects that have a label (power die changes are
+            // already spelled out in the card text).
+            scope.hasChips = function () {
+                return Object.keys((scope.card || {}).effects || {}).some(function (k) { return EFFECT_LABELS[k]; });
+            };
             // Cards not yet transcribed show their scan as the picture.
             scope.scanOnly = function () {
                 var card = scope.card || {};
@@ -58,7 +74,8 @@ djCards.directive('djCard', function (CARD_KIND_LABELS, EFFECT_LABELS) {
             scope.kindLabel = function () {
                 var card = scope.card || {};
                 if (card.missing) return 'missing card';
-                var deck = card.deck ? card.deck.charAt(0).toUpperCase() + card.deck.slice(1) + ' ' : '';
+                var group = card.deck || card.tier;
+                var deck = group ? group.charAt(0).toUpperCase() + group.slice(1) + ' ' : '';
                 return deck + (CARD_KIND_LABELS[card.kind] || '');
             };
         }
@@ -69,21 +86,22 @@ djCards.directive('djCard', function (CARD_KIND_LABELS, EFFECT_LABELS) {
 //                 party="appData.characters" on-switch="switchDeck(...)"></dj-deck-picker>
 // Deck button (cycles decks via on-switch), a picker of cards with copies left,
 // and a random-draw button. Adding goes through cardService.give into `field`
-// (default: the kind's first holding).
-djCards.directive('djDeckPicker', function (cardService, CARD_KIND_LABELS) {
+// (default: the kind's first holding). With fixed="true" there is one list of
+// the whole kind and no deck or random buttons (used for upgrades).
+djCards.directive('djDeckPicker', function (cardService, cardNotice, CARD_KIND_LABELS) {
     return {
         restrict: 'E',
-        scope: { kind: '@', field: '@', deck: '<', character: '<', party: '<', onSwitch: '&' },
+        scope: { kind: '@', field: '@', fixed: '@', deck: '<', character: '<', party: '<', onSwitch: '&' },
         template:
             '<div class="input-group dj-deck-picker">' +
-            '  <span class="input-group-btn">' +
+            '  <span class="input-group-btn" ng-if="!isFixed">' +
             '    <button type="button" class="btn btn-default dj-deck-button" ng-class="deckId()" ng-click="onSwitch()">{{deck}}</button>' +
             '  </span>' +
             '  <select class="form-control" ng-model="pick.card" ng-change="add(pick.card)"' +
             '          ng-options="card as pickerLabel(card) for card in choices() track by card.id">' +
             '    <option value="">Add {{article}} {{label}}…</option>' +
             '  </select>' +
-            '  <span class="input-group-btn">' +
+            '  <span class="input-group-btn" ng-if="!isFixed">' +
             '    <button type="button" class="btn btn-success dj-random" ng-click="addRandom()" aria-label="Add a random {{label}}"><i class="fa fa-random"></i></button>' +
             '  </span>' +
             '</div>',
@@ -93,11 +111,17 @@ djCards.directive('djDeckPicker', function (cardService, CARD_KIND_LABELS) {
             scope.article = /^[aeiou]/.test(scope.label) ? 'an' : 'a';
             scope.deckId = function () { return String(scope.deck || '').toLowerCase(); };
             scope.pickerLabel = cardService.pickerLabel;
+            scope.isFixed = scope.fixed === 'true';
             scope.choices = function () {
+                if (scope.isFixed) {
+                    return cardService.all(scope.kind).filter(function (card) {
+                        return cardService.remaining(card, scope.party) > 0;
+                    });
+                }
                 return cardService.choices(scope.kind, scope.deckId(), scope.party);
             };
             scope.add = function (card) {
-                if (card) cardService.give(scope.character, card, scope.field || undefined);
+                if (card) cardNotice(cardService.give(scope.character, card, scope.field || undefined));
                 scope.pick.card = null;
             };
             scope.addRandom = function () {

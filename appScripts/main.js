@@ -27,23 +27,6 @@ app.factory("appData", function () {
         currentSkillDeck: 'Fighter',
         currentFeatDeck: 'Fighter',
         characters: [],
-        upgradeItems: [
-            { type: 'upgrade', qty: 4, src: 'Images/Upgrades/', name: "Maximum Wounds Copper" },
-            { type: 'upgrade', qty: 4, src: 'Images/Upgrades/', name: "Maximum Wounds Silver" },
-            { type: 'upgrade', qty: 4, src: 'Images/Upgrades/', name: "Maximum Wounds Gold" },
-            { type: 'upgrade', qty: 4, src: 'Images/Upgrades/', name: "Maximum Fatigue Copper" },
-            { type: 'upgrade', qty: 4, src: 'Images/Upgrades/', name: "Maximum Fatigue Silver" },
-            { type: 'upgrade', qty: 4, src: 'Images/Upgrades/', name: "Maximum Fatigue Gold" },
-            { type: 'upgrade', qty: 99, src: 'Images/Upgrades/', name: "Melee Power" },
-            { type: 'upgrade', qty: 99, src: 'Images/Upgrades/', name: "Melee Power Silver" },
-            { type: 'upgrade', qty: 99, src: 'Images/Upgrades/', name: "Melee Power Gold" },
-            { type: 'upgrade', qty: 99, src: 'Images/Upgrades/', name: "Ranged Power" },
-            { type: 'upgrade', qty: 99, src: 'Images/Upgrades/', name: "Ranged Power Silver" },
-            { type: 'upgrade', qty: 99, src: 'Images/Upgrades/', name: "Ranged Power Gold" },
-            { type: 'upgrade', qty: 99, src: 'Images/Upgrades/', name: "Magic Power" },
-            { type: 'upgrade', qty: 99, src: 'Images/Upgrades/', name: "Magic Power Silver" },
-            { type: 'upgrade', qty: 99, src: 'Images/Upgrades/', name: "Magic Power Gold" }
-        ],
         heroes: [{
             name: "Andira Runehand",
             trait: "When Andira Runehand makes a Magic attack on an adjacent enemy, she gains Pierce 2.",

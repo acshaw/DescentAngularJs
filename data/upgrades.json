@@ -1,0 +1,354 @@
+[
+  {
+    "id": "maximum-wounds-copper",
+    "name": "Maximum Wounds",
+    "tier": "copper",
+    "qty": 4,
+    "xp": 20,
+    "cost": 500,
+    "text": "+ 4 to Maximum Wounds",
+    "effects": {
+      "maxWounds": 4
+    },
+    "art": "Images/Art/upgrades/maximum-wounds-copper.jpg",
+    "artBox": [
+      0.165,
+      0.135,
+      0.835,
+      0.52
+    ],
+    "aliases": [
+      "Maximum Wounds Copper"
+    ],
+    "scan": "Images/Upgrades/Maximum Wounds Copper.JPG"
+  },
+  {
+    "id": "maximum-wounds-silver",
+    "name": "Maximum Wounds",
+    "tier": "silver",
+    "qty": 4,
+    "xp": 25,
+    "cost": 750,
+    "text": "+ 4 to Maximum Wounds",
+    "effects": {
+      "maxWounds": 4
+    },
+    "art": "Images/Art/upgrades/maximum-wounds-silver.jpg",
+    "artBox": [
+      0.165,
+      0.135,
+      0.835,
+      0.52
+    ],
+    "aliases": [
+      "Maximum Wounds Silver",
+      "Maximum Hearts"
+    ],
+    "scan": "Images/Upgrades/Maximum Wounds Silver.JPG"
+  },
+  {
+    "id": "maximum-wounds-gold",
+    "name": "Maximum Wounds",
+    "tier": "gold",
+    "qty": 4,
+    "xp": 30,
+    "cost": 1000,
+    "text": "+ 4 to Maximum Wounds",
+    "effects": {
+      "maxWounds": 4
+    },
+    "art": "Images/Art/upgrades/maximum-wounds-gold.jpg",
+    "artBox": [
+      0.165,
+      0.135,
+      0.835,
+      0.52
+    ],
+    "aliases": [
+      "Maximum Wounds Gold"
+    ],
+    "scan": "Images/Upgrades/Maximum Wounds Gold.JPG"
+  },
+  {
+    "id": "maximum-fatigue-copper",
+    "name": "Maximum Fatigue",
+    "tier": "copper",
+    "qty": 4,
+    "xp": 20,
+    "cost": 500,
+    "text": "+ 2 to Maximum Fatigue",
+    "effects": {
+      "maxFatigue": 2
+    },
+    "art": "Images/Art/upgrades/maximum-fatigue-copper.jpg",
+    "artBox": [
+      0.165,
+      0.135,
+      0.835,
+      0.52
+    ],
+    "aliases": [
+      "Maximum Fatigue Copper"
+    ],
+    "scan": "Images/Upgrades/Maximum Fatigue Copper.JPG"
+  },
+  {
+    "id": "maximum-fatigue-silver",
+    "name": "Maximum Fatigue",
+    "tier": "silver",
+    "qty": 4,
+    "xp": 25,
+    "cost": 750,
+    "text": "+ 2 to Maximum Fatigue",
+    "effects": {
+      "maxFatigue": 2
+    },
+    "art": "Images/Art/upgrades/maximum-fatigue-silver.jpg",
+    "artBox": [
+      0.165,
+      0.135,
+      0.835,
+      0.52
+    ],
+    "aliases": [
+      "Maximum Fatigue Silver"
+    ],
+    "scan": "Images/Upgrades/Maximum Fatigue Silver.JPG"
+  },
+  {
+    "id": "maximum-fatigue-gold",
+    "name": "Maximum Fatigue",
+    "tier": "gold",
+    "qty": 4,
+    "xp": 30,
+    "cost": 1000,
+    "text": "+ 2 to Maximum Fatigue",
+    "effects": {
+      "maxFatigue": 2
+    },
+    "art": "Images/Art/upgrades/maximum-fatigue-gold.jpg",
+    "artBox": [
+      0.165,
+      0.135,
+      0.835,
+      0.52
+    ],
+    "aliases": [
+      "Maximum Fatigue Gold"
+    ],
+    "scan": "Images/Upgrades/Maximum Fatigue Gold.JPG"
+  },
+  {
+    "id": "black-melee-die",
+    "name": "Black Melee Die",
+    "tier": "black",
+    "qty": 99,
+    "xp": 15,
+    "cost": 500,
+    "text": "+ 1 Black Melee Power Die",
+    "effects": {
+      "meleePower": 1
+    },
+    "art": "Images/Art/upgrades/black-melee-die.jpg",
+    "artBox": [
+      0.165,
+      0.135,
+      0.835,
+      0.52
+    ],
+    "aliases": [
+      "Melee Power"
+    ],
+    "scan": "Images/Upgrades/Melee Power.JPG"
+  },
+  {
+    "id": "silver-melee-die",
+    "name": "Silver Melee Die",
+    "tier": "silver",
+    "qty": 99,
+    "xp": 20,
+    "cost": 750,
+    "text": "+ 1 Silver Melee Power Die",
+    "effects": {
+      "meleePower": -1,
+      "meleeSilverPower": 1
+    },
+    "art": "Images/Art/upgrades/silver-melee-die.jpg",
+    "artBox": [
+      0.165,
+      0.135,
+      0.835,
+      0.52
+    ],
+    "aliases": [
+      "Melee Power Silver"
+    ],
+    "scan": "Images/Upgrades/Melee Power Silver.JPG"
+  },
+  {
+    "id": "gold-melee-die",
+    "name": "Gold Melee Die",
+    "tier": "gold",
+    "qty": 99,
+    "xp": 25,
+    "cost": 1000,
+    "text": "+ 1 Gold Melee Power Die",
+    "effects": {
+      "meleeSilverPower": -1,
+      "meleeGoldPower": 1
+    },
+    "art": "Images/Art/upgrades/gold-melee-die.jpg",
+    "artBox": [
+      0.165,
+      0.135,
+      0.835,
+      0.52
+    ],
+    "aliases": [
+      "Melee Power Gold"
+    ],
+    "scan": "Images/Upgrades/Melee Power Gold.JPG"
+  },
+  {
+    "id": "black-ranged-die",
+    "name": "Black Ranged Die",
+    "tier": "black",
+    "qty": 99,
+    "xp": 15,
+    "cost": 500,
+    "text": "+ 1 Black Ranged Power Die",
+    "effects": {
+      "rangedPower": 1
+    },
+    "art": "Images/Art/upgrades/black-ranged-die.jpg",
+    "artBox": [
+      0.165,
+      0.135,
+      0.835,
+      0.52
+    ],
+    "aliases": [
+      "Ranged Power"
+    ],
+    "scan": "Images/Upgrades/Ranged Power.JPG"
+  },
+  {
+    "id": "silver-ranged-die",
+    "name": "Silver Ranged Die",
+    "tier": "silver",
+    "qty": 99,
+    "xp": 20,
+    "cost": 750,
+    "text": "+ 1 Silver Ranged Power Die",
+    "effects": {
+      "rangedPower": -1,
+      "rangedSilverPower": 1
+    },
+    "art": "Images/Art/upgrades/silver-ranged-die.jpg",
+    "artBox": [
+      0.165,
+      0.135,
+      0.835,
+      0.52
+    ],
+    "aliases": [
+      "Ranged Power Silver"
+    ],
+    "scan": "Images/Upgrades/Ranged Power Silver.JPG"
+  },
+  {
+    "id": "gold-ranged-die",
+    "name": "Gold Ranged Die",
+    "tier": "gold",
+    "qty": 99,
+    "xp": 25,
+    "cost": 1000,
+    "text": "+ 1 Gold Ranged Power Die",
+    "effects": {
+      "rangedSilverPower": -1,
+      "rangedGoldPower": 1
+    },
+    "art": "Images/Art/upgrades/gold-ranged-die.jpg",
+    "artBox": [
+      0.165,
+      0.135,
+      0.835,
+      0.52
+    ],
+    "aliases": [
+      "Ranged Power Gold"
+    ],
+    "scan": "Images/Upgrades/Ranged Power Gold.JPG"
+  },
+  {
+    "id": "black-magic-die",
+    "name": "Black Magic Die",
+    "tier": "black",
+    "qty": 99,
+    "xp": 15,
+    "cost": 500,
+    "text": "+ 1 Black Magic Power Die",
+    "effects": {
+      "magicPower": 1
+    },
+    "art": "Images/Art/upgrades/black-magic-die.jpg",
+    "artBox": [
+      0.165,
+      0.135,
+      0.835,
+      0.52
+    ],
+    "aliases": [
+      "Magic Power"
+    ],
+    "scan": "Images/Upgrades/Magic Power.JPG"
+  },
+  {
+    "id": "silver-magic-die",
+    "name": "Silver Magic Die",
+    "tier": "silver",
+    "qty": 99,
+    "xp": 20,
+    "cost": 750,
+    "text": "+ 1 Silver Magic Power Die",
+    "effects": {
+      "magicPower": -1,
+      "magicSilverPower": 1
+    },
+    "art": "Images/Art/upgrades/silver-magic-die.jpg",
+    "artBox": [
+      0.165,
+      0.135,
+      0.835,
+      0.52
+    ],
+    "aliases": [
+      "Magic Power Silver"
+    ],
+    "scan": "Images/Upgrades/Magic Power Silver.JPG"
+  },
+  {
+    "id": "gold-magic-die",
+    "name": "Gold Magic Die",
+    "tier": "gold",
+    "qty": 99,
+    "xp": 25,
+    "cost": 1000,
+    "text": "+ 1 Gold Magic Power Die",
+    "effects": {
+      "magicSilverPower": -1,
+      "magicGoldPower": 1
+    },
+    "art": "Images/Art/upgrades/gold-magic-die.jpg",
+    "artBox": [
+      0.165,
+      0.135,
+      0.835,
+      0.52
+    ],
+    "aliases": [
+      "Magic Power Gold"
+    ],
+    "scan": "Images/Upgrades/Magic Power Gold.JPG"
+  }
+]

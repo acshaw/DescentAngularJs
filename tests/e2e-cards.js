@@ -1,4 +1,4 @@
-// End-to-end tests for the data-driven cards (plans 01-04: skills, feats, items).
+// End-to-end tests for the data-driven cards (plans 01-05: skills, feats, items, upgrades).
 // Needs Playwright and the site served at BASE, e.g. from the parent directory:
 //   python3 -m http.server 8765   (with this repo at ./DescentAngularJs)
 //   BASE=http://localhost:8765/DescentAngularJs/ node tests/e2e-cards.js
@@ -11,6 +11,7 @@ var BASE = process.env.BASE || 'http://localhost:8765/DescentAngularJs/';
 var V1_SAVE = path.join(__dirname, 'fixtures', 'v1-save.json');
 var V2_SAVE = path.join(__dirname, 'fixtures', 'v2-save.json');
 var V3_SAVE = path.join(__dirname, 'fixtures', 'v3-save.json');
+var V4_SAVE = path.join(__dirname, 'fixtures', 'v4-save.json');
 var failures = 0;
 
 function check(label, ok, detail) {
@@ -25,6 +26,10 @@ async function run(device) {
     var page = await context.newPage();
     var errors = [];
     page.on('pageerror', function (e) { errors.push('JS ' + e.message); });
+    // Refusals use sweetalert when it loads (from a CDN); without it they fall
+    // back to window.alert, which is what we capture here.
+    var dialogs = [];
+    page.on('dialog', function (d) { dialogs.push(d.message()); d.dismiss(); });
     page.on('response', function (r) {
         // src="{{...}}" requests from not-yet-converted card types are known noise.
         if (r.status() >= 400 && r.url().indexOf('%7B%7B') === -1 && r.url().indexOf('Portraits/.PNG') === -1) errors.push(r.status() + ' ' + r.url());
@@ -33,7 +38,8 @@ async function run(device) {
     var hero = function (n) {
         return page.evaluate(function (n) {
             var c = angular.element(document.body).injector().get('appData').characters[n || 0];
-            return JSON.parse(JSON.stringify({ w: c.wounds, wc: c.woundsCap, f: c.fatigue, fc: c.fatigueCap, s: c.speed, skills: c.skills, feats: c.feats, equipped: c.equipped, bag: c.bag }));
+            return JSON.parse(JSON.stringify({ w: c.wounds, wc: c.woundsCap, f: c.fatigue, fc: c.fatigueCap, s: c.speed, skills: c.skills, feats: c.feats, equipped: c.equipped, bag: c.bag, upgrades: c.upgrades,
+                melee: [c.meleePower, c.meleeSilverPower, c.meleeGoldPower], magic: [c.magicPower, c.magicSilverPower, c.magicGoldPower] }));
         }, n);
     };
     // kind is 'skills', 'feats', or an item field: 'equipped' / 'bag'.
@@ -190,7 +196,61 @@ async function run(device) {
     await showDeck('Store', 'bag');
     await page.click('button[ng-click="handBtn(0)"]');
 
-    // 4. Save, reload, load: same skills, feats and items.
+    // 3d. Upgrades: wounds/fatigue effects, power die chain and limits.
+    await page.click('button[ng-click="handBtn(4)"]');
+    var upSel = 'dj-deck-picker[kind=upgrades] select';
+    await page.waitForSelector(upSel, { state: 'visible' });
+    check('upgrade picker has no deck or random button', (await page.locator('dj-deck-picker[kind=upgrades] .dj-deck-button, dj-deck-picker[kind=upgrades] .dj-random').count()) === 0);
+    var addUp = function (label) { return page.selectOption(upSel, { label: label }); };
+    var removeUp = async function (id) {
+        var ids = (await hero()).upgrades;
+        await page.locator('dj-card[ng-repeat^="id in character.upgrades"]').nth(ids.lastIndexOf(id)).locator('.dj-card-x').click();
+    };
+    var u0 = await hero();
+    await addUp('Maximum Wounds (Copper)');
+    var u1 = await hero();
+    check('Maximum Wounds adds 4 max and current wounds', u1.wc === u0.wc + 4 && u1.w === u0.w + 4, u1);
+    await page.evaluate(function () { angular.element(document.body).injector().get('appData').characters[0].wounds -= 2; });
+    await removeUp('maximum-wounds-copper');
+    var u2 = await hero();
+    check('removing it while wounded clamps wounds to the new max', u2.wc === u0.wc && u2.w === u0.wc && u2.upgrades.length === 0, u2);
+    dialogs.length = 0;
+    await addUp('Silver Melee Die');
+    var u3 = await hero();
+    check('Silver die with no black die is refused, nothing changes', u3.upgrades.length === 0 && JSON.stringify(u3.melee) === JSON.stringify(u0.melee) && /no black melee power dice/.test(dialogs.join()), { u3: u3, dialogs: dialogs });
+    check('refused upgrade does not use up a copy', (await page.$$eval(upSel + ' option', function (os) { return os.map(function (o) { return o.textContent.trim(); }); })).indexOf('Silver Melee Die') !== -1);
+    await addUp('Black Melee Die');
+    await addUp('Silver Melee Die');
+    await addUp('Gold Melee Die');
+    var u4 = await hero();
+    check('Black -> Silver -> Gold moves one die along the chain', JSON.stringify(u4.melee) === JSON.stringify([u0.melee[0], u0.melee[1], u0.melee[2] + 1]), u4.melee);
+    dialogs.length = 0;
+    await removeUp('black-melee-die');
+    var u5 = await hero();
+    check('removing the upgraded Black die is refused', u5.upgrades.length === 3 && JSON.stringify(u5.melee) === JSON.stringify(u4.melee) && /has been upgraded/.test(dialogs.join()), { u5: u5, dialogs: dialogs });
+    await removeUp('gold-melee-die');
+    await removeUp('silver-melee-die');
+    await removeUp('black-melee-die');
+    var u6 = await hero();
+    check('removing in reverse order restores the dice', u6.upgrades.length === 0 && JSON.stringify(u6.melee) === JSON.stringify(u0.melee), u6);
+    var room = 5 - u0.magic[0] - u0.magic[1] - u0.magic[2];
+    for (var k = 0; k < room; k++) await addUp('Black Magic Die');
+    dialogs.length = 0;
+    await addUp('Black Magic Die');
+    var u7 = await hero();
+    check('a 6th magic power die is refused', u7.upgrades.length === room && /5 magic power dice/.test(dialogs.join()), { u7: u7, dialogs: dialogs });
+    for (k = 0; k < room; k++) await removeUp('black-magic-die');
+    for (k = 0; k < 4; k++) await addUp('Maximum Fatigue (Gold)');
+    var opts = function () { return page.$$eval(upSel + ' option', function (os) { return os.map(function (o) { return o.textContent.trim(); }); }); };
+    check('all 4 copies taken: no longer offered', (await opts()).indexOf('Maximum Fatigue (Gold)') === -1);
+    await removeUp('maximum-fatigue-gold');
+    check('removing one returns it to the deck (old bug: it shrank)', (await opts()).indexOf('Maximum Fatigue (Gold)') !== -1);
+    for (k = 0; k < 3; k++) await removeUp('maximum-fatigue-gold');
+    var u8 = await hero();
+    check('stats back to start after all upgrade tests', u8.wc === u0.wc && u8.fc === u0.fc && JSON.stringify(u8.magic) === JSON.stringify(u0.magic) && u8.upgrades.length === 0, u8);
+    await page.click('button[ng-click="handBtn(0)"]');
+
+    // 4. Save, reload, load: same skills, feats, items and upgrades.
     await addSkill('Fighter', 'Tough');
     var saved = await hero();
     var download = await Promise.all([page.waitForEvent('download'), page.evaluate(function () {
@@ -199,7 +259,7 @@ async function run(device) {
     var savePath = path.join(os.tmpdir(), 'dj-v2-save-' + device.name + '.json');
     await download.saveAs(savePath);
     var v2 = JSON.parse(fs.readFileSync(savePath, 'utf8'));
-    check('save is version 4 without card decks', v2.version === 4 && !v2.fighterSkills && !v2.fighterFeats && !v2.storeItems && Array.isArray(v2.characters[0].skills) && typeof v2.characters[0].skills[0] === 'string', Object.keys(v2));
+    check('save is version 5 without card decks', v2.version === 5 && !v2.fighterSkills && !v2.fighterFeats && !v2.storeItems && !v2.upgradeItems && Array.isArray(v2.characters[0].skills) && typeof v2.characters[0].skills[0] === 'string', Object.keys(v2));
     check('save has no $$hashKey noise', fs.readFileSync(savePath, 'utf8').indexOf('$$hashKey') === -1);
     await loadSave(savePath);
     var reloaded = await hero();
@@ -239,6 +299,13 @@ async function run(device) {
     check('v3 treasure items now render as full cards', (await held('equipped').locator('.dj-card-name').allTextContents()).indexOf("Archer's Charm") !== -1 && (await page.locator('.dj-card-scanonly').count()) === 0);
     check('no missing-card placeholders after v3 load', (await page.locator('.dj-missing').count()) === 0);
 
+    // 6c. Phase 04 (v4) save with upgrades stored as objects: migrated, stats unchanged.
+    await loadSave(V4_SAVE);
+    a = await hero(0); l = await hero(1);
+    check('v4 upgrades migrated to ids', JSON.stringify(a.upgrades) === '["maximum-wounds-copper","black-melee-die","black-melee-die","silver-melee-die","silver-magic-die"]' && JSON.stringify(l.upgrades) === '["maximum-fatigue-silver"]', { a: a.upgrades, l: l.upgrades });
+    check('v4 stats unchanged by migration', a.wc === 16 && JSON.stringify(a.melee) === '[1,1,0]' && JSON.stringify(a.magic) === '[2,1,0]' && l.fc === 7, a);
+    check('no missing-card placeholders after v4 load', (await page.locator('.dj-missing').count()) === 0);
+
     // 7. A card that's not in the data: shown as a removable placeholder.
     var oddPath = path.join(os.tmpdir(), 'dj-unknown-card.json');
     var odd = JSON.parse(fs.readFileSync(V1_SAVE, 'utf8'));
@@ -251,6 +318,7 @@ async function run(device) {
 
     await page.screenshot({ path: path.join(os.tmpdir(), 'dj-cards-' + device.name + '.png'), fullPage: true });
     check('no 404s or JS errors', errors.length === 0, errors);
+    check('no stray alerts (old debug "hi" popups)', dialogs.every(function (m) { return !/^hi$/i.test(m); }), dialogs);
     await browser.close();
 }
 

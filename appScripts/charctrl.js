@@ -1,9 +1,8 @@
-﻿app.controller('CharCtrl', function ($scope, $routeParams, appData, $location, cardService, saveService) {
+﻿app.controller('CharCtrl', function ($scope, $routeParams, appData, $location, cardService, cardNotice, saveService) {
     var charId = $routeParams.id;
     $scope.appData = appData;
     $scope.statusSwitch = 'bleed';
     $scope.cards = cardService;
-    $scope.upgradeDeck = $scope.appData.upgradeItems;
     if ($scope.appData.characters.length < 1) {
         $location.path('/');
         $scope.$apply();
@@ -69,15 +68,17 @@
     };
 
     // field is where the card is held: 'skills', 'feats', 'equipped' or 'bag'.
+    // The rules can refuse a change (e.g. removing a power die that was
+    // upgraded); cardNotice shows why.
     $scope.removeCard = function (field, index) {
-        cardService.take($scope.character, field, index);
+        cardNotice(cardService.take($scope.character, field, index));
     };
     $scope.moveCard = function (field, index, toField) {
-        cardService.move($scope.character, field, index, $scope.character, toField);
+        cardNotice(cardService.move($scope.character, field, index, $scope.character, toField));
     };
     // Given items go into the other hero's backpack.
     $scope.giveCard = function (field, index, hero) {
-        cardService.move($scope.character, field, index, hero, 'bag');
+        cardNotice(cardService.move($scope.character, field, index, hero, 'bag'));
     };
     // Treasure Caches: add the coins to party gold, put any granted items in
     // the backpack (if copies are left), then remove the cache.
@@ -95,244 +96,6 @@
     $scope.otherHeroes = function () {
         return $scope.appData.characters.filter(function (hero) { return hero !== $scope.character; });
     };
-    $scope.removeItemFromUpgrades = function (index) {
-        var original = angular.copy($scope.character.upgrades);
-        var removedItem = $scope.character.upgrades.splice(index, 1)[0];
-        for (i = 0; i < $scope.appData.upgradeItems.length; i++) {
-            if ($scope.appData.upgradeItems[i].name === removedItem.name) {
-                $scope.appData.upgradeItems[i].qty--;
-                switch (removedItem.name) {
-                    case 'Maximum Wounds Copper':
-                        $scope.character.woundsCap = $scope.character.woundsCap - 4;
-                        $scope.character.wounds = $scope.character.wounds - 4;
-                        break;
-                    case 'Maximum Wounds Silver':
-                        $scope.character.woundsCap = $scope.character.woundsCap - 4;
-                        $scope.character.wounds = $scope.character.wounds - 4;
-                        break;
-                    case 'Maximum Wounds Gold':
-                        $scope.character.woundsCap = $scope.character.woundsCap - 4;
-                        $scope.character.wounds = $scope.character.wounds - 4;
-                        break;
-                    case 'Maximum Fatigue Copper':
-                        $scope.character.fatigueCap = $scope.character.fatigueCap - 2;
-                        $scope.character.fatigue = $scope.character.fatigue - 2;
-                        break;
-                    case 'Maximum Fatigue Silver':
-                        $scope.character.fatigueCap = $scope.character.fatigueCap - 2;
-                        $scope.character.fatigue = $scope.character.fatigue - 2;
-                        break;
-                    case 'Maximum Fatigue Gold':
-                        $scope.character.fatigueCap = $scope.character.fatigueCap - 2;
-                        $scope.character.fatigue = $scope.character.fatigue - 2;
-                        break;
-                    case 'Melee Power':
-                        if ($scope.character.meleePower > 0)
-                            $scope.character.meleePower = $scope.character.meleePower - 1;
-                        else {
-                            $scope.character.upgrades = orginal;
-                        }
-                        break;
-                    case 'Ranged Power':
-                        if ($scope.character.rangedPower > 0)
-                            $scope.character.rangedPower = $scope.character.rangedPower - 1;
-                        else {
-                            $scope.character.upgrades = original;
-                        }
-                        break;
-                    case 'Magic Power':
-                        if ($scope.character.magicPower > 0)
-                            $scope.character.magicPower = $scope.character.magicPower - 1;
-                        else {
-                            $scope.character.upgrades = original;
-                        }
-                        break;
-                    case 'Melee Power Silver':
-                        if ($scope.character.meleeSilverPower > 0) {
-                            $scope.character.meleePower = $scope.character.meleePower + 1;
-                            $scope.character.meleeSilverPower = $scope.character.meleeSilverPower - 1;
-                        }
-                        else {
-                            $scope.character.upgrades = original;
-                        }
-                        break;
-                    case 'Ranged Power Silver':
-                        alert('hi');
-                        if ($scope.character.rangedSilverPower > 0) {
-                            alert('HI')
-                            $scope.character.rangedPower = $scope.character.rangedPower + 1;
-                            $scope.character.rangedSilverPower = $scope.character.rangedSilverPower - 1;
-                        }
-                        else {
-                            $scope.character.upgrades = original;
-                        }
-                        break;
-                    case 'Magic Power Silver':
-                        if ($scope.character.magicSilverPower > 0) {
-                            $scope.character.magicPower = $scope.character.magicPower + 1;
-                            $scope.character.magicSilverPower = $scope.character.magicSilverPower - 1;
-                        }
-                        else {
-                            $scope.character.upgrades = original;
-                        }
-                        break;
-                    case 'Melee Power Gold':
-                        if ($scope.character.meleeGoldPower > 0) {
-                            $scope.character.meleeSilverPower = $scope.character.meleeSilverPower + 1;
-                            $scope.character.meleeGoldPower = $scope.character.meleeGoldPower - 1;
-                        }
-                        else {
-                            $scope.character.upgrades = original;
-                        }
-                        break;
-                    case 'Ranged Power Gold':
-                        if ($scope.character.rangedGoldPower > 0) {
-                            $scope.character.rangedSilverPower = $scope.character.rangedSilverPower + 1;
-                            $scope.character.rangedGoldPower = $scope.character.rangedGoldPower - 1;
-                        }
-                        else {
-                            $scope.character.upgrades = original;
-                        }
-                        break;
-                    case 'Magic Power Gold':
-                        if ($scope.character.magicGoldPower > 0) {
-                            $scope.character.magicSilverPower = $scope.character.magicSilverPower + 1;
-                            $scope.character.magicGoldPower = $scope.character.magicGoldPower - 1;
-                        }
-                        else {
-                            $scope.character.upgrades = original;
-                        }
-                        break;
-                    default:
-                        break;
-                };
-            };
-        };
-    };
-
-    $scope.addUpgrade = function () {
-        var newItem = JSON.parse($scope.newUpgrade);
-        for (i = 0; i < $scope.appData.upgradeItems.length; i++) {
-            if ($scope.appData.upgradeItems[i].name === newItem.name) {
-                $scope.appData.upgradeItems[i].qty--;
-
-                switch (newItem.name) {
-                    case 'Maximum Wounds Copper':
-                        $scope.character.woundsCap = $scope.character.woundsCap + 4;
-                        $scope.character.wounds = $scope.character.wounds + 4;
-                        $scope.character.upgrades.push(newItem);
-                        break;
-                    case 'Maximum Wounds Silver':
-                        $scope.character.woundsCap = $scope.character.woundsCap + 4;
-                        $scope.character.wounds = $scope.character.wounds + 4;
-                        $scope.character.upgrades.push(newItem);
-                        break;
-                    case 'Maximum Wounds Gold':
-                        $scope.character.woundsCap = $scope.character.woundsCap + 4;
-                        $scope.character.wounds = $scope.character.wounds + 4;
-                        $scope.character.upgrades.push(newItem);
-                        break;
-                    case 'Maximum Fatigue Copper':
-                        $scope.character.fatigueCap = $scope.character.fatigueCap + 2;
-                        $scope.character.fatigue = $scope.character.fatigue + 2;
-                        $scope.character.upgrades.push(newItem);
-                        break;
-                    case 'Maximum Fatigue Silver':
-                        $scope.character.fatigueCap = $scope.character.fatigueCap + 2;
-                        $scope.character.fatigue = $scope.character.fatigue + 2;
-                        $scope.character.upgrades.push(newItem);
-                        break;
-                    case 'Maximum Fatigue Gold':
-                        $scope.character.fatigueCap = $scope.character.fatigueCap + 2;
-                        $scope.character.fatigue = $scope.character.fatigue + 2;
-                        $scope.character.upgrades.push(newItem);
-                        break;
-                    case 'Melee Power':
-                        if ($scope.character.meleePower + $scope.character.meleeSilverPower + $scope.character.meleeGoldPower < 5) {
-                            $scope.character.meleePower = $scope.character.meleePower + 1;
-                            $scope.character.upgrades.push(newItem);
-                        }
-                        else
-                            swal("Rules: Maximum Power Dice", "This character may not add any additional melee power dice. The limit is 5.", "info");
-                        break;
-                    case 'Ranged Power':
-                        if ($scope.character.rangedPower + $scope.character.rangedSilverPower + $scope.character.rangedGoldPower < 5) {
-                            $scope.character.rangedPower = $scope.character.rangedPower + 1;
-                            $scope.character.upgrades.push(newItem);
-                        }
-                        else
-                            swal("Rules: Maximum Power Dice", "This character may not add any additional ranged power dice. The limit is 5.", "info");
-                        break;
-                    case 'Magic Power':
-                        if ($scope.character.magicPower + $scope.character.magicSilverPower + $scope.character.magicGoldPower < 5) {
-                            $scope.character.magicPower = $scope.character.magicPower + 1;
-                            $scope.character.upgrades.push(newItem);
-                        }
-                        else
-                            swal("Rules: Maximum Power Dice", "This character may not add any additional magic power dice. The limit is 5.", "info");
-                        break;
-                    case 'Melee Power Silver':
-                        if ($scope.character.meleePower > 0) {
-                            $scope.character.meleePower = $scope.character.meleePower - 1;
-                            $scope.character.meleeSilverPower = $scope.character.meleeSilverPower + 1;
-                            $scope.character.upgrades.push(newItem);
-                        }
-                        else
-                            swal("Rules: Maximum Power Dice", "This character does not have any black melee power dice to upgrade.", "info");
-                        break;
-                    case 'Ranged Power Silver':
-                        if ($scope.character.rangedPower > 0) {
-                            $scope.character.rangedPower = $scope.character.rangedPower - 1;
-                            $scope.character.rangedSilverPower = $scope.character.rangedSilverPower + 1;
-                            $scope.character.upgrades.push(newItem);
-                        }
-                        else
-                            swal("Rules: Upgrading Power Dice", "This character does not have any black ranged power dice to upgrade.", "info");
-                        break;
-                    case 'Magic Power Silver':
-                        if ($scope.character.magicPower > 0) {
-                            $scope.character.magicPower = $scope.character.magicPower - 1;
-                            $scope.character.magicSilverPower = $scope.character.magicSilverPower + 1;
-                            $scope.character.upgrades.push(newItem);
-                        }
-                        else
-                            swal("Rules: Upgrading Power Dice", "This character does not have any black magic power dice to upgrade.", "info");
-                        break;
-                    case 'Melee Power Gold':
-                        if ($scope.character.meleeSilverPower > 0) {
-                            $scope.character.meleeSilverPower = $scope.character.meleeSilverPower - 1;
-                            $scope.character.meleeGoldPower = $scope.character.meleeGoldPower + 1;
-                            $scope.character.upgrades.push(newItem);
-                        }
-                        else
-                            swal("Rules: Upgrading Power Dice", "This character does not have any silver magic power dice to upgrade.", "info");
-                        break;
-                    case 'Ranged Power Gold':
-                        if ($scope.character.rangedSilverPower > 0) {
-                            $scope.character.rangedSilverPower = $scope.character.rangedSilverPower - 1;
-                            $scope.character.rangedGoldPower = $scope.character.rangedGoldPower + 1;
-                            $scope.character.upgrades.push(newItem);
-                        }
-                        else
-                            swal("Rules: Upgrading Power Dice", "This character does not have any silver magic power dice to upgrade.", "info");
-                        break;
-                    case 'Magic Power Gold':
-                        if ($scope.character.magicSilverPower > 0) {
-                            $scope.character.magicSilverPower = $scope.character.magicSilverPower - 1;
-                            $scope.character.magicGoldPower = $scope.character.magicGoldPower + 1;
-                            $scope.character.upgrades.push(newItem);
-                        }
-                        else
-                            swal("Rules: Upgrading Power Dice", "This character does not have any silver magic power dice to upgrade.", "info");
-                        break;
-                    default:
-                        break;
-                };
-            };
-        };
-        return;
-    };
-
     $scope.switchFeatLabel = function (val) {
         switch (val) {
             case 'Fighter':
