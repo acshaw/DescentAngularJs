@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ng-app="proofApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Card Proofs</title>
+    <link href="Content/font-awesome.css" rel="stylesheet" />
+    <link href="Content/cards.css" rel="stylesheet" />
+    <script src="Scripts/angular.js"></script>
+    <script src="Scripts/angular-sanitize.js"></script>
+    <script src="appScripts/cardService.js"></script>
+    <script src="appScripts/cardText.js"></script>
+    <script src="appScripts/cardDirective.js"></script>
+    <style>
+        body { margin: 0; padding: 16px; background: #ece7de; font-family: -apple-system, "Segoe UI", Roboto, sans-serif; color: #1f1d1a; }
+        h1 { font-size: 20px; margin: 0 0 4px; }
+        h2 { font-size: 16px; margin: 24px 0 8px; text-transform: capitalize; }
+        .note { margin: 0 0 12px; color: #6b655c; font-size: 14px; }
+        .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+        .filters input { flex: 1 1 180px; padding: 6px 8px; font-size: 16px; }
+        .pair { display: grid; grid-template-columns: minmax(0, 240px) minmax(0, 240px); gap: 12px; margin-bottom: 18px; align-items: start; }
+        .pair img { width: 100%; border-radius: 10px; cursor: zoom-in; }
+        .pair img.big { position: fixed; inset: 0; margin: auto; width: auto; height: auto; max-width: 100vw; max-height: 100vh; z-index: 10; cursor: zoom-out; border-radius: 0; background: #000; }
+        .id { font-family: monospace; font-size: 12px; color: #6b655c; }
+        .problems { background: #fff3cd; border: 1px solid #e0c36b; padding: 8px 12px; border-radius: 8px; font-size: 14px; }
+    </style>
+</head>
+<body ng-controller="ProofCtrl">
+    <h1>Card proofs</h1>
+    <p class="note">The new HTML card (left) next to the original scan (right). Tap a scan to enlarge it. Not linked from the app.</p>
+    <div class="filters">
+        <input type="search" ng-model="q" placeholder="Filter by name or text" />
+    </div>
+    <p class="note" ng-if="!loaded">Loading…</p>
+    <div class="problems" ng-if="problems.length">
+        <b>Unknown text tokens:</b> <span ng-repeat="p in problems">{{p}}{{$last ? '' : ', '}}</span>
+    </div>
+
+    <section ng-repeat="group in groups">
+        <h2>{{group.title}} ({{group.cards.length}})</h2>
+        <div class="pair" ng-repeat="card in group.cards | filter:q">
+            <div>
+                <dj-card card="card"></dj-card>
+                <div class="id">{{card.id}} · qty {{card.qty}}</div>
+            </div>
+            <img ng-src="{{card.scan}}" alt="Original scan of {{card.name}}" ng-class="{big: card.zoom}" ng-click="card.zoom = !card.zoom" loading="lazy" />
+        </div>
+    </section>
+
+    <script>
+        angular.module('proofApp', ['djCards']).controller('ProofCtrl', function ($scope, cardService, CARD_ICONS) {
+            cardService.ready().then(function () {
+                $scope.groups = [];
+                ['skills', 'feats'].forEach(function (kind) {
+                    ['fighter', 'subterfuge', 'wizardry'].forEach(function (deck) {
+                        $scope.groups.push({ title: deck + ' ' + kind, cards: cardService.deck(kind, deck) });
+                    });
+                });
+                var unknown = {};
+                cardService.all('skills').concat(cardService.all('feats')).forEach(function (card) {
+                    (card.text.match(/\{(\w+)\}/g) || []).forEach(function (token) {
+                        if (!CARD_ICONS[token.slice(1, -1)]) unknown[card.name + ' ' + token] = true;
+                    });
+                });
+                $scope.problems = Object.keys(unknown);
+                $scope.loaded = true;
+            });
+        });
+    </script>
+</body>
+</html>

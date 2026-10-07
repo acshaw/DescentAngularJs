@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Card Style Mock</title>
+<link href="../../../Content/font-awesome.css" rel="stylesheet" />
+<style>
+  :root {
+    --fighter: #a3262a; --subterfuge: #2e7d32; --wizardry: #6a3d9a;
+    --store: #2b2b2b; --copper: #b8572b; --silver: #8a9099; --gold: #c9a227;
+    --ink: #1f1d1a; --muted: #6b655c; --paper: #fbf8f2; --line: #e3dccf;
+  }
+  body { margin: 0; padding: 16px; background: #ece7de; font-family: -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--ink); }
+  h1 { font-size: 18px; margin: 0 0 4px; }
+  p.note { margin: 0 0 16px; color: var(--muted); font-size: 14px; }
+  .row { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 8px; scroll-snap-type: x mandatory; }
+
+  /* ---- the card ---- */
+  .card { flex: 0 0 220px; scroll-snap-align: start; background: var(--paper); border-radius: 12px;
+          box-shadow: 0 1px 3px rgba(0,0,0,.25); overflow: hidden; display: flex; flex-direction: column;
+          min-height: 320px; position: relative; }
+  .card-head { background: var(--deck); color: #fff; padding: 10px 40px 10px 12px; }
+  .card-name { font-size: 17px; font-weight: 700; line-height: 1.2; }
+  .card-kind { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; opacity: .85; }
+  .card-x { position: absolute; top: 8px; right: 10px; color: #fff; opacity: .8; font-size: 20px; }
+  .card-art { display: block; width: 100%; height: 120px; object-fit: cover; }
+  .card-type { padding: 8px 12px 0; font-weight: 700; font-size: 14px; }
+  .card-type small { font-weight: 400; color: var(--muted); }
+  .card-text { padding: 8px 12px; font-size: 14px; line-height: 1.4; flex: 1; }
+  .card-text p { margin: 0 0 8px; }
+  .card-effects { margin: 0 12px 10px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip { background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px; font-size: 12px; font-weight: 600; }
+  .card-foot { border-top: 1px solid var(--line); padding: 8px 12px; display: flex; align-items: center; gap: 10px; font-size: 14px; }
+  .card-foot .cost { font-weight: 700; } .card-foot .cost i { color: var(--gold); }
+  .card-foot .dice { margin-left: auto; display: flex; gap: 3px; }
+  .die { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+  .die.red { background: #d63a2f; } .die.green { background: #2e9a3e; }
+  .ico { font-style: normal; font-weight: 700; }
+  .ico-surge { color: #b8860b; } .ico-fatigue { color: #b8860b; }
+
+  .fighter { --deck: var(--fighter); } .subterfuge { --deck: var(--subterfuge); }
+  .wizardry { --deck: var(--wizardry); } .store { --deck: var(--store); }
+</style>
+</head>
+<body>
+  <h1>Card style mock (D3, option A)</h1>
+  <p class="note">Static mock, not wired to the app. Swipe the row sideways on a phone. Header colour = deck/tier. The ✕ is the existing "remove" action.</p>
+
+  <div class="row">
+    <div class="card fighter">
+      <div class="card-head"><div class="card-kind">Fighter skill</div><div class="card-name">Able Warrior</div></div>
+      <i class="fa fa-remove card-x"></i>
+      <div class="card-text"><p>When you declare an <b>Advance</b> action, you may immediately spend 2 <i class="fa fa-tint ico-fatigue"></i> to make 2 attacks this turn instead of 1.</p></div>
+    </div>
+
+    <div class="card subterfuge">
+      <div class="card-head"><div class="card-kind">Subterfuge skill</div><div class="card-name">Spry</div></div>
+      <i class="fa fa-remove card-x"></i>
+      <div class="card-text">
+        <p>Your maximum fatigue is increased by 1.</p>
+        <p>In addition, your speed is increased by 1. Any speed reduction from <b>Armor</b> is applied before this bonus.</p>
+      </div>
+      <div class="card-effects"><span class="chip"><i class="fa fa-tint ico-fatigue"></i> +1 max</span><span class="chip"><i class="fa fa-bolt"></i> +1 speed</span></div>
+    </div>
+
+    <div class="card wizardry">
+      <div class="card-head"><div class="card-kind">Wizardry skill</div><div class="card-name">Alchemist</div></div>
+      <i class="fa fa-remove card-x"></i>
+      <div class="card-text"><p>Each time you (and only you) activate a glyph, you gain 3 potions of your choice.</p></div>
+    </div>
+
+    <div class="card store">
+      <div class="card-head"><div class="card-kind">Store item · preview of phase 03</div><div class="card-name">Sword</div></div>
+      <i class="fa fa-remove card-x"></i>
+      <img class="card-art" src="sword-art.jpg" alt="" />
+      <div class="card-type">Weapon <small>· Melee</small></div>
+      <div class="card-text">
+        <p><i class="ico ico-surge">⚡⚡</i>: +1 Damage</p>
+        <p>Off-Hand Bonus: +1 Damage</p>
+      </div>
+      <div class="card-foot">
+        <span class="cost"><i class="fa fa-circle"></i> 75</span>
+        <span><i class="fa fa-hand-paper-o"></i> 1</span>
+        <span class="dice"><span class="die red"></span><span class="die green"></span></span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

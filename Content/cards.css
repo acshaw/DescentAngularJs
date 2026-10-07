@@ -1,0 +1,114 @@
+/* Data-driven cards (<dj-card>). Deck/tier colours are set once here. */
+:root {
+    --dj-fighter: #a3262a;
+    --dj-subterfuge: #2e7d32;
+    --dj-wizardry: #6a3d9a;
+    --dj-store: #2b2b2b;
+    --dj-copper: #b8572b;
+    --dj-silver: #7d838c;
+    --dj-gold: #b8921a;
+    --dj-missing: #8a8a8a;
+    --dj-ink: #1f1d1a;
+    --dj-muted: #6b655c;
+    --dj-paper: #fbf8f2;
+    --dj-line: #e3dccf;
+}
+
+/* A row of cards that scrolls sideways on narrow screens. */
+.dj-card-row {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    padding: 4px 2px 12px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+.dj-card-row > dj-card { flex: 0 0 240px; scroll-snap-align: start; display: block; }
+
+.dj-card {
+    --dj-deck: var(--dj-store);
+    height: 100%;
+    min-height: 300px;
+    background: var(--dj-paper);
+    color: var(--dj-ink);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+.dj-deck-fighter { --dj-deck: var(--dj-fighter); }
+.dj-deck-subterfuge { --dj-deck: var(--dj-subterfuge); }
+.dj-deck-wizardry { --dj-deck: var(--dj-wizardry); }
+.dj-deck-store { --dj-deck: var(--dj-store); }
+.dj-deck-copper { --dj-deck: var(--dj-copper); }
+.dj-deck-silver { --dj-deck: var(--dj-silver); }
+.dj-deck-gold { --dj-deck: var(--dj-gold); }
+.dj-missing { --dj-deck: var(--dj-missing); }
+
+.dj-card-head {
+    position: relative;
+    background: var(--dj-deck);
+    color: #fff;
+    padding: 10px 44px 10px 12px;
+}
+.dj-card-kind { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; opacity: .85; }
+.dj-card-name { font-size: 17px; font-weight: 700; line-height: 1.2; }
+.dj-card-x {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    opacity: .85;
+    font-size: 20px;
+}
+.dj-card-x:hover, .dj-card-x:focus { opacity: 1; }
+
+.dj-card-text { padding: 10px 12px; font-size: 14px; line-height: 1.4; flex: 1; }
+.dj-card-text p { margin: 0 0 8px; }
+
+.dj-card-effects { margin: 0 12px 10px; display: flex; gap: 6px; flex-wrap: wrap; }
+.dj-chip {
+    background: #fff;
+    border: 1px solid var(--dj-line);
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.dj-card-scan {
+    display: block;
+    padding: 6px 12px 8px;
+    border-top: 1px solid var(--dj-line);
+    font-size: 12px;
+    color: var(--dj-muted);
+}
+
+/* Inline icons used by the cardText filter. */
+.dj-ico-fatigue { color: #b8860b; }
+.dj-ico-wound { color: #a3262a; }
+.dj-ico-surge { font-style: normal; color: #b8860b; }
+.dj-ico-surge::before { content: "\26A1"; }
+.dj-die {
+    display: inline-block;
+    width: .9em;
+    height: .9em;
+    border-radius: 2px;
+    vertical-align: -1px;
+    border: 1px solid rgba(0, 0, 0, .35);
+}
+.dj-die-power { background: #3a3a3a; }
+.dj-die-red { background: #d63a2f; }
+.dj-die-blue { background: #2f6fd6; }
+.dj-die-white { background: #fff; }
+.dj-die-green { background: #2e9a3e; }
+.dj-die-yellow { background: #e8c21c; }
+.dj-die-black { background: #111; }
+.dj-die-silver { background: #c0c4c9; }
+.dj-die-gold { background: #d4a72c; }

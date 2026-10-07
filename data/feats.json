@@ -1,0 +1,221 @@
+[
+  {
+    "id": "blocked",
+    "name": "Blocked",
+    "deck": "fighter",
+    "qty": 2,
+    "text": "Play after a monster has made a successful melee or ranged attack against you (a melee or ranged attack that doesn't miss).\n\nYou must roll a power die. If the result is a surge, there is no effect.\n\nIf the result is not a surge, that monster's attack against you becomes a miss.",
+    "scan": "Images/Feats/Fighting/Blocked.jpg"
+  },
+  {
+    "id": "fend",
+    "name": "Fend",
+    "deck": "fighter",
+    "qty": 3,
+    "text": "Play this card after the overlord has declared a monster's attack against you, but before he has rolled the dice for the attack.\n\nYour hero gains +4 armor for that attack.",
+    "scan": "Images/Feats/Fighting/Fend.jpg"
+  },
+  {
+    "id": "follow-through",
+    "name": "Follow Through",
+    "deck": "fighter",
+    "qty": 3,
+    "text": "Play after making a successful melee attack on a monster (a melee attack that doesn't miss).\n\nGain +2 damage for that attack.",
+    "scan": "Images/Feats/Fighting/Follow Through.jpg"
+  },
+  {
+    "id": "hurry",
+    "name": "Hurry",
+    "deck": "fighter",
+    "qty": 2,
+    "text": "Play at the start of your turn.\n\nYou may make 1 extra melee attack this turn.",
+    "scan": "Images/Feats/Fighting/Hurry.jpg"
+  },
+  {
+    "id": "killing-blow",
+    "name": "Killing Blow",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "Play after rolling the dice in a melee attack.\n\nThe hero chooses the results of that attack roll, placing those sides of the dice faceup, except that the hero cannot change the facing result of the red die.",
+    "scan": "Images/Feats/Fighting/Killing Blow.jpg"
+  },
+  {
+    "id": "lunge",
+    "name": "Lunge",
+    "deck": "fighter",
+    "qty": 2,
+    "text": "Play before rolling the dice when making a melee attack.\n\nYou gain the **Reach** ability for that attack.",
+    "scan": "Images/Feats/Fighting/Lunge.jpg"
+  },
+  {
+    "id": "riposte",
+    "name": "Riposte",
+    "deck": "fighter",
+    "qty": 2,
+    "text": "Play after a monster has attacked you with a melee attack.\n\nIf able, you may immediately attack that monster.\n\nAfter your attack, the overlord resumes his turn as normal.",
+    "scan": "Images/Feats/Fighting/Riposte.jpg"
+  },
+  {
+    "id": "second-wind-fighter",
+    "name": "Second Wind",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "Play at the start of your turn.\n\nRecover all of your fatigue.",
+    "scan": "Images/Feats/Fighting/Second Wind.jpg"
+  },
+  {
+    "id": "sweeping-blow",
+    "name": "Sweeping Blow",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "Play before rolling the dice when making a melee attack.\n\nYou gain the **Sweep** ability for that attack.",
+    "scan": "Images/Feats/Fighting/Sweeping Blow.jpg"
+  },
+  {
+    "id": "backstab",
+    "name": "Backstab",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "Play this card after the overlord has declared a monster's melee attack against you, but before he has rolled the dice for the attack.\n\nYou must roll a power die. If the result is a surge, there is no effect.\n\nIf the result is not a surge, you may make a melee or ranged attack against that monster before the overlord attacks you with that monster.",
+    "scan": "Images/Feats/Subterfuge/Backstab.jpg"
+  },
+  {
+    "id": "chink-in-the-armor",
+    "name": "Chink in the Armor",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "Play before rolling the dice when making a ranged attack.\n\nYou gain the **Pierce 4** ability for that attack.",
+    "aliases": [
+      "Chink in Armor"
+    ],
+    "scan": "Images/Feats/Subterfuge/Chink in Armor.jpg"
+  },
+  {
+    "id": "disarm",
+    "name": "Disarm",
+    "deck": "subterfuge",
+    "qty": 2,
+    "text": "Play when the overlord plays a trap card on you or any friendly figure within 3 spaces of you.\n\nYou must roll a power die. If the result is a blank, there is no effect.\n\nIf the result is not a blank, the trap card is canceled and discarded, but the overlord must still pay the threat cost of that discarded trap card.",
+    "scan": "Images/Feats/Subterfuge/Disarm.jpg"
+  },
+  {
+    "id": "evade",
+    "name": "Evade",
+    "deck": "subterfuge",
+    "qty": 2,
+    "text": "Play after a monster has made a successful ranged or magic attack against you (a ranged or magic attack that doesn't miss).\n\nYou must roll a power die. If the result is a surge, there is no effect.\n\nIf the result is not a surge, that monster's attack becomes a miss.",
+    "scan": "Images/Feats/Subterfuge/Evade.jpg"
+  },
+  {
+    "id": "foiled-plans",
+    "name": "Foiled Plans",
+    "deck": "subterfuge",
+    "qty": 2,
+    "text": "Play at the start of your turn.\n\nRandomly pick and reveal 2 cards from the overlord's hand.\n\nThe overlord must choose 1 of those 2 cards to discard, and returns the other card to his hand.\n\nThe overlord does not receive threat tokens for the discarded card.",
+    "scan": "Images/Feats/Subterfuge/Foiled Plans.jpg"
+  },
+  {
+    "id": "hustle",
+    "name": "Hustle",
+    "deck": "subterfuge",
+    "qty": 3,
+    "text": "Play at the start of your turn.\n\nYour hero may move 3 extra spaces this turn.",
+    "scan": "Images/Feats/Subterfuge/Hustle.jpg"
+  },
+  {
+    "id": "second-wind-subterfuge",
+    "name": "Second Wind",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "Play at the start of your turn.\n\nRecover all of your fatigue.",
+    "scan": "Images/Feats/Subterfuge/Second Wind.jpg"
+  },
+  {
+    "id": "shooting-for-distance",
+    "name": "Shooting for Distance",
+    "deck": "subterfuge",
+    "qty": 3,
+    "text": "Play before rolling the dice when making a ranged attack.\n\nYou gain +8 range for that attack.",
+    "scan": "Images/Feats/Subterfuge/Shooting for Distance.jpg"
+  },
+  {
+    "id": "skulk",
+    "name": "Skulk",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "Play this card after the overlord has declared a monster's attack against you, but before he has rolled the dice for the attack.\n\nYou must roll a power die. If the result is a surge, there is no effect. If the result is not a surge, you gain the **Ghost** and **Stealth** abilities until the start of your next turn.\n\nLeave this card faceup in front of you until the start of your next turn.",
+    "scan": "Images/Feats/Subterfuge/Skulk.jpg"
+  },
+  {
+    "id": "carried-by-air",
+    "name": "Carried By Air",
+    "deck": "wizardry",
+    "qty": 2,
+    "text": "Play at the start of your turn.\n\nYou gain +2 speed and the **Fly** ability until the end of this turn.",
+    "scan": "Images/Feats/Wizardry/Carried By Air.jpg"
+  },
+  {
+    "id": "flaming-fury",
+    "name": "Flaming Fury",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "Play after making a successful magic attack on a monster (a magic attack that doesn't miss).\n\nPlace 3 burn tokens on that monster.",
+    "scan": "Images/Feats/Wizardry/Flaming Fury.jpg"
+  },
+  {
+    "id": "focus",
+    "name": "Focus",
+    "deck": "wizardry",
+    "qty": 3,
+    "text": "Play before rolling the dice when making an attack.\n\nGain 2 free surges when making that attack.",
+    "scan": "Images/Feats/Wizardry/Focus.jpg"
+  },
+  {
+    "id": "magi-madness",
+    "name": "Magi Madness",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "Play before rolling the dice when making a magic attack.\n\nYou gain the **Sorcery 3** ability for that attack.",
+    "scan": "Images/Feats/Wizardry/Magi Madness.jpg"
+  },
+  {
+    "id": "preventing-evil",
+    "name": "Preventing Evil",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "Play this card immediately after the overlord has played a card from his hand. You must roll a power die. If the result is a surge, there is no effect.\n\nIf the result is not a surge, the overlord's card is not put into play, and is instead discarded.\n\nThe overlord does not have to pay the threat cost of that discarded card, and does not get threat tokens from discarding that card.",
+    "scan": "Images/Feats/Wizardry/Preventing Evil.jpg"
+  },
+  {
+    "id": "protect-thyself",
+    "name": "Protect Thyself",
+    "deck": "wizardry",
+    "qty": 2,
+    "text": "Play this card after the overlord has declared a monster's attack against any hero, but before he has rolled the dice for the attack.\n\nYour hero, and all heroes within 3 spaces of you, gains +2 armor until the start of your next turn.\n\nLeave this card face up in front of you until the start of your next turn.",
+    "scan": "Images/Feats/Wizardry/Protect Thyself.jpg"
+  },
+  {
+    "id": "sparks-of-pain",
+    "name": "Sparks of Pain",
+    "deck": "wizardry",
+    "qty": 2,
+    "text": "Play this card at the start of the overlord's turn.\n\nYou gain the **Aura 4** ability until the start of your next turn.\n\nLeave this card faceup in front of you until the start of your next turn.",
+    "scan": "Images/Feats/Wizardry/Sparks of Pain.jpg"
+  },
+  {
+    "id": "transparent",
+    "name": "Transparent",
+    "deck": "wizardry",
+    "qty": 2,
+    "text": "Play this card after the overlord has declared a monster's attack against you, but before he has rolled the dice for the attack.\n\nYou gain the **Stealth** ability for that attack.",
+    "scan": "Images/Feats/Wizardry/Transparent.jpg"
+  },
+  {
+    "id": "we-are-not-afraid",
+    "name": "We Are Not Afraid",
+    "deck": "wizardry",
+    "qty": 3,
+    "text": "Play at the start of any player's turn (including the overlord).\n\nThe overlord loses 4 threat.",
+    "scan": "Images/Feats/Wizardry/We Are Not Afraid.jpg"
+  }
+]

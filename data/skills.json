@@ -1,0 +1,715 @@
+[
+  {
+    "id": "able-warrior",
+    "name": "Able Warrior",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "When you declare an **Advance** action, you may immediately spend 2 fatigue to make 2 attacks this turn instead of 1.",
+    "scan": "Images/Skills/Fighter/Able Warrior.jpg"
+  },
+  {
+    "id": "battle-cry",
+    "name": "Battle Cry",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "When you declare a **Battle** action, you may immediately restore 1 fatigue to yourself and all adjacent heroes.",
+    "scan": "Images/Skills/Fighter/Battle Cry.jpg"
+  },
+  {
+    "id": "bear-tattoo",
+    "name": "Bear Tattoo",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "You have the **Grapple** ability.\n\nIn addition, your maximum number of wounds is increased by 2.",
+    "effects": {
+      "maxWounds": 2
+    },
+    "scan": "Images/Skills/Fighter/Bear Tattoo.jpg"
+  },
+  {
+    "id": "berserker",
+    "name": "Berserker",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "You gain +2 Damage to all of your attacks whenever you have lost half or more of your wounds.\n\nThis bonus increases to +4 Damage whenever you have one quarter of your wounds or fewer remaining.\n\n(Note that this skill works differently from the \"Berserk\" special ability.)",
+    "scan": "Images/Skills/Fighter/Berserker.jpg"
+  },
+  {
+    "id": "brawler",
+    "name": "Brawler",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "When you make a **Melee** attack, you gain +1 Damage for each monster adjacent to you beyond the first one.\n\nIn addition, each time you use a **Melee** attack to deal the killing blow to an enemy figure, you inflict 1 wound (ignoring armor) to all enemy figures adjacent to it. If the figure is **Undying**, this effect does not happen unless the figure stays dead.",
+    "scan": "Images/Skills/Fighter/Brawler.jpg"
+  },
+  {
+    "id": "brawny",
+    "name": "Brawny",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "When you place a prolonged action order to make a prolonged **Melee** action, you roll twice instead of once to accumulate progress tokens (maximum 5 power dice each roll).\n\nYou may open doors for 0 movement, but if you do so, the door is destroyed. You must still have a runekey to open rune-locked doors.",
+    "scan": "Images/Skills/Fighter/Brawny.jpg"
+  },
+  {
+    "id": "captain",
+    "name": "Captain",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "Exhaust this skill at the start of the overlord's turn to allow every hero that doesn't already have a placed order (including yourself) to place their choice of a dodge, rest, or aim order.\n\nThis skill only refreshes when you (and only you) activate a glyph.",
+    "scan": "Images/Skills/Fighter/Captain.jpg"
+  },
+  {
+    "id": "cleaving",
+    "name": "Cleaving",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "Each time you kill an enemy with a **Melee** attack, you may spend 1 fatigue to immediately make 1 additional attack with the same weapon. You may do this once each time you kill an enemy with a **Melee** attack.",
+    "scan": "Images/Skills/Fighter/Cleaving.jpg"
+  },
+  {
+    "id": "counter-attack",
+    "name": "Counter Attack",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "After an enemy figure in your melee range rolls a miss result, you may immediately make 1 **Melee** attack against that figure. You may do this once each time an enemy figure in your melee range rolls a miss result.",
+    "scan": "Images/Skills/Fighter/Counter Attack.jpg"
+  },
+  {
+    "id": "defender",
+    "name": "Defender",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "If you have a ***Shield*** equipped, you may exhaust it to cancel wounds being dealt to you ***or*** 1 adjacent hero. The number of wounds canceled still equals the amount listed on the ***Shield*** card.\n\nIn addition, while you have a guard order placed on you, all other adjacent heroes gain **+1 armor**.",
+    "scan": "Images/Skills/Fighter/Defender.jpg"
+  },
+  {
+    "id": "die-hard",
+    "name": "Die Hard",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "Each time you (and only you) activate a glyph, you heal yourself for 8 wounds.",
+    "scan": "Images/Skills/Fighter/Die Hard.jpg"
+  },
+  {
+    "id": "enduring",
+    "name": "Enduring",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "**Armor** does not reduce your speed. In addition, if you are not wearing **Armor**, you gain **+1 Armor**.",
+    "scan": "Images/Skills/Fighter/Enduring.jpg"
+  },
+  {
+    "id": "furr-the-spirit-wolf",
+    "name": "Furr the Spirit Wolf",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "**Familiar**\n\nFurr the Spirit Wolf is your familiar. Take the Furr marker at the start of the game.",
+    "scan": "Images/Skills/Fighter/Furr the Spirit Wolf.jpg"
+  },
+  {
+    "id": "knight",
+    "name": "Knight",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "When you declare a **Battle** action, you may immediately spend 2 fatigue to gain movement points equal to half your speed (round up) and may make 3 attacks instead of 2 this turn.",
+    "scan": "Images/Skills/Fighter/Knight.jpg"
+  },
+  {
+    "id": "leadership",
+    "name": "Leadership",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "When you declare a **Ready** action, you may immediately spend 1 fatigue to take 3 half actions instead of 2 half actions (one half action must still be an **order** half action).\n\nIn addition, when you place an order, you may allow another hero to place the order instead.",
+    "scan": "Images/Skills/Fighter/Leadership.jpg"
+  },
+  {
+    "id": "mighty",
+    "name": "Mighty",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "When making a **Melee** attack, you gain +2 Damage.",
+    "scan": "Images/Skills/Fighter/Mighty.jpg"
+  },
+  {
+    "id": "nimble",
+    "name": "Nimble",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "Your maximum fatigue is increased by 1.\n\nIn addition, it never costs you more than 1 movement point to enter a space.\n\n(Other costs and effects to enter a space are not affected.)",
+    "effects": {
+      "maxFatigue": 1
+    },
+    "scan": "Images/Skills/Fighter/Nimble.jpg"
+  },
+  {
+    "id": "ox-tattoo",
+    "name": "Ox Tattoo",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "You are immune to **Daze**, **Grapple**, **Knockback**, **Stun**, and **Web**.",
+    "scan": "Images/Skills/Fighter/Ox Tattoo.jpg"
+  },
+  {
+    "id": "parry",
+    "name": "Parry",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "You gain **+1 armor** against **melee** attacks per campaign level (+2 at Silver, +3 at Gold).",
+    "scan": "Images/Skills/Fighter/Parry.jpg"
+  },
+  {
+    "id": "relentless",
+    "name": "Relentless",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "When you declare an **Advance** action, you may immediately recover 1 fatigue.",
+    "scan": "Images/Skills/Fighter/Relentless.jpg"
+  },
+  {
+    "id": "runner",
+    "name": "Runner",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "When you declare a **Run** action, you may immediately spend 1 fatigue to make 1 attack, instead of none.",
+    "scan": "Images/Skills/Fighter/Runner.jpg"
+  },
+  {
+    "id": "shark-tattoo",
+    "name": "Shark Tattoo",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "Your maximum wounds are increased by 2.\n\nIn addition, you gain the **Swim** ability.",
+    "effects": {
+      "maxWounds": 2
+    },
+    "scan": "Images/Skills/Fighter/Shark Tattoo.jpg"
+  },
+  {
+    "id": "swashbuckler",
+    "name": "Swashbuckler",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "When you declare a **Battle** action, you may immediately spend 2 fatigue to gain movement points equal to half your speed (round up) and place a dodge order on yourself at the end of your turn.",
+    "scan": "Images/Skills/Fighter/Swashbuckler.jpg"
+  },
+  {
+    "id": "taunt",
+    "name": "Taunt",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "When an enemy figure within 5 spaces of you declares an attack, but before dice are rolled, you may force the figure to target you with that attack if it is able to do so.",
+    "scan": "Images/Skills/Fighter/Taunt.jpg"
+  },
+  {
+    "id": "tiger-tattoo",
+    "name": "Tiger Tattoo",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "Your speed is increased by 1. Any speed reduction from **Armor** is applied before this bonus.\n\nYour maximum fatigue is increased by 1.\n\nIn addition, you take no damage from falling into pits or from pit **Trap** cards.",
+    "effects": {
+      "maxFatigue": 1,
+      "speed": 1
+    },
+    "scan": "Images/Skills/Fighter/Tiger Tattoo.jpg"
+  },
+  {
+    "id": "tough",
+    "name": "Tough",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "Your maximum wounds are increased by 4.",
+    "effects": {
+      "maxWounds": 4
+    },
+    "scan": "Images/Skills/Fighter/Tough.jpg"
+  },
+  {
+    "id": "unmovable",
+    "name": "Unmovable",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "When you declare a **Battle** action, you may place a **guard** order during your turn and you gain **+1 Armor** until the start of your next turn.",
+    "scan": "Images/Skills/Fighter/Unmovable.jpg"
+  },
+  {
+    "id": "weapon-mastery",
+    "name": "Weapon Mastery",
+    "deck": "fighter",
+    "qty": 1,
+    "text": "When making a **Melee** attack, you gain 2 free surges.",
+    "scan": "Images/Skills/Fighter/Weapon Mastery.jpg"
+  },
+  {
+    "id": "acrobat",
+    "name": "Acrobat",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "You may move through enemy figures. In addition, you may enter and move through obstacles (but not other props, such as scything blades or boulders) without effect. You may not end your movement or make an attack from a space occupied by either another figure or an obstacle that blocks movement.",
+    "scan": "Images/Skills/Subterfuge/Acrobat.jpg"
+  },
+  {
+    "id": "alertness",
+    "name": "Alertness",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "When an enemy figure moves into a space adjacent to you, you may spend 2 fatigue to immediately make 1 attack against that figure. You may do this once each time an enemy figure moves into an adjacent space.",
+    "scan": "Images/Skills/Subterfuge/Alertness.jpg"
+  },
+  {
+    "id": "ambidextrous",
+    "name": "Ambidextrous",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "When you receive an **Off-Hand Bonus**, your attack gains +1 Damage. In addition, each time you use a ***Shield***, it cancels 1 additional wound.",
+    "scan": "Images/Skills/Subterfuge/Ambidextrous.jpg"
+  },
+  {
+    "id": "appraiser",
+    "name": "Appraiser",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "When you draw 1 or more treasure cards, draw 1 extra treasure card, then choose 1 and return it to the bottom of the deck, facedown.",
+    "scan": "Images/Skills/Subterfuge/Appraiser.jpg"
+  },
+  {
+    "id": "born-to-the-bow",
+    "name": "Born to the Bow",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "All ranged attacks that you make using two-handed weapons are **aimed attacks**.",
+    "scan": "Images/Skills/Subterfuge/Born to the Bow.jpg"
+  },
+  {
+    "id": "burglar",
+    "name": "Burglar",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "It only costs you 1 movement point to open or close a door, or to open a chest.\n\nIn addition, ***Trap*** cards played by the Overlord in response to an action you have taken cost him 1 extra threat.",
+    "scan": "Images/Skills/Subterfuge/Burglar.jpg"
+  },
+  {
+    "id": "cautious",
+    "name": "Cautious",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "The overlord receives 1 fewer threat token each turn. In addition, ***Trap*** cards always deal 1 less wound to you (minimum 0).",
+    "scan": "Images/Skills/Subterfuge/Cautious.jpg"
+  },
+  {
+    "id": "crack-shot",
+    "name": "Crack Shot",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "When making a **Ranged** or **Magic** attack, you may trace line of sight from any empty space that is adjacent to you.",
+    "aliases": [
+      "Crackshot"
+    ],
+    "scan": "Images/Skills/Subterfuge/Crackshot.jpg"
+  },
+  {
+    "id": "dead-eye",
+    "name": "Dead Eye",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "Your **Ranged** attacks gain **+2 damage** and cannot be dodged.",
+    "scan": "Images/Skills/Subterfuge/Dead Eye.jpg"
+  },
+  {
+    "id": "eagle-eye",
+    "name": "Eagle Eye",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "When making a **Ranged** attack, you gain **Pierce 2**.\n\nIn addition, when making a **Ranged** or **Magic** attack you gain +1 Range.",
+    "scan": "Images/Skills/Subterfuge/Eagle Eye.jpg"
+  },
+  {
+    "id": "evasion",
+    "name": "Evasion",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "**Ranged** and **Magic** attacks suffer a –3 penalty to **range** when targeting you.\n\nAttacks that target more than one space ignore this ability.",
+    "scan": "Images/Skills/Subterfuge/Evasion.jpg"
+  },
+  {
+    "id": "gunner",
+    "name": "Gunner",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "All attacks you make with cannons gain **+1 range** and **+1 damage**, and are automatically aimed.\n\nIf not playing the ***Sea of Blood*** advanced campaign, discard this skill and draw again.",
+    "scan": "Images/Skills/Subterfuge/Gunner.jpg"
+  },
+  {
+    "id": "keen-sight",
+    "name": "Keen Sight",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "When making **Ranged** or **Magic** attacks, you gain **+1 range** and **+1 damage**.\n\nIn addition, your attacks ignore the **Shadowcloak** ability.",
+    "scan": "Images/Skills/Subterfuge/Keen Sight.jpg"
+  },
+  {
+    "id": "lightfinger",
+    "name": "Lightfinger",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "Lightfinger is your familiar. Take the Lightfinger marker at the start of the game.",
+    "scan": "Images/Skills/Subterfuge/Lightfinger.jpg"
+  },
+  {
+    "id": "lucky",
+    "name": "Lucky",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "Any time you roll a power enhancement on a power die during an attack roll, you gain **both** +1 Range **and** +1 Damage to the roll instead of having to choose one or the other.",
+    "scan": "Images/Skills/Subterfuge/Lucky.jpg"
+  },
+  {
+    "id": "marksman",
+    "name": "Marksman",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "When making a **Ranged** or **Magic** attack, you gain +3 Range.",
+    "scan": "Images/Skills/Subterfuge/Marksman.jpg"
+  },
+  {
+    "id": "master-archer",
+    "name": "Master Archer",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "When making a **Ranged** attack, you gain 2 free surges.",
+    "scan": "Images/Skills/Subterfuge/Master Archer.jpg"
+  },
+  {
+    "id": "pickpocket",
+    "name": "Pickpocket",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "When you deal the killing blow to a normal unnamed monster, you gain 25 coins.\n\nWhen you deal the killing blow to a master monster, you gain 75 coins instead of 50 coins.",
+    "scan": "Images/Skills/Subterfuge/Pickpocket.jpg"
+  },
+  {
+    "id": "piercing-shot",
+    "name": "Piercing Shot",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "Exhaust this skill before making a **Ranged** attack to make that attack an aimed attack and give it **Pierce 10**.\n\nThis skill only refreshes when you (and only you) activate a glyph.",
+    "scan": "Images/Skills/Subterfuge/Piercing Shot.jpg"
+  },
+  {
+    "id": "precision",
+    "name": "Precision",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "You may ignore 1 figure or obstacle when tracing line of sight for a **Ranged** or **Magic** attack.",
+    "scan": "Images/Skills/Subterfuge/Precision.jpg"
+  },
+  {
+    "id": "ranger",
+    "name": "Ranger",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "When you place a prolonged action order to make a prolonged **Ranged** action, you roll twice instead of once to accumulate progress tokens (maximum 5 power dice each roll).\n\nAll **Ranged** attacks you make using one-handed weapons gain +1 Damage. All **Ranged** attacks you make using two-handed weapons gain +2 Damage.",
+    "scan": "Images/Skills/Subterfuge/Ranger.jpg"
+  },
+  {
+    "id": "rapid-fire",
+    "name": "Rapid Fire",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "After making a **Ranged** attack, you may immediately spend 2 fatigue to make 1 additional attack with the same weapon this turn. You may use this ability multiple times, paying its cost each time.",
+    "scan": "Images/Skills/Subterfuge/Rapid Fire.jpg"
+  },
+  {
+    "id": "shadow-soul",
+    "name": "Shadow Soul",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "**Familiar**\n\nThe Shadow Soul is your familiar. Take the Shadow Soul marker at the start of the game.",
+    "scan": "Images/Skills/Subterfuge/Shadow Soul.jpg"
+  },
+  {
+    "id": "skilled",
+    "name": "Skilled",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "Your maximum fatigue is increased by 2.",
+    "effects": {
+      "maxFatigue": 2
+    },
+    "scan": "Images/Skills/Subterfuge/Skilled.jpg"
+  },
+  {
+    "id": "spry",
+    "name": "Spry",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "Your maximum fatigue is increased by 1.\n\nIn addition, your speed is increased by 1. Any speed reduction from **Armor** is applied before this bonus.",
+    "effects": {
+      "maxFatigue": 1,
+      "speed": 1
+    },
+    "scan": "Images/Skills/Subterfuge/Spry.jpg"
+  },
+  {
+    "id": "swift",
+    "name": "Swift",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "Your speed is increased by 2. Any speed reduction from **Armor** is applied before this bonus.",
+    "effects": {
+      "speed": 2
+    },
+    "scan": "Images/Skills/Subterfuge/Swift.jpg"
+  },
+  {
+    "id": "trickster",
+    "name": "Trickster",
+    "deck": "subterfuge",
+    "qty": 1,
+    "text": "Exhaust this skill before an enemy figure makes an attack against you that only targets 1 space. That attack is redirected against another figure (friendly or enemy) of your choice. If the redirected attack is unable to hit its new target (due to range, etc.) then it automatically misses.\n\nThis skill only refreshes when you (and only you) activate a glyph.",
+    "scan": "Images/Skills/Subterfuge/Trickster.jpg"
+  },
+  {
+    "id": "alchemist",
+    "name": "Alchemist",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "Each time you (and only you) activate a glyph, you gain 3 potions of your choice.",
+    "scan": "Images/Skills/Wizardry/Alchemist.jpg"
+  },
+  {
+    "id": "alex-the-wise",
+    "name": "Alex the Wise",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "Alex the Wise is your familiar. Take the Alex the Wise marker at the start of the game.",
+    "scan": "Images/Skills/Wizardry/Alex the Wise.jpg"
+  },
+  {
+    "id": "bardic-lore",
+    "name": "Bardic Lore",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "When you place a prolonged action order to make a prolonged **Magic** action, you roll twice instead of once to accumulate progress tokens (maximum 5 power dice each roll).\n\nWhenever a chest is opened, you draw all of the treasure cards and distribute them equally to the heroes as you see fit.",
+    "scan": "Images/Skills/Wizardry/Bardic Lore.jpg"
+  },
+  {
+    "id": "blessing",
+    "name": "Blessing",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "You have the **Command** ability.",
+    "scan": "Images/Skills/Wizardry/Blessing.jpg"
+  },
+  {
+    "id": "boggs-the-rat",
+    "name": "Boggs the Rat",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "**Familiar**\n\nBoggs the rat is your familiar. Take the Boggs the rat marker at the start of the game.",
+    "scan": "Images/Skills/Wizardry/Boggs the Rat.jpg"
+  },
+  {
+    "id": "brins-mark",
+    "name": "Brin's Mark",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "During your turn, you may sacrifice 1 wound to place a dodge, aim, or rest order on yourself. You may do this up to 2 times per turn, but you may never have more than one order placed at a time.\n\nLosing these wounds cannot be prevented by any means.",
+    "aliases": [
+      "Brins Mark"
+    ],
+    "scan": "Images/Skills/Wizardry/Brins Mark.jpg"
+  },
+  {
+    "id": "divine-retribution",
+    "name": "Divine Retribution",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "When you are killed by an enemy figure, all **unnamed** enemy figures within 3 spaces of you are immediately killed as well. This ability ignores the **Undying** ability.",
+    "scan": "Images/Skills/Wizardry/Divine Retribution.jpg"
+  },
+  {
+    "id": "draggy",
+    "name": "Draggy",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "Draggy is your familiar. Take this token at the start of the game.\n\nOnce per turn, Draggy may attack a monster by breathing fire on her enemies. This attack is made with 1 White Die. Draggy is considered to be flapping above her keeper and may not be targeted by any attack. The token may be kept near the player's hero card.",
+    "scan": "Images/Skills/Wizardry/Draggy.jpg"
+  },
+  {
+    "id": "earth-pact",
+    "name": "Earth Pact",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "You may move through rubble obstacles without effect. You must end your movement in an empty space and you may not attack while in the same space as a rubble obstacle.\n\nIn addition, if you do not move during your turn, you recover 2 wounds at the end of your turn.",
+    "scan": "Images/Skills/Wizardry/Earth Pact.jpg"
+  },
+  {
+    "id": "fire-pact",
+    "name": "Fire Pact",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "You may move through lava obstacles without effect.\n\nIn addition, you are immune to **Burn**.\n\nFinally, when attacking with a \"Staff,\" you gain the **Burn** ability.",
+    "scan": "Images/Skills/Wizardry/Fire Pact.jpg"
+  },
+  {
+    "id": "hand-of-death",
+    "name": "Hand of Death",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "Exhaust this skill instead of making an attack to target a normal unnamed monster in an adjacent space. Roll a power die. On anything but a surge, that monster is instantly killed. On a surge, you suffer 2 wounds (ignoring armor).\n\nThis skill only refreshes when you (and only you) activate a glyph.",
+    "scan": "Images/Skills/Wizardry/Hand of Death.jpg"
+  },
+  {
+    "id": "holy-aura",
+    "name": "Holy Aura",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "You have the **Aura** ability.",
+    "scan": "Images/Skills/Wizardry/Holy Aura.jpg"
+  },
+  {
+    "id": "inner-fire",
+    "name": "Inner Fire",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "When making a **Ranged** or **Magic** attack, you gain +2 Range and +1 Damage.",
+    "scan": "Images/Skills/Wizardry/Inner Fire.jpg"
+  },
+  {
+    "id": "rans-mark",
+    "name": "Ran's Mark",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "During your turn, you may sacrifice 1 wound to heal all other friendly figures within 3 spaces of you (regardless of line of sight) by 1 wound. You may do this up to 2 times per turn.\n\nLosing these wounds cannot be prevented by any means.",
+    "aliases": [
+      "Kans Mark"
+    ],
+    "scan": "Images/Skills/Wizardry/Kans Mark.jpg"
+  },
+  {
+    "id": "kolls-mark",
+    "name": "Koll's Mark",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "During your turn, you may sacrifice 2 wounds to make 1 additional **Magic** attack. You may do this up to 2 times per turn.\n\nLosing these wounds cannot be prevented by any means.",
+    "aliases": [
+      "Kolls Mark"
+    ],
+    "scan": "Images/Skills/Wizardry/Kolls Mark.jpg"
+  },
+  {
+    "id": "mage-cloak",
+    "name": "Mage Cloak",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "You gain **+1 armor** for each ***Rune*** you have equipped, up to a maximum of +3.",
+    "scan": "Images/Skills/Wizardry/Mage Cloak.jpg"
+  },
+  {
+    "id": "mata-and-kata",
+    "name": "Mata and Kata",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "**Familiar**\n\nMata and Kata are your familiars. Take the Mata and Kata markers at the start of the game.",
+    "scan": "Images/Skills/Wizardry/Mata and Kata.jpg"
+  },
+  {
+    "id": "necromancy",
+    "name": "Necromancy",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "You have the **Necromancy** ability.",
+    "scan": "Images/Skills/Wizardry/Necromancy.jpg"
+  },
+  {
+    "id": "prodigy",
+    "name": "Prodigy",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "When making a **Magic** attack, you gain 2 free surges.",
+    "scan": "Images/Skills/Wizardry/Prodigy.jpg"
+  },
+  {
+    "id": "quick-casting",
+    "name": "Quick Casting",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "After making a **Magic** attack, you may immediately spend 2 fatigue and exhaust this card to make 1 additional attack with the same weapon this turn.",
+    "scan": "Images/Skills/Wizardry/Quick Casting.jpg"
+  },
+  {
+    "id": "sajs-mark",
+    "name": "Saj's Mark",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "After rolling a **Magic** or **Ranged** attack, you may sacrifice 1 wound to add 2 surges to the attack. You may do this up to 2 times per attack.\n\nLosing these wounds cannot be prevented by any means.",
+    "aliases": [
+      "Sajs Mark"
+    ],
+    "scan": "Images/Skills/Wizardry/Sajs Mark.jpg"
+  },
+  {
+    "id": "sharr-the-brightwing",
+    "name": "Sharr the Brightwing",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "**Familiar**\n\nSharr the Brightwing is your familiar. Take the Sharr marker at the start of the game.",
+    "scan": "Images/Skills/Wizardry/Sharr the Brightwing.jpg"
+  },
+  {
+    "id": "spiritwalker",
+    "name": "Spiritwalker",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "When making a **Magic** attack, you may cause the attack to originate from any space up to 10 spaces away that contains a friendly figure (but not a familiar). All aspects of the attack (such as tracing line of sight and calculating range) are done as though you were in that space.",
+    "scan": "Images/Skills/Wizardry/Spiritwalker.jpg"
+  },
+  {
+    "id": "telekinesis",
+    "name": "Telekinesis",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "Spend 1 fatigue during your turn to move any figure within your line of sight 1 space, following normal movement rules. You may use this ability multiple times, paying its cost each time.",
+    "scan": "Images/Skills/Wizardry/Telekinesis.jpg"
+  },
+  {
+    "id": "vampiric-blood",
+    "name": "Vampiric Blood",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "You gain 1 fatigue each time you deal the killing blow to an enemy figure. If the figure is **Undying**, you do not gain fatigue unless the figure stays dead.",
+    "scan": "Images/Skills/Wizardry/Vampiric Blood.jpg"
+  },
+  {
+    "id": "water-pact",
+    "name": "Water Pact",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "You may move through water obstacles without effect. You must end your movement in an empty space, and you may not attack while in the same space as a water obstacle.\n\nIn addition, when attacking with a \"Staff,\" you gain the **Knockback** ability.",
+    "scan": "Images/Skills/Wizardry/Water Pact.jpg"
+  },
+  {
+    "id": "wild-talent",
+    "name": "Wild Talent",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "You have the **Sorcery 1** ability.\n\nIn addition, you always roll 1 extra power die when rolling power dice to avoid or reduce the effects of ***Trap*** cards.",
+    "scan": "Images/Skills/Wizardry/Wild Talent.jpg"
+  },
+  {
+    "id": "willpower",
+    "name": "Willpower",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "You gain **+1 armor** against **magic** attacks per campaign level (+2 at Silver, +3 at Gold).",
+    "scan": "Images/Skills/Wizardry/Willpower.jpg"
+  },
+  {
+    "id": "wind-pact",
+    "name": "Wind Pact",
+    "deck": "wizardry",
+    "qty": 1,
+    "text": "You may move through pit obstacles without effect.\n\nIn addition, when a new area is revealed, you may immediately look at the overlord's hand and force him to discard 1 card of your choice. He receives threat for the card that you force him to discard.",
+    "scan": "Images/Skills/Wizardry/Wind Pact.jpg"
+  }
+]

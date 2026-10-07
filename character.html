@@ -204,36 +204,14 @@
     <div uib-collapse="!appData.handSwitch[0]">
         <div class="well well-lg">
             <div class="row">
-                <div class="col-xs-12 col-sm-6 text-left input-group">
-                    <span class="input-group-btn">
-                        <button type="button"
-                                class="btn btn-default"
-                                ng-class="{'fighter': appData.currentSkillDeck === 'Fighter','subterfuge': appData.currentSkillDeck === 'Subterfuge', 'wizardry': appData.currentSkillDeck === 'Wizardry' }"
-                                ng-click="switchDeck(currentSkillDeck)">
-                            {{appData.currentSkillDeck}}
-                        </button>
-                    </span>
-                    <select class="form-control" ng-model="newSkill" ng-change="addSkill()">
-                        <option ng-repeat="item in skillDeck" value="{{item}}" ng-if="item.qty > 0">{{item.name}}</option>
-                    </select>
-                    <span class="input-group-btn">
-                        <!--<button type="button" class="btn btn-primary" ng-disabled="!newSkill" ng-click="addSkill()"><i class="fa fa-plus"></i></button>-->
-                        <button type="button" class="btn btn-success" ng-click="addRandomSkill()"><i class="fa fa-random"></i></button>
-                    </span>
-                </div>
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-sm-6 text-left">
+                    <dj-deck-picker kind="skills" deck="appData.currentSkillDeck" character="character" party="appData.characters" on-switch="switchDeck(currentSkillDeck)"></dj-deck-picker>
                 </div>
             </div>
             <br />
-            <div class="DocumentList">
-                <ul class="list-inline">
-                    <li class="DocumentItem" ng-repeat="item in character.skills">
-                        <div ng-class="{'fighter': item.type === 'Fighter', 'subterfuge': item.type === 'Subterfuge', 'wizardry': item.type === 'Wizardry'}" class="text-left">
-                            <i class="fa fa-remove" style="cursor:pointer; font-size: x-large; color:white;  margin: 3px 14px 3px 7px;" ng-click="removeItemFromSkills($index)"></i><br />
-                            <img class="img-rounded" src="{{item.src + item.name + '.jpg'}}" height="350" />
-                        </div>
-                    </li>
-                </ul>
+            <div class="dj-card-row">
+                <dj-card ng-repeat="id in character.skills track by $index" card="cards.byId(id)" on-remove="removeCard('skills', $index)"></dj-card>
+                <p class="text-muted" ng-if="!character.skills.length">No skills yet.</p>
             </div>
         </div>
     </div>
@@ -320,36 +298,14 @@
     <div uib-collapse="!appData.handSwitch[3]">
         <div class="well well-lg">
             <div class="row">
-                <div class="col-xs-12 col-sm-6 text-left input-group">
-                    <span class="input-group-btn">
-                        <button type="button"
-                                class="btn btn-default"
-                                ng-class="{'fighter': appData.currentFeatDeck === 'Fighter','subterfuge': appData.currentFeatDeck === 'Subterfuge', 'wizardry': appData.currentFeatDeck === 'Wizardry' }"
-                                ng-click="switchFeatLabel(currentFeatDeck)">
-                            {{appData.currentFeatDeck}}
-                        </button>
-                    </span>
-                    <select class="form-control" ng-model="newFeat" ng-change="addFeat()">
-                        <option ng-repeat="item in featDeck" value="{{item}}" ng-if="item.qty > 0">{{item.name}}</option>
-                    </select>
-                    <span class="input-group-btn">
-                        <!--<button type="button" class="btn btn-primary" ng-disabled="!newFeat" ng-click="addFeat()"><i class="fa fa-plus"></i></button>-->
-                        <button type="button" class="btn btn-success" ng-click="addRandomFeat()"><i class="fa fa-random"></i></button>
-                    </span>
-                </div>
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-sm-6 text-left">
+                    <dj-deck-picker kind="feats" deck="appData.currentFeatDeck" character="character" party="appData.characters" on-switch="switchFeatLabel(currentFeatDeck)"></dj-deck-picker>
                 </div>
             </div>
             <br />
-            <div class="DocumentList">
-                <ul class="list-inline">
-                    <li class="DocumentItem" ng-repeat="item in character.feats track by $index">
-                        <div ng-class="{'fighter': item.type === 'Fighter', 'subterfuge': item.type === 'Subterfuge', 'wizardry': item.type === 'Wizardry'}" class="text-left">
-                            <i class="fa fa-remove" style="cursor:pointer; font-size: x-large; color:white;  margin: 3px 14px 3px 7px;" ng-click="removeItemFromFeats($index)"></i><br />
-                            <img class="img-rounded" src="{{item.src + item.name + '.jpg'}}" height="350" />
-                        </div>
-                    </li>
-                </ul>
+            <div class="dj-card-row">
+                <dj-card ng-repeat="id in character.feats track by $index" card="cards.byId(id)" on-remove="removeCard('feats', $index)"></dj-card>
+                <p class="text-muted" ng-if="!character.feats.length">No feats yet.</p>
             </div>
         </div>
     </div>
