@@ -1,4 +1,4 @@
-// End-to-end tests for the data-driven cards (plans 01-05: skills, feats, items, upgrades).
+// End-to-end tests for the data-driven app (plans 01-06: skills, feats, items, upgrades, heroes).
 // Needs Playwright and the site served at BASE, e.g. from the parent directory:
 //   python3 -m http.server 8765   (with this repo at ./DescentAngularJs)
 //   BASE=http://localhost:8765/DescentAngularJs/ node tests/e2e-cards.js
@@ -12,6 +12,7 @@ var V1_SAVE = path.join(__dirname, 'fixtures', 'v1-save.json');
 var V2_SAVE = path.join(__dirname, 'fixtures', 'v2-save.json');
 var V3_SAVE = path.join(__dirname, 'fixtures', 'v3-save.json');
 var V4_SAVE = path.join(__dirname, 'fixtures', 'v4-save.json');
+var V5_SAVE = path.join(__dirname, 'fixtures', 'v5-save.json');
 var failures = 0;
 
 function check(label, ok, detail) {
@@ -72,10 +73,41 @@ async function run(device) {
     // 1. New party, add skills from each deck and a random one.
     await page.goto(BASE);
     await page.click('text=Create New Party');
-    await page.locator('select').nth(0).selectOption({ label: 'Andira Runehand' });
-    await page.locator('select').nth(1).selectOption({ label: 'Lyssa' });
+    // 0. Heroes: every portrait loads; a chosen hero isn't offered again.
+    var slot = function (n) { return page.locator('.dj-hero-slot select').nth(n); };
+    var heroNames = (await slot(0).locator('option').allTextContents()).slice(1);
+    var brokenPortraits = [];
+    for (var hn = 0; hn < heroNames.length; hn++) {
+        await slot(0).selectOption({ label: heroNames[hn] });
+        var ok = await page.locator('.dj-hero-slot').first().locator('img').evaluate(function (img) {
+            return new Promise(function (resolve) {
+                if (img.complete) return resolve(img.naturalWidth > 0);
+                img.onload = function () { resolve(true); };
+                img.onerror = function () { resolve(false); };
+            });
+        });
+        if (!ok) brokenPortraits.push(heroNames[hn]);
+    }
+    check('all ' + heroNames.length + ' heroes selectable with a body portrait', heroNames.length === 48 && brokenPortraits.length === 0, brokenPortraits);
+    await slot(0).selectOption({ label: 'Andira Runehand' });
+    check('a hero chosen in slot 1 is not offered in slot 2', (await slot(1).locator('option').allTextContents()).indexOf('Andira Runehand') === -1);
+    await slot(1).selectOption({ label: 'Lyssa' });
     await page.click('text=Done');
     await page.waitForSelector(picker('skills') + 'select');
+    var party = await page.evaluate(function () {
+        return angular.element(document.body).injector().get('appData').characters.map(function (c) { return { heroId: c.heroId, hasTrait: 'trait' in c }; });
+    });
+    check('characters carry heroId and no copied ability text', JSON.stringify(party) === '[{"heroId":"andira-runehand","hasTrait":false},{"heroId":"lyssa","hasTrait":false}]', party);
+    check('character screen shows the ability from hero data', (await page.locator('p:has-text("Andira Runehand makes a Magic attack")').count()) === 1);
+    // Status token buttons (they never worked before: incHealth didn't exist).
+    var bleedPlus = page.locator('button[ng-click="incHealth(index, 1, \'BleedStatus\');"]');
+    var bleedMinus = page.locator('button[ng-click="incHealth(index, -1, \'BleedStatus\');"]');
+    var bleed = function () { return page.evaluate(function () { return angular.element(document.body).injector().get('appData').characters[0].bleedStatus; }); };
+    await bleedPlus.click(); await bleedPlus.click();
+    check('status + buttons count up', (await bleed()) === 2, await bleed());
+    await bleedMinus.click(); await bleedMinus.click(); await bleedMinus.click();
+    check('status - buttons stop at 0', (await bleed()) === 0, await bleed());
+    await bleedPlus.click();
     var start = await hero();
     await showDeck('Fighter');
     var fighterBefore = (await choices()).length;
@@ -259,7 +291,7 @@ async function run(device) {
     var savePath = path.join(os.tmpdir(), 'dj-v2-save-' + device.name + '.json');
     await download.saveAs(savePath);
     var v2 = JSON.parse(fs.readFileSync(savePath, 'utf8'));
-    check('save is version 5 without card decks', v2.version === 5 && !v2.fighterSkills && !v2.fighterFeats && !v2.storeItems && !v2.upgradeItems && Array.isArray(v2.characters[0].skills) && typeof v2.characters[0].skills[0] === 'string', Object.keys(v2));
+    check('save is version 6 without card decks', v2.version === 6 && v2.characters[0].heroId === 'andira-runehand' && !('trait' in v2.characters[0]) && v2.characters[0].bleedStatus === 1 && !v2.fighterSkills && !v2.fighterFeats && !v2.storeItems && !v2.upgradeItems && Array.isArray(v2.characters[0].skills) && typeof v2.characters[0].skills[0] === 'string', Object.keys(v2));
     check('save has no $$hashKey noise', fs.readFileSync(savePath, 'utf8').indexOf('$$hashKey') === -1);
     await loadSave(savePath);
     var reloaded = await hero();
@@ -305,6 +337,18 @@ async function run(device) {
     check('v4 upgrades migrated to ids', JSON.stringify(a.upgrades) === '["maximum-wounds-copper","black-melee-die","black-melee-die","silver-melee-die","silver-magic-die"]' && JSON.stringify(l.upgrades) === '["maximum-fatigue-silver"]', { a: a.upgrades, l: l.upgrades });
     check('v4 stats unchanged by migration', a.wc === 16 && JSON.stringify(a.melee) === '[1,1,0]' && JSON.stringify(a.magic) === '[2,1,0]' && l.fc === 7, a);
     check('no missing-card placeholders after v4 load', (await page.locator('.dj-missing').count()) === 0);
+
+    // 6d. Phase 05 (v5) save: characters gain heroId, copied ability text dropped, state kept.
+    await loadSave(V5_SAVE);
+    var v5 = await page.evaluate(function () {
+        return angular.element(document.body).injector().get('appData').characters.map(function (c) {
+            return { heroId: c.heroId, w: c.wounds, wc: c.woundsCap, bleed: c.bleedStatus, web: c.webStatus, frost: c.freezeStatus, tapped: c.isCharTapped, trait: 'trait' in c, skills: c.skills };
+        });
+    });
+    check('v5 characters matched to heroes by name', v5[0].heroId === 'hugo-the-glorious' && v5[1].heroId === 'spiritspeaker-mok', v5);
+    check('v5 live state kept (wounds, statuses, tapped, cards)', v5[0].w === 21 && v5[0].wc === 24 && v5[0].bleed === 2 && v5[0].web === 1 && v5[0].tapped === true && v5[1].frost === 1 && JSON.stringify(v5[0].skills) === '["tough"]', v5);
+    check('v5 copied ability text dropped', !v5[0].trait && !v5[1].trait);
+    check('v5 ability shown from data, without the stray tab', (await page.locator('p:has-text("Hugo the Glorious cannot make Magic attacks")').count()) === 1);
 
     // 7. A card that's not in the data: shown as a removable placeholder.
     var oddPath = path.join(os.tmpdir(), 'dj-unknown-card.json');

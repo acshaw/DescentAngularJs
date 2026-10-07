@@ -1,5 +1,6 @@
-﻿app.controller('NavCtrl', function ($scope, appData, saveService) {
+﻿app.controller('NavCtrl', function ($scope, appData, saveService, heroService) {
     $scope.appData = appData;
+    $scope.heroes = heroService;
     $scope.isNavCollapsed = true;
     $scope.unTapAll = function () {
         for (i = 0; i < $scope.appData.characters.length; i++) {

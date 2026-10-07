@@ -1,6 +1,6 @@
 # Dev Plan 06: Heroes
 
-**Status:** DRAFT, awaiting approval
+**Status:** DONE (see "Build notes" at the end). Approved with 06-A to 06-D as recommended.
 **Depends on:** Plan 05 (done, merged in PR #5)
 
 ## Goal
@@ -95,3 +95,28 @@ You'll spot-check heroes against your hero sheets on `proof.html`.
 ## Size
 
 Small to medium: no transcription, because the data already exists. The care goes into the save migration and party creation.
+
+---
+
+## Build notes (what differed from the plan)
+
+- **Three heroes have another hero's ability text** (copied in the original data):
+  - **Jonas the Kind** has Eliam's.
+  - **Zyla** has Varikas the Dead's.
+  - **Spiritspeaker Mok** starts with Mordrog's line, followed by what's probably Mok's own: "The overlord's cost to play cards is increased by 1 threat token per card."
+
+  I didn't guess the correct text. `proof.html` flags these three heroes, and each is a one-line fix in `data/heroes.json` once you check your hero sheets. Because saves no longer copy ability text, fixes will show up in existing saves too.
+- **Nanok of the Blade's armor is "\*"** (his ability defines it). `check-data.js` allows "\*" for armor.
+- **Party creation** is one repeated slot template instead of four copies. Clearing a slot also clears the slots after it, since they're shown in order. Heroes are compared by id, because ngOptions with `track by` hands the model a copy of the object.
+- **Status buttons:** I added the missing `incHealth()` handler. The 16 buttons already pass names like "BleedStatus", so no markup changed.
+- **No more 404 noise:** the old `src="{{…}}"` portrait requests were the last source of 404s, and they're gone. The tests now allow no 404s at all.
+- **`main.js`** is 34 lines, down from about 1,400 at the start of phase 06.
+- **Tests:** 81 checks, run at phone and desktop size, all pass. They cover:
+  - all 48 heroes creatable with a portrait that loads;
+  - a chosen hero isn't offered again;
+  - `heroId` stored and ability text not copied;
+  - status +/− working and stopping at 0;
+  - a v6 save round-trip;
+  - the v5 fixture (made from the phase 05 app) keeping wounds, statuses, tapped state and cards.
+
+  A deliberate break (removing the status handler) failed the status checks, as expected.

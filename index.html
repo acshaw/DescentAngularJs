@@ -19,6 +19,7 @@
     <script src="appScripts/cardService.js" defer></script>
     <script src="appScripts/cardText.js" defer></script>
     <script src="appScripts/cardDirective.js" defer></script>
+    <script src="appScripts/heroService.js" defer></script>
     <script src="appScripts/main.js" defer></script>
     <script src="appScripts/saveService.js" defer></script>
     <script src="appScripts/navctrl.js" defer></script>
@@ -40,7 +41,7 @@
                 <ul class="navbar-nav hidden-sm hidden-md hidden-lg" style="list-style: none;">
                     <li ng-repeat="item in appData.characters">
                         <a href="#!char/{{$index + 1}}">
-                            <img class="img-rounded pull-left" height="36" style="padding-right: 10px; padding-left: 10px;" ng-class="{'tapped': item.isCharTapped}" src="{{'Images/Face Portraits/' + item.name + '.JPG'}}" />
+                            <img class="img-rounded pull-left" height="36" style="padding-right: 10px; padding-left: 10px;" ng-class="{'tapped': item.isCharTapped}" ng-src="{{heroes.face(item)}}" alt="{{item.name}}" />
                         </a>
                     </li>
                     <li ng-if="appData.characters.length > 0">
@@ -54,7 +55,7 @@
                 <ul class="nav navbar-nav">
                     <li ng-repeat="item in appData.characters">
                         <a href="#!char/{{$index + 1}}">
-                            <img class="img-rounded pull-left" height="48" style="padding-right: 3px;" ng-class="{'tapped': item.isCharTapped}" src="{{'Images/Face Portraits/' + item.name + '.JPG'}}" />
+                            <img class="img-rounded pull-left" height="48" style="padding-right: 3px;" ng-class="{'tapped': item.isCharTapped}" ng-src="{{heroes.face(item)}}" alt="{{item.name}}" />
                             <uib-progressbar style="width: 200px; margin:1px 1px 2px 0px;" type="danger" value="item.wounds" max="item.woundsCap"></uib-progressbar>
                             <uib-progressbar style="width: 200px; margin:1px 1px 2px 0px;" type="warning" value="item.fatigue" max="item.fatigueCap"></uib-progressbar>
                         </a>

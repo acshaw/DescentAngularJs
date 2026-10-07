@@ -1,4 +1,4 @@
-﻿app.controller('CharCtrl', function ($scope, $routeParams, appData, $location, cardService, cardNotice, saveService) {
+﻿app.controller('CharCtrl', function ($scope, $routeParams, appData, $location, cardService, cardNotice, saveService, heroService) {
     var charId = $routeParams.id;
     $scope.appData = appData;
     $scope.statusSwitch = 'bleed';
@@ -11,7 +11,7 @@
     $scope.currentDeck = $scope.appData.currentDeck;
     $scope.currentSkillDeck = $scope.appData.currentSkillDeck;
     $scope.currentFeatDeck = $scope.appData.currentFeatDeck;
-    $scope.picture = 'Images/Body Portraits/' + $scope.appData.characters[charId - 1].name + '.PNG';
+    $scope.heroes = heroService;
 
     $scope.nextChar = function () {
         if (charId < 4)
@@ -30,6 +30,12 @@
     $scope.handBtn = function (id) {
         $scope.appData.handSwitch = [];
         $scope.appData.handSwitch[id] = true;
+    };
+    // Status token counters (bleed, daze, ...). The buttons pass e.g.
+    // 'BleedStatus'; counters never go below 0.
+    $scope.incHealth = function (index, delta, status) {
+        var field = status.charAt(0).toLowerCase() + status.slice(1);
+        $scope.character[field] = Math.max(0, ($scope.character[field] || 0) + delta);
     };
     $scope.movementHelp = function () {
         swal('Movement Costs', '<ul class="text-left"><li>0 Pick up a token in your space</li><li>0 Drop an item (lost forever)</li><li>1 Move from Glyph to town</li><li>1 Move from town to glyph</li><li>1 Walk up or down a staircase</li><li>1 Give one item to adjacent hero</li><li>1 Drink a potion</li><li>2 Open or close a door</li><li>2 Open chest</li><li>2 Re-equip</li><li>3 Jump over an obstacle (per space)</li></ul>', 'info');

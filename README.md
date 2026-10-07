@@ -36,6 +36,8 @@ Items (`data/items.json`) also take `category` (Weapon, Armor, Shield, Other, Po
 
 Upgrades (`data/upgrades.json`) have a `tier`, `xp`, `cost` and `effects`. Besides `maxWounds`, `maxFatigue` and `speed`, effects can change power dice: `meleePower`, `meleeSilverPower`, `meleeGoldPower` (and the same for `ranged` and `magic`). A die count can't go below 0, and a hero can hold at most 5 power dice per attack type; changes that would break this are refused with a message.
 
+Heroes live in `data/heroes.json`: `ability`, `wounds`, `fatigue`, `armor`, `speed`, `dice` (`melee`/`ranged`/`magic`), `traits` (`fighter`/`subterfuge`/`wizardry`) and `face`/`body` portrait paths. Saves store each party member's `heroId`, so edits to a hero's ability reach existing saves.
+
 ## Tests
 
 `tests/e2e-cards.js` drives the app in headless Chromium (Playwright). See the comment at the top of the file for how to run it.

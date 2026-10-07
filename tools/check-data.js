@@ -37,6 +37,7 @@ var SCHEMAS = {
 };
 var DICE = ['red', 'blue', 'white', 'green', 'yellow', 'black', 'power', 'silver', 'gold'];
 
+// Heroes are checked separately below (they aren't cards).
 var problems = [];
 var pendingGrants = []; // checked once every id is known
 var seenIds = {};
@@ -104,6 +105,27 @@ Object.keys(SCHEMAS).forEach(function (kind) {
     });
     console.log(kind + ': ' + cards.length + ' cards');
 });
+
+(function checkHeroes() {
+    var heroes = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'heroes.json'), 'utf8'));
+    var ids = {};
+    var NUM = ['wounds', 'fatigue', 'armor', 'speed'];
+    heroes.forEach(function (hero, i) {
+        var where = 'heroes.json[' + i + '] ' + (hero.id || hero.name || '');
+        ['id', 'name', 'ability', 'face', 'body'].forEach(function (key) { if (!hero[key]) problems.push(where + ': missing ' + key); });
+        if (ids[hero.id]) problems.push(where + ': duplicate id');
+        ids[hero.id] = true;
+        NUM.forEach(function (key) {
+            // Armor may be "*" when the hero's ability defines it (Nanok of the Blade).
+            if (key === 'armor' && hero[key] === '*') return;
+            if (!Number.isInteger(hero[key]) || hero[key] < 0) problems.push(where + ': ' + key + ' must be a whole number');
+        });
+        ['melee', 'ranged', 'magic'].forEach(function (k) { if (!Number.isInteger((hero.dice || {})[k])) problems.push(where + ': dice.' + k + ' must be a whole number'); });
+        ['fighter', 'subterfuge', 'wizardry'].forEach(function (k) { if (!Number.isInteger((hero.traits || {})[k])) problems.push(where + ': traits.' + k + ' must be a whole number'); });
+        ['face', 'body'].forEach(function (key) { if (hero[key] && !existsExact(hero[key])) problems.push(where + ': ' + key + ' portrait not found (check exact case): ' + hero[key]); });
+    });
+    console.log('heroes: ' + heroes.length);
+})();
 
 pendingGrants.forEach(function (g) {
     g.items.forEach(function (id) { if (!seenIds[id]) problems.push(g.where + ': grants unknown card ' + id); });

@@ -9,7 +9,7 @@
                 </h1>
             </div>
             <div class="hidden-xs col-sm-4 col-md-3 col-lg-2">
-                <img class="img-rounded img-responsive" style="cursor:pointer;" ng-class="{'tapped': character.isCharTapped}" ng-click="character.isCharTapped = !character.isCharTapped" src="{{picture}}" />
+                <img class="img-rounded img-responsive" style="cursor:pointer;" ng-class="{'tapped': character.isCharTapped}" ng-click="character.isCharTapped = !character.isCharTapped" ng-src="{{heroes.body(character)}}" alt="{{character.name}}" />
 
                 <br class="hidden-md hidden-lg" />
             </div>
@@ -71,7 +71,7 @@
                 <br />
                 <div class="row spacer">
                     <div style="border:1px black solid; border-radius: 10px; background-color: white; font-style:italic">
-                        <p style="padding:5px;">{{character.trait}}</p>
+                        <p style="padding:5px;">{{heroes.ability(character)}}</p>
                     </div>
                 </div>
             </div>
@@ -228,7 +228,7 @@
                     <dj-card card="cards.byId(entry.id)" tapped="entry.tapped" on-tap="entry.tapped = !entry.tapped" on-remove="removeCard('equipped', $index)" on-collect="collect('equipped', $index)"></dj-card>
                     <div class="dj-held-actions">
                         <button type="button" class="dj-give" ng-repeat="hero in otherHeroes()" ng-click="giveCard('equipped', $parent.$index, hero)" title="Give to {{hero.name}}" aria-label="Give to {{hero.name}}">
-                            <img ng-src="{{'Images/Face Portraits/' + hero.name + '.JPG'}}" alt="" />
+                            <img ng-src="{{heroes.face(hero)}}" alt="" />
                         </button>
                         <button type="button" class="btn btn-default btn-sm dj-move" ng-click="moveCard('equipped', $index, 'bag')">→ Backpack</button>
                     </div>
@@ -250,7 +250,7 @@
                     <dj-card card="cards.byId(entry.id)" tapped="entry.tapped" on-tap="entry.tapped = !entry.tapped" on-remove="removeCard('bag', $index)" on-collect="collect('bag', $index)"></dj-card>
                     <div class="dj-held-actions">
                         <button type="button" class="dj-give" ng-repeat="hero in otherHeroes()" ng-click="giveCard('bag', $parent.$index, hero)" title="Give to {{hero.name}}" aria-label="Give to {{hero.name}}">
-                            <img ng-src="{{'Images/Face Portraits/' + hero.name + '.JPG'}}" alt="" />
+                            <img ng-src="{{heroes.face(hero)}}" alt="" />
                         </button>
                         <button type="button" class="btn btn-default btn-sm dj-move" ng-click="moveCard('bag', $index, 'equipped')">→ Equip</button>
                     </div>

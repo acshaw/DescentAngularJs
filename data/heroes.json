@@ -1,0 +1,1010 @@
+[
+  {
+    "id": "andira-runehand",
+    "name": "Andira Runehand",
+    "ability": "When Andira Runehand makes a Magic attack on an adjacent enemy, she gains Pierce 2.",
+    "wounds": 12,
+    "fatigue": 5,
+    "armor": 1,
+    "speed": 5,
+    "dice": {
+      "melee": 0,
+      "ranged": 0,
+      "magic": 3
+    },
+    "traits": {
+      "fighter": 0,
+      "subterfuge": 0,
+      "wizardry": 3
+    },
+    "face": "Images/Face Portraits/Andira Runehand.JPG",
+    "body": "Images/Body Portraits/Andira Runehand.PNG"
+  },
+  {
+    "id": "arvel-worldwalker",
+    "name": "Arvel Worldwalker",
+    "ability": "When a glyph has been activated, Arvel may draw 2 feat cards instead of just 1. Arvel's maximum feat hand size is increased to 6.",
+    "wounds": 12,
+    "fatigue": 4,
+    "armor": 1,
+    "speed": 4,
+    "dice": {
+      "melee": 1,
+      "ranged": 1,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 2,
+      "subterfuge": 2,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Arvel Worldwalker.JPG",
+    "body": "Images/Body Portraits/Arvel Worldwalker.PNG"
+  },
+  {
+    "id": "aurim",
+    "name": "Aurim",
+    "ability": "During his turn, Aurim may discard one of his equipped potions and exchange it for another potion of any type from the bank. He may use this ability as often as he likes.",
+    "wounds": 8,
+    "fatigue": 5,
+    "armor": 1,
+    "speed": 5,
+    "dice": {
+      "melee": 1,
+      "ranged": 1,
+      "magic": 1
+    },
+    "traits": {
+      "fighter": 1,
+      "subterfuge": 0,
+      "wizardry": 2
+    },
+    "face": "Images/Face Portraits/Aurim.JPG",
+    "body": "Images/Body Portraits/Aurim.PNG"
+  },
+  {
+    "id": "battlemage-jaes",
+    "name": "Battlemage Jaes",
+    "ability": "Battlemage Jaes may equip Runes even while wearing Armor that would ordinarily prevent it.",
+    "wounds": 12,
+    "fatigue": 4,
+    "armor": 2,
+    "speed": 4,
+    "dice": {
+      "melee": 1,
+      "ranged": 0,
+      "magic": 2
+    },
+    "traits": {
+      "fighter": 1,
+      "subterfuge": 0,
+      "wizardry": 2
+    },
+    "face": "Images/Face Portraits/Battlemage Jaes.JPG",
+    "body": "Images/Body Portraits/Battlemage Jaes.PNG"
+  },
+  {
+    "id": "bogran-the-shadow",
+    "name": "Bogran the Shadow",
+    "ability": "When Bogran the Shadow attacks an enemy that did not have line of sight to him at the start of the current turn, he gains +2 damage.",
+    "wounds": 8,
+    "fatigue": 4,
+    "armor": 1,
+    "speed": 5,
+    "dice": {
+      "melee": 0,
+      "ranged": 2,
+      "magic": 1
+    },
+    "traits": {
+      "fighter": 1,
+      "subterfuge": 2,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Bogran the Shadow.JPG",
+    "body": "Images/Body Portraits/Bogran the Shadow.PNG"
+  },
+  {
+    "id": "brother-gherinn",
+    "name": "Brother Gherinn",
+    "ability": "Before rolling for any attack, Brother Gherinn may sacrifice 1 wound to make it an aimed attack.",
+    "wounds": 12,
+    "fatigue": 3,
+    "armor": 2,
+    "speed": 3,
+    "dice": {
+      "melee": 0,
+      "ranged": 0,
+      "magic": 3
+    },
+    "traits": {
+      "fighter": 1,
+      "subterfuge": 0,
+      "wizardry": 2
+    },
+    "face": "Images/Face Portraits/Brother Gherinn.JPG",
+    "body": "Images/Body Portraits/Brother Gherinn.PNG"
+  },
+  {
+    "id": "brother-glyr",
+    "name": "Brother Glyr",
+    "ability": "Brother Glyr always receives an extra 2 movement points each turn, regardless of which action he declares.",
+    "wounds": 8,
+    "fatigue": 5,
+    "armor": 3,
+    "speed": 2,
+    "dice": {
+      "melee": 2,
+      "ranged": 1,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 2,
+      "subterfuge": 1,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Brother Glyr.JPG",
+    "body": "Images/Body Portraits/Brother Glyr.PNG"
+  },
+  {
+    "id": "challara",
+    "name": "Challara",
+    "ability": "Brightblaze is your familiar. Take the Brightblaze token at the start of the game. Brightblaze's speed is 4. Once per area, Brightblaze may make a magic Breath attack, rolling one white die and one green die, ignoring armor.",
+    "wounds": 12,
+    "fatigue": 5,
+    "armor": 0,
+    "speed": 4,
+    "dice": {
+      "melee": 0,
+      "ranged": 0,
+      "magic": 3
+    },
+    "traits": {
+      "fighter": 0,
+      "subterfuge": 0,
+      "wizardry": 3
+    },
+    "face": "Images/Face Portraits/Challara.JPG",
+    "body": "Images/Body Portraits/Challara.PNG"
+  },
+  {
+    "id": "corbin",
+    "name": "Corbin",
+    "ability": "Corbin takes 1 fewer wound than usual each time he is wounded.",
+    "wounds": 8,
+    "fatigue": 5,
+    "armor": 2,
+    "speed": 3,
+    "dice": {
+      "melee": 2,
+      "ranged": 1,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 1,
+      "subterfuge": 2,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Corbin.JPG",
+    "body": "Images/Body Portraits/Corbin.PNG"
+  },
+  {
+    "id": "eliam",
+    "name": "Eliam",
+    "ability": "Once per turn, Eliam may spend 3 fatigue before making a Melee attack to give that attack the Sweep ability.",
+    "wounds": 12,
+    "fatigue": 3,
+    "armor": 1,
+    "speed": 5,
+    "dice": {
+      "melee": 1,
+      "ranged": 0,
+      "magic": 2
+    },
+    "traits": {
+      "fighter": 2,
+      "subterfuge": 0,
+      "wizardry": 1
+    },
+    "face": "Images/Face Portraits/Eliam.JPG",
+    "body": "Images/Body Portraits/Eliam.PNG"
+  },
+  {
+    "id": "grey-ker",
+    "name": "Grey Ker",
+    "ability": "Grey Ker can change his declared action during his turn as long as his total movement and attacks during the turn do not exceed those allowed by his new action.",
+    "wounds": 12,
+    "fatigue": 5,
+    "armor": 1,
+    "speed": 4,
+    "dice": {
+      "melee": 0,
+      "ranged": 3,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 0,
+      "subterfuge": 2,
+      "wizardry": 1
+    },
+    "face": "Images/Face Portraits/Grey Ker.JPG",
+    "body": "Images/Body Portraits/Grey Ker.PNG"
+  },
+  {
+    "id": "hugo-the-glorious",
+    "name": "Hugo the Glorious",
+    "ability": "Hugo the Glorious cannot make Magic attacks or spend fatigue for extra movement.",
+    "wounds": 20,
+    "fatigue": 3,
+    "armor": 2,
+    "speed": 3,
+    "dice": {
+      "melee": 3,
+      "ranged": 0,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 3,
+      "subterfuge": 0,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Hugo the Glorious.JPG",
+    "body": "Images/Body Portraits/Hugo the Glorious.PNG"
+  },
+  {
+    "id": "ispher",
+    "name": "Ispher",
+    "ability": "At the start of his turn, Ispher recovers 1 wound. Ispher is immune to Poison.",
+    "wounds": 12,
+    "fatigue": 4,
+    "armor": 0,
+    "speed": 5,
+    "dice": {
+      "melee": 1,
+      "ranged": 2,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 1,
+      "subterfuge": 2,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Ispher.JPG",
+    "body": "Images/Body Portraits/Ispher.PNG"
+  },
+  {
+    "id": "jonas-the-kind",
+    "name": "Jonas the Kind",
+    "ability": "Once per turn, Eliam may spend 3 fatigue before making a Melee attack to give that attack the Sweep ability.",
+    "wounds": 16,
+    "fatigue": 4,
+    "armor": 0,
+    "speed": 5,
+    "dice": {
+      "melee": 2,
+      "ranged": 0,
+      "magic": 1
+    },
+    "traits": {
+      "fighter": 2,
+      "subterfuge": 0,
+      "wizardry": 1
+    },
+    "face": "Images/Face Portraits/Jonas the Kind.JPG",
+    "body": "Images/Body Portraits/Jonas the Kind.PNG"
+  },
+  {
+    "id": "karnon",
+    "name": "Karnon",
+    "ability": "Karnon has the Tread Ice ability and is immune to Frost and Fear.",
+    "wounds": 16,
+    "fatigue": 4,
+    "armor": 1,
+    "speed": 4,
+    "dice": {
+      "melee": 5,
+      "ranged": 0,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 2,
+      "subterfuge": 0,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Karnon.JPG",
+    "body": "Images/Body Portraits/Karnon.PNG"
+  },
+  {
+    "id": "kirga",
+    "name": "Kirga",
+    "ability": "The Overlord cannot spawn monsters within 5 spaces of Kirga, regardless of line of sight or other effects.",
+    "wounds": 16,
+    "fatigue": 3,
+    "armor": 1,
+    "speed": 4,
+    "dice": {
+      "melee": 0,
+      "ranged": 3,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 0,
+      "subterfuge": 3,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Kirga.JPG",
+    "body": "Images/Body Portraits/Kirga.PNG"
+  },
+  {
+    "id": "krutzbeck",
+    "name": "Krutzbeck",
+    "ability": "While Krutzbeck has 4 or fewer wounds remaining, he gains +2 armor and +2 damage.",
+    "wounds": 8,
+    "fatigue": 4,
+    "armor": 2,
+    "speed": 4,
+    "dice": {
+      "melee": 3,
+      "ranged": 0,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 3,
+      "subterfuge": 0,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Krutzbeck.JPG",
+    "body": "Images/Body Portraits/Krutzbeck.PNG"
+  },
+  {
+    "id": "landrec-the-wise",
+    "name": "Landrec the Wise",
+    "ability": "Landrec the Wise receives 2 free surges on every attack roll.",
+    "wounds": 12,
+    "fatigue": 5,
+    "armor": 0,
+    "speed": 3,
+    "dice": {
+      "melee": 0,
+      "ranged": 0,
+      "magic": 3
+    },
+    "traits": {
+      "fighter": 0,
+      "subterfuge": 1,
+      "wizardry": 2
+    },
+    "face": "Images/Face Portraits/Landrec the Wise.JPG",
+    "body": "Images/Body Portraits/Landrec the Wise.PNG"
+  },
+  {
+    "id": "laughin-buldar",
+    "name": "Laughin Buldar",
+    "ability": "Laughin Buldar may use a single two-handed melee weapon as if it were a one-handed weapon.",
+    "wounds": 16,
+    "fatigue": 3,
+    "armor": 1,
+    "speed": 4,
+    "dice": {
+      "melee": 3,
+      "ranged": 0,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 3,
+      "subterfuge": 0,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Laughin Buldar.JPG",
+    "body": "Images/Body Portraits/Laughin Buldar.PNG"
+  },
+  {
+    "id": "laurel-of-bloodwood",
+    "name": "Laurel of Bloodwood",
+    "ability": "After rolling a Ranged attack, Laurel may spend 1 fatigue to convert any extra range she rolled into damage on one-for-one basis.",
+    "wounds": 8,
+    "fatigue": 4,
+    "armor": 1,
+    "speed": 5,
+    "dice": {
+      "melee": 1,
+      "ranged": 2,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 1,
+      "subterfuge": 2,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Laurel of Bloodwood.JPG",
+    "body": "Images/Body Portraits/Laurel of Bloodwood.PNG"
+  },
+  {
+    "id": "lindel",
+    "name": "Lindel",
+    "ability": "Once per area, Lindel may discard one of his skill cards, drawing a new skill card of the same type to replace it.",
+    "wounds": 16,
+    "fatigue": 5,
+    "armor": 1,
+    "speed": 5,
+    "dice": {
+      "melee": 2,
+      "ranged": 2,
+      "magic": 2
+    },
+    "traits": {
+      "fighter": 1,
+      "subterfuge": 1,
+      "wizardry": 1
+    },
+    "face": "Images/Face Portraits/Lindel.JPG",
+    "body": "Images/Body Portraits/Lindel.PNG"
+  },
+  {
+    "id": "lord-hawthorne",
+    "name": "Lord Hawthorne",
+    "ability": "Lord Hawthorne has the Reach ability.",
+    "wounds": 16,
+    "fatigue": 4,
+    "armor": 1,
+    "speed": 4,
+    "dice": {
+      "melee": 3,
+      "ranged": 0,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 3,
+      "subterfuge": 0,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Lord Hawthorne.JPG",
+    "body": "Images/Body Portraits/Lord Hawthorne.PNG"
+  },
+  {
+    "id": "lyssa",
+    "name": "Lyssa",
+    "ability": "When Lyssa is attacked, she may force attacker to re-roll 1 Green, 1 Yellow or 1 Black die of her choice. Lyssa cannot use this ability when she is dodging, and she cannot use it when the attack is an aimed attack.",
+    "wounds": 8,
+    "fatigue": 5,
+    "armor": 1,
+    "speed": 5,
+    "dice": {
+      "melee": 1,
+      "ranged": 1,
+      "magic": 1
+    },
+    "traits": {
+      "fighter": 2,
+      "subterfuge": 1,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Lyssa.JPG",
+    "body": "Images/Body Portraits/Lyssa.PNG"
+  },
+  {
+    "id": "mad-carthos",
+    "name": "Mad Carthos",
+    "ability": "When making Magic attacks, Mad Carthos gains +2 damage.",
+    "wounds": 8,
+    "fatigue": 3,
+    "armor": 1,
+    "speed": 4,
+    "dice": {
+      "melee": 0,
+      "ranged": 0,
+      "magic": 3
+    },
+    "traits": {
+      "fighter": 0,
+      "subterfuge": 0,
+      "wizardry": 3
+    },
+    "face": "Images/Face Portraits/Mad Carthos.JPG",
+    "body": "Images/Body Portraits/Mad Carthos.PNG"
+  },
+  {
+    "id": "mordrog",
+    "name": "Mordrog",
+    "ability": "Mordrog recovers 1 fatigue each time he is wounded.",
+    "wounds": 16,
+    "fatigue": 3,
+    "armor": 2,
+    "speed": 3,
+    "dice": {
+      "melee": 3,
+      "ranged": 0,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 3,
+      "subterfuge": 0,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Mordrog.JPG",
+    "body": "Images/Body Portraits/Mordrog.PNG"
+  },
+  {
+    "id": "nanok-of-the-blade",
+    "name": "Nanok of the Blade",
+    "ability": "Nanok of the Blade cannot wear Armor. * is equal to 2 + Nanok of the Blade's melee trait (the number of power dice he rolls when making a Melee attack).",
+    "wounds": 16,
+    "fatigue": 4,
+    "armor": "*",
+    "speed": 4,
+    "dice": {
+      "melee": 2,
+      "ranged": 0,
+      "magic": 1
+    },
+    "traits": {
+      "fighter": 2,
+      "subterfuge": 1,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Nanok of the Blade.JPG",
+    "body": "Images/Body Portraits/Nanok of the Blade.PNG"
+  },
+  {
+    "id": "nara-the-fang",
+    "name": "Nara the Fang",
+    "ability": "Enemy figures damaged by one of Nara's attacks suffer 1 extra damage for each space they occupy beyond the first.",
+    "wounds": 12,
+    "fatigue": 4,
+    "armor": 2,
+    "speed": 4,
+    "dice": {
+      "melee": 3,
+      "ranged": 0,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 2,
+      "subterfuge": 1,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Nara the Fang.JPG",
+    "body": "Images/Body Portraits/Nara the Fang.PNG"
+  },
+  {
+    "id": "okaluk-and-rakash",
+    "name": "Okaluk and Rakash",
+    "ability": "Okaluk and Rakash have the Stealth ability.",
+    "wounds": 16,
+    "fatigue": 2,
+    "armor": 0,
+    "speed": 6,
+    "dice": {
+      "melee": 2,
+      "ranged": 1,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 2,
+      "subterfuge": 1,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Okaluk and Rakash.JPG",
+    "body": "Images/Body Portraits/Okaluk and Rakash.PNG"
+  },
+  {
+    "id": "one-fist",
+    "name": "One Fist",
+    "ability": "One Fist only has one hand for the purposes of equipping items. He may always make one Melee attack, rolling 1 Red and 1 Green die, in addition to his normal action.",
+    "wounds": 12,
+    "fatigue": 3,
+    "armor": 2,
+    "speed": 4,
+    "dice": {
+      "melee": 2,
+      "ranged": 1,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 1,
+      "subterfuge": 2,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/One Fist.JPG",
+    "body": "Images/Body Portraits/One Fist.PNG"
+  },
+  {
+    "id": "red-scorpion",
+    "name": "Red Scorpion",
+    "ability": "At the start of her turn, Red Scorpion may spend 1 fatigue to recover 1 wound or suffer 1 wound to recover 1 fatigue.",
+    "wounds": 12,
+    "fatigue": 4,
+    "armor": 1,
+    "speed": 4,
+    "dice": {
+      "melee": 1,
+      "ranged": 1,
+      "magic": 1
+    },
+    "traits": {
+      "fighter": 1,
+      "subterfuge": 1,
+      "wizardry": 1
+    },
+    "face": "Images/Face Portraits/Red Scorpion.JPG",
+    "body": "Images/Body Portraits/Red Scorpion.PNG"
+  },
+  {
+    "id": "ronan-of-the-wild",
+    "name": "Ronan of the Wild",
+    "ability": "Pico is your companion. Take the Pico token at the start of the game.",
+    "wounds": 12,
+    "fatigue": 4,
+    "armor": 1,
+    "speed": 5,
+    "dice": {
+      "melee": 1,
+      "ranged": 2,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 1,
+      "subterfuge": 2,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Ronan of the Wild.JPG",
+    "body": "Images/Body Portraits/Ronan of the Wild.PNG"
+  },
+  {
+    "id": "runemaster-thorn",
+    "name": "Runemaster Thorn",
+    "ability": "Once per turn, Runemaster Thorn may spend 5 movement points to move to any empty space in his line of sight.",
+    "wounds": 12,
+    "fatigue": 4,
+    "armor": 0,
+    "speed": 5,
+    "dice": {
+      "melee": 0,
+      "ranged": 0,
+      "magic": 3
+    },
+    "traits": {
+      "fighter": 0,
+      "subterfuge": 0,
+      "wizardry": 3
+    },
+    "face": "Images/Face Portraits/Runemaster Thorn.JPG",
+    "body": "Images/Body Portraits/Runemaster Thorn.PNG"
+  },
+  {
+    "id": "runewitch-astarra",
+    "name": "Runewitch Astarra",
+    "ability": "Glyphs activate when Runewitch Astarra moves within 6 spaces of them.",
+    "wounds": 12,
+    "fatigue": 5,
+    "armor": 0,
+    "speed": 5,
+    "dice": {
+      "melee": 0,
+      "ranged": 0,
+      "magic": 3
+    },
+    "traits": {
+      "fighter": 0,
+      "subterfuge": 0,
+      "wizardry": 3
+    },
+    "face": "Images/Face Portraits/Runewitch Astarra.JPG",
+    "body": "Images/Body Portraits/Runewitch Astarra.PNG"
+  },
+  {
+    "id": "sahla",
+    "name": "Sahla",
+    "ability": "At the start of his turn, Sahla may spend 2 fatigue to discard one effect token that is placed on him. The discarded token does not take effect.",
+    "wounds": 12,
+    "fatigue": 4,
+    "armor": 0,
+    "speed": 4,
+    "dice": {
+      "melee": 0,
+      "ranged": 1,
+      "magic": 2
+    },
+    "traits": {
+      "fighter": 0,
+      "subterfuge": 0,
+      "wizardry": 3
+    },
+    "face": "Images/Face Portraits/Sahla.JPG",
+    "body": "Images/Body Portraits/Sahla.PNG"
+  },
+  {
+    "id": "shiver",
+    "name": "Shiver",
+    "ability": "During the Overlord's turn, Shiver has the Aura 4 ability.",
+    "wounds": 12,
+    "fatigue": 4,
+    "armor": 0,
+    "speed": 4,
+    "dice": {
+      "melee": 0,
+      "ranged": 0,
+      "magic": 3
+    },
+    "traits": {
+      "fighter": 0,
+      "subterfuge": 0,
+      "wizardry": 3
+    },
+    "face": "Images/Face Portraits/Shiver.JPG",
+    "body": "Images/Body Portraits/Shiver.PNG"
+  },
+  {
+    "id": "silhouette",
+    "name": "Silhouette",
+    "ability": "While Silhouette has a readied order, she may spend 2 fatigue to exchange it for a different order at any time.",
+    "wounds": 12,
+    "fatigue": 5,
+    "armor": 1,
+    "speed": 5,
+    "dice": {
+      "melee": 0,
+      "ranged": 3,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 0,
+      "subterfuge": 3,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Silhouette.JPG",
+    "body": "Images/Body Portraits/Silhouette.PNG"
+  },
+  {
+    "id": "sir-valadir",
+    "name": "Sir Valadir",
+    "ability": "When Sir Valadir spends fatigue to add dice to an attack roll, he adds 2 power dice instead of 1 (up to the normal limit of 5 power dice).",
+    "wounds": 16,
+    "fatigue": 3,
+    "armor": 1,
+    "speed": 4,
+    "dice": {
+      "melee": 3,
+      "ranged": 0,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 3,
+      "subterfuge": 0,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Sir Valadir.JPG",
+    "body": "Images/Body Portraits/Sir Valadir.PNG"
+  },
+  {
+    "id": "spiritspeaker-mok",
+    "name": "Spiritspeaker Mok",
+    "ability": "Mordrog recovers 1 fatigue each time he is wounded The overlord's cost to play cards is increased by 1 threat token per card.",
+    "wounds": 12,
+    "fatigue": 4,
+    "armor": 0,
+    "speed": 4,
+    "dice": {
+      "melee": 1,
+      "ranged": 0,
+      "magic": 2
+    },
+    "traits": {
+      "fighter": 1,
+      "subterfuge": 0,
+      "wizardry": 2
+    },
+    "face": "Images/Face Portraits/Spiritspeaker Mok.JPG",
+    "body": "Images/Body Portraits/Spiritspeaker Mok.PNG"
+  },
+  {
+    "id": "steelhorns",
+    "name": "Steelhorns",
+    "ability": "Steelhorns can make one Melee attack when he declares a Run action. He must move in a straight line and end his movement after making the attack.",
+    "wounds": 16,
+    "fatigue": 3,
+    "armor": 1,
+    "speed": 4,
+    "dice": {
+      "melee": 3,
+      "ranged": 0,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 3,
+      "subterfuge": 0,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Steelhorns.JPG",
+    "body": "Images/Body Portraits/Steelhorns.PNG"
+  },
+  {
+    "id": "tahlia",
+    "name": "Tahlia",
+    "ability": "When Tahlia discards a Guard order to make an interrupt attack, she may move a number of spaces equal to her speed before or after attacking.",
+    "wounds": 16,
+    "fatigue": 3,
+    "armor": 2,
+    "speed": 3,
+    "dice": {
+      "melee": 3,
+      "ranged": 0,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 3,
+      "subterfuge": 0,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Tahlia.JPG",
+    "body": "Images/Body Portraits/Tahlia.PNG"
+  },
+  {
+    "id": "tatianna",
+    "name": "Tatianna",
+    "ability": "Once per area, Tatianna may return to town at the start of the Overlord's turn without using a glyph.",
+    "wounds": 12,
+    "fatigue": 4,
+    "armor": 1,
+    "speed": 5,
+    "dice": {
+      "melee": 0,
+      "ranged": 3,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 0,
+      "subterfuge": 3,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Tatianna.JPG",
+    "body": "Images/Body Portraits/Tatianna.PNG"
+  },
+  {
+    "id": "tetherys",
+    "name": "Tetherys",
+    "ability": "Tetherys may change her target after rolling for an attack.",
+    "wounds": 12,
+    "fatigue": 4,
+    "armor": 1,
+    "speed": 4,
+    "dice": {
+      "melee": 0,
+      "ranged": 2,
+      "magic": 1
+    },
+    "traits": {
+      "fighter": 0,
+      "subterfuge": 3,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Tetherys.JPG",
+    "body": "Images/Body Portraits/Tetherys.PNG"
+  },
+  {
+    "id": "tobin-farslayer",
+    "name": "Tobin Farslayer",
+    "ability": "When Tobin makes a successful attack, add the distance to his target to his damage. Tobin cannot make ranged attacks against adjacent figures.",
+    "wounds": 16,
+    "fatigue": 3,
+    "armor": 2,
+    "speed": 3,
+    "dice": {
+      "melee": 0,
+      "ranged": 3,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 0,
+      "subterfuge": 3,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Tobin Farslayer.JPG",
+    "body": "Images/Body Portraits/Tobin Farslayer.PNG"
+  },
+  {
+    "id": "trenloe-the-strong",
+    "name": "Trenloe the Strong",
+    "ability": "When Trenloe the Strong attacks, you may re-roll 1 Green, 1 Yellow or 1 Black die of your choice. Trenloe cannot use this ability if he is aiming or if his target is dodging.",
+    "wounds": 16,
+    "fatigue": 3,
+    "armor": 2,
+    "speed": 3,
+    "dice": {
+      "melee": 3,
+      "ranged": 0,
+      "magic": 0
+    },
+    "traits": {
+      "fighter": 3,
+      "subterfuge": 0,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Trenloe the Strong.JPG",
+    "body": "Images/Body Portraits/Trenloe the Strong.PNG"
+  },
+  {
+    "id": "truthseer-kel",
+    "name": "Truthseer Kel",
+    "ability": "Obstacles and other figures do not block Truthseer Kel's line of sight. Kel ignores the Shadowcloak ability.",
+    "wounds": 12,
+    "fatigue": 4,
+    "armor": 1,
+    "speed": 4,
+    "dice": {
+      "melee": 0,
+      "ranged": 0,
+      "magic": 3
+    },
+    "traits": {
+      "fighter": 0,
+      "subterfuge": 0,
+      "wizardry": 3
+    },
+    "face": "Images/Face Portraits/Truthseer Kel.JPG",
+    "body": "Images/Body Portraits/Truthseer Kel.PNG"
+  },
+  {
+    "id": "varikas-the-dead",
+    "name": "Varikas the Dead",
+    "ability": "At the start of his turn, Varikas the Dead recovers 1 fatigue.",
+    "wounds": 16,
+    "fatigue": 4,
+    "armor": 2,
+    "speed": 3,
+    "dice": {
+      "melee": 2,
+      "ranged": 0,
+      "magic": 1
+    },
+    "traits": {
+      "fighter": 2,
+      "subterfuge": 0,
+      "wizardry": 1
+    },
+    "face": "Images/Face Portraits/Varikas the Dead.JPG",
+    "body": "Images/Body Portraits/Varikas the Dead.PNG"
+  },
+  {
+    "id": "vyrah-the-falconer",
+    "name": "Vyrah the Falconer",
+    "ability": "Skye is your familiar. Take the Skye marker at the start of the game.",
+    "wounds": 12,
+    "fatigue": 4,
+    "armor": 1,
+    "speed": 4,
+    "dice": {
+      "melee": 0,
+      "ranged": 2,
+      "magic": 1
+    },
+    "traits": {
+      "fighter": 1,
+      "subterfuge": 2,
+      "wizardry": 0
+    },
+    "face": "Images/Face Portraits/Vyrah the Falconer.JPG",
+    "body": "Images/Body Portraits/Vyrah the Falconer.PNG"
+  },
+  {
+    "id": "zyla",
+    "name": "Zyla",
+    "ability": "At the start of his turn, Varikas the Dead recovers 1 fatigue.",
+    "wounds": 8,
+    "fatigue": 5,
+    "armor": 0,
+    "speed": 4,
+    "dice": {
+      "melee": 1,
+      "ranged": 1,
+      "magic": 1
+    },
+    "traits": {
+      "fighter": 1,
+      "subterfuge": 1,
+      "wizardry": 1
+    },
+    "face": "Images/Face Portraits/Zyla.JPG",
+    "body": "Images/Body Portraits/Zyla.PNG"
+  }
+]
