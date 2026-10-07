@@ -2,7 +2,6 @@
     var charId = $routeParams.id;
     $scope.appData = appData;
     $scope.statusSwitch = 'bleed';
-    $scope.pick = {};
     $scope.cards = cardService;
     $scope.upgradeDeck = $scope.appData.upgradeItems;
     if ($scope.appData.characters.length < 1) {
@@ -69,9 +68,8 @@
             $scope.appData.partyConquest = $scope.appData.partyConquest - 1;
     };
 
-    $scope.removeItemFromSkills = function (index) {
-        var removedId = $scope.character.skills.splice(index, 1)[0];
-        cardService.applyEffects($scope.character, cardService.byId(removedId), -1);
+    $scope.removeCard = function (kind, index) {
+        cardService.take($scope.character, kind, index);
     };
     $scope.removeItemFromEquipment = function (index) {
         var removedItem = $scope.character.equipped.splice(index, 1);
@@ -139,32 +137,6 @@
                 break;
         };
 
-    };
-    $scope.removeItemFromFeats = function (index) {
-        var removedItem = $scope.character.feats.splice(index, 1);
-        switch (removedItem[0].type) {
-            case 'Fighter':
-                for (i = 0; i < $scope.appData.fighterFeats.length; i++) {
-                    if ($scope.appData.fighterFeats[i].name === removedItem[0].name) {
-                        $scope.appData.fighterFeats[i].qty++;
-                    };
-                };
-                break;
-            case 'Subterfuge':
-                for (i = 0; i < $scope.appData.subterfugeFeats.length; i++) {
-                    if ($scope.appData.subterfugeFeats[i].name === removedItem[0].name) {
-                        $scope.appData.subterfugeFeats[i].qty++;
-                    };
-                };
-                break;
-            case 'Wizardry':
-                for (i = 0; i < $scope.appData.wizardryFeats.length; i++) {
-                    if ($scope.appData.wizardryFeats[i].name === removedItem[0].name) {
-                        $scope.appData.wizardryFeats[i].qty++;
-                    };
-                };
-                break;
-        };
     };
     $scope.removeItemFromUpgrades = function (index) {
         var original = angular.copy($scope.character.upgrades);
@@ -290,58 +262,6 @@
         $scope.character.bag.splice(index, 1);
     };
 
-    $scope.addRandomSkill = function () {
-        // Weighted by copies left, so every remaining card is equally likely.
-        var pool = [];
-        $scope.skillChoices().forEach(function (card) {
-            for (var n = $scope.skillsLeft(card); n > 0; n--) pool.push(card);
-        });
-        if (pool.length)
-            $scope.addSkill(pool[Math.floor(Math.random() * pool.length)]);
-    };
-    $scope.addRandomFeat = function () {
-        var deckName = $scope.currentFeatDeck;
-        var cardCount = 0;
-        var newItem
-        for (i = 0; i < $scope.featDeck.length; i++)
-            cardCount = cardCount + $scope.featDeck[i].qty;
-
-        var randomNumber = Math.floor(Math.random() * cardCount);
-
-        for (i = 0; i < $scope.featDeck.length; i++) {
-            randomNumber = randomNumber - $scope.featDeck[i].qty;
-
-            if (randomNumber < 1) {
-                newItem = $scope.featDeck[i];
-
-                switch (newItem.type) {
-                    case "Fighter":
-                        for (i = 0; i < $scope.appData.fighterFeats.length; i++) {
-                            if ($scope.appData.fighterFeats[i].name === newItem.name) {
-                                $scope.appData.fighterFeats[i].qty--;
-                            };
-                        };
-                        break;
-                    case "Subterfuge":
-                        for (i = 0; i < $scope.appData.subterfugeFeats.length; i++) {
-                            if ($scope.appData.subterfugeFeats[i].name === newItem.name) {
-                                $scope.appData.subterfugeFeats[i].qty--;
-                            };
-                        };
-                        break;
-                    case "Wizardry":
-                        for (i = 0; i < $scope.appData.wizardryFeats.length; i++) {
-                            if ($scope.appData.wizardryFeats[i].name === newItem.name) {
-                                $scope.appData.wizardryFeats[i].qty--;
-                            };
-                        };
-                        break;
-                };
-                $scope.character.feats.push(newItem);
-                return;
-            }
-        }
-    };
     $scope.addRandomItemToEquipment = function () {
         var deckName = $scope.currentDeck;
         var cardCount = 0;
@@ -516,49 +436,6 @@
         };
         $scope.character.bag.push(newItem);
     };
-    $scope.addSkill = function (card) {
-        if (!card) return;
-        $scope.character.skills.push(card.id);
-        cardService.applyEffects($scope.character, card, +1);
-        $scope.pick.skill = null;
-    };
-    $scope.skillsLeft = function (card) {
-        return cardService.remaining(card, $scope.appData.characters, 'skills');
-    };
-    $scope.skillChoices = function () {
-        var deck = ($scope.currentSkillDeck || 'Fighter').toLowerCase();
-        return cardService.deck('skills', deck).filter(function (card) {
-            return $scope.skillsLeft(card) > 0;
-        });
-    };
-    $scope.addFeat = function () {
-        var newItem = JSON.parse($scope.newFeat);
-        console.log(newItem);
-        switch (newItem.type) {
-            case 'Fighter':
-                for (i = 0; i < $scope.appData.fighterFeats.length; i++) {
-                    if ($scope.appData.fighterFeats[i].name === newItem.name) {
-                        $scope.appData.fighterFeats[i].qty--;
-                    };
-                };
-                break;
-            case 'Subterfuge':
-                for (i = 0; i < $scope.appData.subterfugeFeats.length; i++) {
-                    if ($scope.appData.subterfugeFeats[i].name === newItem.name) {
-                        $scope.appData.subterfugeFeats[i].qty--;
-                    };
-                };
-                break;
-            case 'Wizardry':
-                for (i = 0; i < $scope.appData.wizardryFeats.length; i++) {
-                    if ($scope.appData.wizardryFeats[i].name === newItem.name) {
-                        $scope.appData.wizardryFeats[i].qty--;
-                    };
-                };
-                break;
-        };
-        $scope.character.feats.push(newItem);
-    };
     $scope.addUpgrade = function () {
         var newItem = JSON.parse($scope.newUpgrade);
         for (i = 0; i < $scope.appData.upgradeItems.length; i++) {
@@ -704,7 +581,6 @@
                 break;
         }
         $scope.currentFeatDeck = $scope.appData.currentFeatDeck;
-        $scope.switchFeatDeck();
     }
     $scope.switchDeck = function (val) {
         switch (val) {
@@ -733,7 +609,6 @@
         $scope.currentSkillDeck = $scope.appData.currentSkillDeck;
         $scope.currentDeck = $scope.appData.currentDeck;
         $scope.switchItemDeck();
-        $scope.switchSkillDeck();
     };
     $scope.switchItemDeck = function () {
         switch ($scope.currentDeck) {
@@ -754,31 +629,10 @@
                 break;
         }
     };
-    $scope.switchSkillDeck = function () {
-        // Skill choices are computed from currentSkillDeck by skillChoices().
-    };
-    $scope.switchFeatDeck = function () {
-        switch ($scope.currentFeatDeck) {
-            case 'Subterfuge':
-                $scope.featDeck = $scope.appData.subterfugeFeats;
-                break;
-            case 'Wizardry':
-                $scope.featDeck = $scope.appData.wizardryFeats;
-                break;
-            case 'Fighter':
-                $scope.featDeck = $scope.appData.fighterFeats;
-                break;
-            default:
-                $scope.featDeck = $scope.appData.fighterFeats;
-                break;
-        }
-    };
     $scope.getNumber = function (num) {
         return new Array(num);
     };
 
     $scope.switchItemDeck();
-    $scope.switchSkillDeck();
-    $scope.switchFeatDeck();
 
 });

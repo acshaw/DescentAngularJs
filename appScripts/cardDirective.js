@@ -1,7 +1,8 @@
 // <dj-card card="card" on-remove="remove()"></dj-card>
 // The one renderer for every card type. on-remove is optional.
 djCards.constant('CARD_KIND_LABELS', {
-    skills: 'skill'
+    skills: 'skill',
+    feats: 'feat'
 });
 
 djCards.constant('EFFECT_LABELS', {
@@ -34,6 +35,45 @@ djCards.directive('djCard', function (CARD_KIND_LABELS, EFFECT_LABELS) {
                 if (card.missing) return 'missing card';
                 var deck = card.deck ? card.deck.charAt(0).toUpperCase() + card.deck.slice(1) + ' ' : '';
                 return deck + (CARD_KIND_LABELS[card.kind] || '');
+            };
+        }
+    };
+});
+
+// <dj-deck-picker kind="skills" deck="appData.currentSkillDeck" character="character"
+//                 party="appData.characters" on-switch="switchDeck(...)"></dj-deck-picker>
+// Deck button (cycles decks via on-switch), a picker of cards with copies left,
+// and a random-draw button. Adding goes through cardService.give.
+djCards.directive('djDeckPicker', function (cardService, CARD_KIND_LABELS) {
+    return {
+        restrict: 'E',
+        scope: { kind: '@', deck: '<', character: '<', party: '<', onSwitch: '&' },
+        template:
+            '<div class="input-group dj-deck-picker">' +
+            '  <span class="input-group-btn">' +
+            '    <button type="button" class="btn btn-default dj-deck-button" ng-class="deckId()" ng-click="onSwitch()">{{deck}}</button>' +
+            '  </span>' +
+            '  <select class="form-control" ng-model="pick.card" ng-change="add(pick.card)"' +
+            '          ng-options="card as card.name for card in choices() track by card.id">' +
+            '    <option value="">Add a {{label}}…</option>' +
+            '  </select>' +
+            '  <span class="input-group-btn">' +
+            '    <button type="button" class="btn btn-success dj-random" ng-click="addRandom()" aria-label="Add a random {{label}}"><i class="fa fa-random"></i></button>' +
+            '  </span>' +
+            '</div>',
+        link: function (scope) {
+            scope.pick = {};
+            scope.label = CARD_KIND_LABELS[scope.kind];
+            scope.deckId = function () { return String(scope.deck || '').toLowerCase(); };
+            scope.choices = function () {
+                return cardService.choices(scope.kind, scope.deckId(), scope.party);
+            };
+            scope.add = function (card) {
+                if (card) cardService.give(scope.character, card);
+                scope.pick.card = null;
+            };
+            scope.addRandom = function () {
+                scope.add(cardService.drawRandom(scope.kind, scope.deckId(), scope.party));
             };
         }
     };

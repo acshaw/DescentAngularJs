@@ -1,11 +1,12 @@
-// Party save files. Version 2 stores each hero's skills as card ids and no
-// longer stores skill decks (they're derived from the card data). Version 1
-// saves (no "version" field) are migrated on load.
+// Party save files. Since version 3, each hero's skills and feats are stored
+// as card ids, and their decks aren't saved (they're derived from the card
+// data). Older saves are migrated on load: any held card still stored as an
+// object is matched to an id by name and deck.
 app.factory('saveService', function (appData, cardService) {
-    var SAVE_VERSION = 2;
+    var SAVE_VERSION = 3;
+    var DATA_KINDS = ['skills', 'feats'];
     var STILL_SAVED_DECKS = [
-        'storeItems', 'copperItems', 'silverItems', 'goldItems',
-        'fighterFeats', 'subterfugeFeats', 'wizardryFeats', 'upgradeItems'
+        'storeItems', 'copperItems', 'silverItems', 'goldItems', 'upgradeItems'
     ];
 
     function build() {
@@ -19,15 +20,18 @@ app.factory('saveService', function (appData, cardService) {
         return saveFile;
     }
 
-    function migrateV1(saveFile) {
+    function migrate(saveFile) {
         (saveFile.characters || []).forEach(function (character) {
-            character.skills = (character.skills || []).map(function (skill) {
-                return cardService.idForLegacyName('skills', skill.name, (skill.type || '').toLowerCase());
+            DATA_KINDS.forEach(function (kind) {
+                character[kind] = (character[kind] || []).map(function (card) {
+                    if (typeof card === 'string') return card;
+                    return cardService.idForLegacyName(kind, card.name, (card.type || '').toLowerCase());
+                });
             });
         });
-        // Character stats already include skill effects, so nothing is reapplied.
-        // The fighterSkills/subterfugeSkills/wizardrySkills arrays are ignored:
-        // deck counts are derived from what the party holds.
+        // Character stats already include card effects, so nothing is reapplied.
+        // Old deck arrays (fighterSkills, fighterFeats, ...) are ignored: deck
+        // counts are derived from what the party holds.
         saveFile.version = SAVE_VERSION;
         return saveFile;
     }
@@ -50,7 +54,7 @@ app.factory('saveService', function (appData, cardService) {
 
         load: function (text) {
             var saveFile = JSON.parse(text);
-            if (!saveFile.version) saveFile = migrateV1(saveFile);
+            saveFile = migrate(saveFile);
             appData.characters = saveFile.characters;
             appData.partyGold = saveFile.partyGold;
             appData.partyConquest = saveFile.partyConquest;

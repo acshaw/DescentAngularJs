@@ -3,11 +3,12 @@
 var djCards = angular.module('djCards', ['ngSanitize']);
 
 djCards.factory('cardService', function ($http, $q) {
-    var KINDS = ['skills'];
+    var KINDS = ['skills', 'feats'];
     var EFFECT_KEYS = ['maxWounds', 'maxFatigue', 'speed'];
 
     var byKind = {};
     var byId = {};
+    var placeholders = {};
     var readyPromise = null;
 
     function normalize(name) {
@@ -48,10 +49,15 @@ djCards.factory('cardService', function ($http, $q) {
         // Unknown ids (cards removed from the data, or legacy names that could
         // not be matched) come back as a placeholder so they stay visible and
         // removable instead of disappearing.
+        // Placeholders are cached: templates call byId on every digest, and a
+        // new object each time would never settle.
         byId: function (id) {
             if (byId[id]) return byId[id];
-            var label = String(id).indexOf('legacy:') === 0 ? id.slice(7) : id;
-            return { id: id, name: label, missing: true, text: 'This card is no longer in the card data. Remove it, or add it back to the JSON.' };
+            if (!placeholders[id]) {
+                var label = String(id).indexOf('legacy:') === 0 ? id.slice(7) : id;
+                placeholders[id] = { id: id, name: label, missing: true, text: 'This card is no longer in the card data. Remove it, or add it back to the JSON.' };
+            }
+            return placeholders[id];
         },
 
         // Matches an old save's card name to an id within a kind (and deck, if given).
@@ -65,15 +71,42 @@ djCards.factory('cardService', function ($http, $q) {
             return match ? match.id : 'legacy:' + name;
         },
 
-        // How many copies are left in the deck: deck size minus what the party holds.
-        remaining: function (card, characters, field) {
+        // How many copies are left in the deck: deck size minus what the party
+        // holds. A hero's held cards of a kind live in character[kind] as ids.
+        remaining: function (card, characters) {
             var held = 0;
             (characters || []).forEach(function (character) {
-                (character[field] || []).forEach(function (id) {
+                (character[card.kind] || []).forEach(function (id) {
                     if (id === card.id) held++;
                 });
             });
             return card.qty - held;
+        },
+
+        // Cards in a deck with at least one copy left, for the pickers.
+        choices: function (kind, deck, characters) {
+            return service.deck(kind, deck).filter(function (card) {
+                return service.remaining(card, characters) > 0;
+            });
+        },
+
+        // Picks from the copies left, so every remaining copy is equally likely.
+        drawRandom: function (kind, deck, characters) {
+            var pool = [];
+            service.choices(kind, deck, characters).forEach(function (card) {
+                for (var n = service.remaining(card, characters); n > 0; n--) pool.push(card);
+            });
+            return pool.length ? pool[Math.floor(Math.random() * pool.length)] : null;
+        },
+
+        give: function (character, card) {
+            character[card.kind].push(card.id);
+            service.applyEffects(character, card, +1);
+        },
+
+        take: function (character, kind, index) {
+            var id = character[kind].splice(index, 1)[0];
+            service.applyEffects(character, service.byId(id), -1);
         },
 
         // sign is +1 when a hero gains the card and -1 when they lose it.

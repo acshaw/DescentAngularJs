@@ -50,12 +50,14 @@
     <script>
         angular.module('proofApp', ['djCards']).controller('ProofCtrl', function ($scope, cardService, CARD_ICONS) {
             cardService.ready().then(function () {
-                var skills = cardService.all('skills');
-                $scope.groups = ['fighter', 'subterfuge', 'wizardry'].map(function (deck) {
-                    return { title: deck + ' skills', cards: cardService.deck('skills', deck) };
+                $scope.groups = [];
+                ['skills', 'feats'].forEach(function (kind) {
+                    ['fighter', 'subterfuge', 'wizardry'].forEach(function (deck) {
+                        $scope.groups.push({ title: deck + ' ' + kind, cards: cardService.deck(kind, deck) });
+                    });
                 });
                 var unknown = {};
-                skills.forEach(function (card) {
+                cardService.all('skills').concat(cardService.all('feats')).forEach(function (card) {
                     (card.text.match(/\{(\w+)\}/g) || []).forEach(function (token) {
                         if (!CARD_ICONS[token.slice(1, -1)]) unknown[card.name + ' ' + token] = true;
                     });

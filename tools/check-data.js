@@ -11,6 +11,12 @@ var SCHEMAS = {
         optional: ['effects', 'aliases', 'scan'],
         decks: ['fighter', 'subterfuge', 'wizardry'],
         effectKeys: ['maxWounds', 'maxFatigue', 'speed']
+    },
+    feats: {
+        required: ['id', 'name', 'deck', 'qty', 'text'],
+        optional: ['aliases', 'scan'],
+        decks: ['fighter', 'subterfuge', 'wizardry'],
+        effectKeys: []
     }
 };
 

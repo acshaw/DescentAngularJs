@@ -34,4 +34,4 @@ Skill `effects` change hero stats when the card is gained or lost: `maxWounds`, 
 
 ## Tests
 
-`tests/e2e-skills.js` drives the app in headless Chromium (Playwright). See the comment at the top of the file for how to run it.
+`tests/e2e-cards.js` drives the app in headless Chromium (Playwright). See the comment at the top of the file for how to run it.

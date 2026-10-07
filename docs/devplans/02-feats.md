@@ -1,6 +1,6 @@
 # Dev Plan 02: Feats
 
-**Status:** DRAFT, awaiting approval
+**Status:** DONE (see "Build notes" at the end). Approved with 02-A, 02-B and 02-C as recommended.
 **Depends on:** Plan 01 (done)
 
 ## Goal
@@ -66,3 +66,14 @@ Items, upgrades and heroes, and deleting the feat scans or card backs (left for 
 ## Size
 
 Small: about 27 cards to transcribe plus a modest refactor. Most of the risk is in 02-C, and the existing tests cover it.
+
+---
+
+## Build notes (what differed from the plan)
+
+- **Copy count:** the feat decks hold **50** copies in total, not the 46 I wrote above. Each deck is 9 cards.
+- **Shared picker:** this became a directive, `<dj-deck-picker kind=… deck=… character=… party=… on-switch=…>`, used by both the Skills and Feats tabs. `charctrl.js` lost another 150 lines, and the skill functions from phase 01 are gone; both tabs now use `cardService.give` / `take` / `choices` / `drawRandom`.
+- **Bug found and fixed (from phase 01):** the "missing card" placeholder was rebuilt as a new object on every render. That makes Angular loop until it aborts (`infdig`), so any save holding a card that's no longer in the data would have broken the page. Placeholders are now cached, and a new test loads a save with a made-up card and checks that it shows up and can be removed.
+- **Ids:** `second-wind-fighter` and `second-wind-subterfuge` (02-A). Chink in Armor became **Chink in the Armor**, with the old name kept as an alias.
+- **Save v3** (02-B): migration is per field, so v1, v2 and v3 saves all go through one path.
+- **Tests:** renamed to `tests/e2e-cards.js`, now with 34 checks run at phone and desktop size, and all pass. A new fixture, `tests/fixtures/v2-save.json`, was generated from the phase 01 app before any changes; it holds both Second Winds, two Focus cards and Chink in Armor. A deliberate break (feat migration switched off) failed 4 checks, as expected.
