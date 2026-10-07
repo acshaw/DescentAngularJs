@@ -59,8 +59,9 @@
                 ['store', 'copper', 'silver', 'gold'].forEach(function (deck) {
                     $scope.groups.push({ title: deck + ' items', cards: cardService.deck('items', deck) });
                 });
+                $scope.groups.push({ title: 'upgrades', cards: cardService.all('upgrades') });
                 var unknown = {};
-                cardService.all('skills').concat(cardService.all('feats'), cardService.all('items')).forEach(function (card) {
+                cardService.all('skills').concat(cardService.all('feats'), cardService.all('items'), cardService.all('upgrades')).forEach(function (card) {
                     var text = (card.text || '') + ' ' + (card.surges || []).map(function (s) { return s.effect; }).join(' ');
                     (text.match(/\{(\w+)\}/g) || []).forEach(function (token) {
                         if (!CARD_ICONS[token.slice(1, -1)]) unknown[card.name + ' ' + token] = true;

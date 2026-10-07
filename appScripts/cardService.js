@@ -3,13 +3,20 @@
 var djCards = angular.module('djCards', ['ngSanitize']);
 
 djCards.factory('cardService', function ($http, $q) {
-    var KINDS = ['skills', 'feats', 'items'];
+    var KINDS = ['skills', 'feats', 'items', 'upgrades'];
     // Where a hero holds each kind of card. Items can be equipped or in the backpack.
-    var HOLDINGS = { skills: ['skills'], feats: ['feats'], items: ['equipped', 'bag'] };
+    var HOLDINGS = { skills: ['skills'], feats: ['feats'], items: ['equipped', 'bag'], upgrades: ['upgrades'] };
     // Kinds whose held copies carry state (an item can be tapped), stored as
     // { id, tapped } instead of a plain id.
     var STATEFUL = { items: true };
-    var EFFECT_KEYS = ['maxWounds', 'maxFatigue', 'speed'];
+    // Power dice per attack type, black -> silver -> gold. A hero may hold at
+    // most MAX_POWER_DICE of one attack type, and no count may go below 0.
+    var ATTACKS = ['melee', 'ranged', 'magic'];
+    var DIE_TIERS = [{ key: 'Power', label: 'black' }, { key: 'SilverPower', label: 'silver' }, { key: 'GoldPower', label: 'gold' }];
+    var MAX_POWER_DICE = 5;
+    var DIE_KEYS = [];
+    ATTACKS.forEach(function (a) { DIE_TIERS.forEach(function (t) { DIE_KEYS.push(a + t.key); }); });
+    var EFFECT_KEYS = ['maxWounds', 'maxFatigue', 'speed'].concat(DIE_KEYS);
 
     var byKind = {};
     var byId = {};
@@ -30,6 +37,7 @@ djCards.factory('cardService', function ($http, $q) {
 
     var service = {
         EFFECT_KEYS: EFFECT_KEYS,
+        DIE_KEYS: DIE_KEYS,
         HOLDINGS: HOLDINGS,
 
         // A held entry is either an id or { id, tapped }.
@@ -52,6 +60,10 @@ djCards.factory('cardService', function ($http, $q) {
         // Name shown in pickers. Cards that grant a reward (Treasure Caches all
         // share a name) say what they grant so they can be told apart.
         pickerLabel: function (card) {
+            // Upgrades share names across tiers ("Maximum Wounds"), so add the tier.
+            if (card.tier && card.name.toLowerCase().indexOf(card.tier) === -1) {
+                return card.name + ' (' + card.tier.charAt(0).toUpperCase() + card.tier.slice(1) + ')';
+            }
             if (!card.grants) return card.name;
             var parts = [];
             if (card.grants.coins) parts.push(card.grants.coins + ' coins');
@@ -123,27 +135,68 @@ djCards.factory('cardService', function ($http, $q) {
         },
 
         // field defaults to the kind's first holding (items: 'equipped').
+        // Why a hero can't gain (sign +1) or lose (sign -1) a card, or null if
+        // they can. Only power dice have rules: no count below 0, at most
+        // MAX_POWER_DICE per attack type.
+        check: function (character, card, sign) {
+            var effects = card.effects || {};
+            var who = character.name || 'This hero';
+            for (var a = 0; a < ATTACKS.length; a++) {
+                var attack = ATTACKS[a], total = 0, touched = false;
+                for (var t = 0; t < DIE_TIERS.length; t++) {
+                    var key = attack + DIE_TIERS[t].key;
+                    var change = sign * (effects[key] || 0);
+                    var after = (character[key] || 0) + change;
+                    if (change) touched = true;
+                    if (after < 0) {
+                        return sign > 0
+                            ? who + ' has no ' + DIE_TIERS[t].label + ' ' + attack + ' power dice to upgrade.'
+                            : 'Can\'t remove ' + card.name + ': that ' + DIE_TIERS[t].label + ' ' + attack + ' die has been upgraded. Remove the higher upgrade first.';
+                    }
+                    total += after;
+                }
+                if (touched && total > MAX_POWER_DICE) {
+                    return who + ' already has ' + MAX_POWER_DICE + ' ' + attack + ' power dice, the limit.';
+                }
+            }
+            return null;
+        },
+
+        // give, take and move return a reason (and change nothing) when the
+        // rules refuse, otherwise null.
+        // field defaults to the kind's first holding (items: 'equipped').
         give: function (character, card, field) {
+            var reason = service.check(character, card, +1);
+            if (reason) return reason;
             field = field || HOLDINGS[card.kind][0];
             character[field].push(STATEFUL[card.kind] ? { id: card.id, tapped: false } : card.id);
             service.applyEffects(character, card, +1);
+            return null;
         },
 
         take: function (character, field, index) {
-            var entry = character[field].splice(index, 1)[0];
-            service.applyEffects(character, service.byId(service.entryId(entry)), -1);
+            var card = service.byId(service.entryId(character[field][index]));
+            var reason = service.check(character, card, -1);
+            if (reason) return reason;
+            character[field].splice(index, 1);
+            service.applyEffects(character, card, -1);
+            return null;
         },
 
         // Moves a held copy (keeping its tapped state) between fields or heroes.
         // Effects follow the card when it changes hero.
         move: function (from, fromField, index, to, toField) {
-            var entry = from[fromField].splice(index, 1)[0];
-            to[toField].push(entry);
+            var entry = from[fromField][index];
             if (from !== to) {
                 var card = service.byId(service.entryId(entry));
+                var reason = service.check(from, card, -1) || service.check(to, card, +1);
+                if (reason) return reason;
                 service.applyEffects(from, card, -1);
                 service.applyEffects(to, card, +1);
             }
+            from[fromField].splice(index, 1);
+            to[toField].push(entry);
+            return null;
         },
 
         // sign is +1 when a hero gains the card and -1 when they lose it.
@@ -162,6 +215,9 @@ djCards.factory('cardService', function ($http, $q) {
             if (effects.speed) {
                 character.speed += sign * effects.speed;
             }
+            DIE_KEYS.forEach(function (key) {
+                if (effects[key]) character[key] = (character[key] || 0) + sign * effects[key];
+            });
         }
     };
     return service;

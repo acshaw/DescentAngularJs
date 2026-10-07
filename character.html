@@ -277,35 +277,13 @@
         <div class="well well-lg">
             <div class="row">
                 <div class="col-xs-12 col-sm-6 text-left">
-                    <!--<span class="input-group-btn">
-                        <button type="button"
-                                class="btn btn-default"
-                                ng-class="{'fighter': appData.currentFeatDeck === 'Fighter','subterfuge': appData.currentFeatDeck === 'Subterfuge', 'wizardry': appData.currentFeatDeck === 'Wizardry' }"
-                                ng-click="switchFeatLabel(currentFeatDeck)">
-                            {{appData.currentFeatDeck}}
-                        </button>
-                    </span>-->
-                    <select class="form-control" ng-model="newUpgrade" ng-change="addUpgrade()">
-                        <option ng-repeat="item in upgradeDeck" value="{{item}}" ng-if="item.qty > 0">{{item.name}}</option>
-                    </select>
-                    <!--<span class="input-group-btn">
-                        <button type="button" class="btn btn-primary" ng-disabled="!newUpgrade" ng-click="addUpgrade()"><i class="fa fa-plus"></i></button>
-                        <button type="button" class="btn btn-success" ng-click="addRandomFeat()"><i class="fa fa-random"></i></button>
-                    </span>-->
-                </div>
-                <div class="col-xs-6">
+                    <dj-deck-picker kind="upgrades" fixed="true" character="character" party="appData.characters"></dj-deck-picker>
                 </div>
             </div>
             <br />
-            <div class="DocumentList">
-                <ul class="list-inline">
-                    <li class="DocumentItem" ng-repeat="item in character.upgrades track by $index">
-                        <div class="text-left store">
-                            <i class="fa fa-remove" style="cursor:pointer; font-size: x-large; color:white;  margin: 3px 14px 3px 7px;" ng-click="removeItemFromUpgrades($index)"></i><br />
-                            <img class="img-rounded" src="{{item.src + item.name + '.JPG'}}" height="350" />
-                        </div>
-                    </li>
-                </ul>
+            <div class="dj-card-row">
+                <dj-card ng-repeat="id in character.upgrades track by $index" card="cards.byId(id)" on-remove="removeCard('upgrades', $index)"></dj-card>
+                <p class="text-muted" ng-if="!character.upgrades.length">No upgrades yet.</p>
             </div>
         </div>
     </div>

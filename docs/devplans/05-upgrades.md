@@ -1,6 +1,6 @@
 # Dev Plan 05: Upgrades (training)
 
-**Status:** DRAFT, awaiting approval
+**Status:** DONE (see "Build notes" at the end). Approved with 05-A to 05-E as recommended.
 **Depends on:** Plan 04 (done, merged in PR #4)
 
 ## Goal
@@ -105,3 +105,24 @@ Heroes (phase 06), XP and gold tracking (05-E), and deleting scans.
 ## Size
 
 Small to medium: 15 simple cards, but the dice rules need careful tests.
+
+---
+
+## Build notes (what differed from the plan)
+
+- **The rules check is generic.** `cardService.check()` applies to every give, take and move, not just upgrades, so any future card with die effects follows the same rules. Refusals now come back from `give`, `take` and `move` and are shown by one `cardNotice` helper. That uses sweetalert as before, falling back to a plain alert if the sweetalert script (loaded from a CDN) is unavailable.
+- **Ids** follow the printed names: `maximum-wounds-copper`, `black-melee-die`, `silver-ranged-die`, … The old app names ("Melee Power Silver") and "Maximum Hearts" are aliases.
+- **Upgrade art** is shown at full height. The pictures are near-square icons, and the standard 130 px item art strip cut off the "+4".
+- **Code removed:** `charctrl.js` lost 230 more lines and is now 144 lines, down from about 1,030 before phase 01. The upgrade array in `main.js` is gone, so `main.js` now holds only app setup and the 48 heroes.
+- **Saves:** version 5 stores no decks at all.
+- **Tests:** 71 checks, run at phone and desktop size, all pass. They cover:
+  - the wounds clamp;
+  - refusing a Silver die with no Black die (the copy isn't used up);
+  - the Black → Silver → Gold chain;
+  - refusing to remove an upgraded Black die, then removing in reverse order;
+  - the 5-dice limit;
+  - deck counts coming back on removal;
+  - no stray alerts;
+  - the v4 fixture (made from the phase 04 app) loading with unchanged stats.
+
+  A deliberate break (limit raised to 99) failed the limit checks, as expected. I also confirmed, with a stand-in `swal`, that the real pop-up receives the refusal message.

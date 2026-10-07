@@ -47,6 +47,7 @@
 .dj-deck-copper { --dj-deck: var(--dj-copper); }
 .dj-deck-silver { --dj-deck: var(--dj-silver); }
 .dj-deck-gold { --dj-deck: var(--dj-gold); }
+.dj-deck-black { --dj-deck: #3a3a3a; }
 .dj-missing { --dj-deck: var(--dj-missing); }
 
 .dj-card-head {
@@ -78,6 +79,8 @@
 /* Item layout */
 .dj-card-art, .dj-card-scanonly { display: block; width: 100%; }
 .dj-card-art { height: 130px; object-fit: cover; }
+/* Upgrade art is a near-square icon; show all of it. */
+.dj-upgrade .dj-card-art { height: auto; }
 .dj-card-type { padding: 8px 12px 0; font-weight: 700; font-size: 14px; }
 .dj-card-type small { font-weight: 400; color: var(--dj-muted); font-size: 13px; }
 .dj-card-abilities { padding: 6px 12px 0; font-weight: 700; font-size: 14px; }
@@ -92,6 +95,7 @@
     font-size: 14px;
 }
 .dj-cost { font-weight: 700; }
+.dj-xp { font-weight: 700; color: var(--dj-muted); }
 .dj-cost .fa { color: #d4a72c; }
 .dj-hands .fa { margin-right: 1px; }
 .dj-dice { margin-left: auto; display: flex; gap: 3px; }

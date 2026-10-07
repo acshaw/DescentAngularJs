@@ -25,6 +25,14 @@ var SCHEMAS = {
         effectKeys: [],
         categories: ['Weapon', 'Armor', 'Shield', 'Other', 'Potion'],
         attacks: ['Melee', 'Ranged', 'Magic']
+    },
+    upgrades: {
+        required: ['id', 'name', 'tier', 'qty', 'text', 'effects'],
+        optional: ['xp', 'cost', 'art', 'artBox', 'aliases', 'scan'],
+        tiers: ['copper', 'silver', 'gold', 'black'],
+        effectKeys: ['maxWounds', 'maxFatigue', 'speed'].concat(['melee', 'ranged', 'magic'].reduce(function (keys, a) {
+            return keys.concat([a + 'Power', a + 'SilverPower', a + 'GoldPower']);
+        }, []))
     }
 };
 var DICE = ['red', 'blue', 'white', 'green', 'yellow', 'black', 'power', 'silver', 'gold'];
@@ -64,7 +72,9 @@ Object.keys(SCHEMAS).forEach(function (kind) {
         if (card.id && !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(card.id)) problems.push(where + ': id must be lowercase-with-dashes');
         if (seenIds[card.id]) problems.push(where + ': duplicate id (also in ' + seenIds[card.id] + ')');
         seenIds[card.id] = kind;
-        if (schema.decks.indexOf(card.deck) === -1) problems.push(where + ': unknown deck ' + card.deck);
+        if (schema.decks && schema.decks.indexOf(card.deck) === -1) problems.push(where + ': unknown deck ' + card.deck);
+        if (schema.tiers && schema.tiers.indexOf(card.tier) === -1) problems.push(where + ': unknown tier ' + card.tier);
+        if (card.xp !== undefined && !(Number.isInteger(card.xp) && card.xp > 0)) problems.push(where + ': xp must be a positive whole number');
         if (!(Number.isInteger(card.qty) && card.qty > 0)) problems.push(where + ': qty must be a positive whole number');
         Object.keys(card.effects || {}).forEach(function (key) {
             if (schema.effectKeys.indexOf(key) === -1) problems.push(where + ': unknown effect ' + key);
