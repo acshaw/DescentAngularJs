@@ -73,6 +73,7 @@
 
 .dj-card-text { padding: 10px 12px; font-size: 14px; line-height: 1.4; }
 .dj-card-spacer { flex: 1; }
+.dj-card-collect { padding: 4px 12px 10px; }
 
 /* Item layout */
 .dj-card-art, .dj-card-scanonly { display: block; width: 100%; }

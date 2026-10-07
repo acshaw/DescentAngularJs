@@ -1,4 +1,4 @@
-// End-to-end tests for the data-driven cards (plans 01-03: skills, feats, items).
+// End-to-end tests for the data-driven cards (plans 01-04: skills, feats, items).
 // Needs Playwright and the site served at BASE, e.g. from the parent directory:
 //   python3 -m http.server 8765   (with this repo at ./DescentAngularJs)
 //   BASE=http://localhost:8765/DescentAngularJs/ node tests/e2e-cards.js
@@ -165,9 +165,28 @@ async function run(device) {
     await page.click(picker('bag') + '.dj-random');
     var drawn = (await hero()).bag;
     check('random copper item drawn into the backpack', drawn.length === 5 && drawn[4].id !== 'sword', drawn);
-    check('untranscribed treasure shows its scan', (await held('bag').last().locator('.dj-card-scanonly').count()) === 1);
+    check('random copper item renders as a full card', (await held('bag').last().locator('.dj-card-type, .dj-card-text').count()) >= 1 && (await held('bag').last().locator('.dj-card-scanonly').count()) === 0);
+    // A card with only a scan (e.g. one you add later) still shows the scan.
+    var fallback = await page.evaluate(function () {
+        var inj = angular.element(document.body).injector();
+        var scope = inj.get('$rootScope').$new();
+        scope.card = { id: 'made-up', name: 'Made Up', deck: 'copper', kind: 'items', qty: 1, scan: 'Images/Items/Copper/Bane.jpg' };
+        var el = inj.get('$compile')('<dj-card card="card"></dj-card>')(scope);
+        scope.$digest();
+        return el[0].querySelectorAll('.dj-card-scanonly').length;
+    });
+    check('scan-only card falls back to its scan', fallback === 1, fallback);
     await held('bag').last().locator('.dj-card-x').click();
     check('removing an item takes it out of the backpack', (await hero()).bag.length === 4);
+    // Treasure Cache: Collect adds coins and the granted potion, removes the cache.
+    await showDeck('Gold', 'bag');
+    var gold0 = await page.evaluate(function () { return angular.element(document.body).injector().get('appData').partyGold; });
+    await page.selectOption(picker('bag') + 'select', { label: 'Treasure Cache (150 coins + Invisibility Potion)' });
+    await held('bag').last().locator('.dj-card-collect button').click();
+    var gold1 = await page.evaluate(function () { return angular.element(document.body).injector().get('appData').partyGold; });
+    var afterCollect = (await hero()).bag;
+    check('Collect adds 150 coins to party gold', gold1 === gold0 + 150, { gold0: gold0, gold1: gold1 });
+    check('Collect puts the potion in the backpack and removes the cache', afterCollect.length === 5 && afterCollect[4].id === 'invisibility-potion' && !afterCollect.some(function (e) { return e.id.indexOf('treasure-cache') === 0; }), afterCollect);
     await showDeck('Store', 'bag');
     await page.click('button[ng-click="handBtn(0)"]');
 
@@ -217,6 +236,7 @@ async function run(device) {
     check('v3 equipped items migrated with tapped state', JSON.stringify(a.equipped) === '[{"id":"sword","tapped":true},{"id":"chain-mail","tapped":false},{"id":"archers-charm","tapped":false}]', a.equipped);
     check('v3 backpack and renamed items migrated', JSON.stringify(a.bag) === '[{"id":"healing-potion","tapped":false},{"id":"healing-potion","tapped":false}]' && JSON.stringify(l.equipped) === '[{"id":"bow","tapped":true},{"id":"wizards-robe","tapped":false}]' && JSON.stringify(l.bag) === '[{"id":"aldars-mirror","tapped":false}]', { a: a.bag, l: l });
     check('v3 skills and feats kept', JSON.stringify(a.skills) === '["tough"]' && JSON.stringify(a.feats) === '["hurry"]');
+    check('v3 treasure items now render as full cards', (await held('equipped').locator('.dj-card-name').allTextContents()).indexOf("Archer's Charm") !== -1 && (await page.locator('.dj-card-scanonly').count()) === 0);
     check('no missing-card placeholders after v3 load', (await page.locator('.dj-missing').count()) === 0);
 
     // 7. A card that's not in the data: shown as a removable placeholder.

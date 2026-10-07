@@ -79,6 +79,19 @@
     $scope.giveCard = function (field, index, hero) {
         cardService.move($scope.character, field, index, hero, 'bag');
     };
+    // Treasure Caches: add the coins to party gold, put any granted items in
+    // the backpack (if copies are left), then remove the cache.
+    $scope.collect = function (field, index) {
+        var card = cardService.byId(cardService.entryId($scope.character[field][index]));
+        var grants = card.grants || {};
+        $scope.appData.partyGold += grants.coins || 0;
+        (grants.items || []).forEach(function (id) {
+            var item = cardService.byId(id);
+            if (!item.missing && cardService.remaining(item, $scope.appData.characters) > 0)
+                cardService.give($scope.character, item, 'bag');
+        });
+        cardService.take($scope.character, field, index);
+    };
     $scope.otherHeroes = function () {
         return $scope.appData.characters.filter(function (hero) { return hero !== $scope.character; });
     };

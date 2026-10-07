@@ -1,6 +1,6 @@
 # Dev Plan 04: Copper, Silver and Gold Treasure
 
-**Status:** DRAFT, awaiting approval
+**Status:** DONE (see "Build notes" at the end). Approved with 04-A to 04-D as recommended.
 **Depends on:** Plan 03 (done, merged in PR #3)
 
 ## Goal
@@ -72,3 +72,18 @@ Upgrades (phase 05), heroes (phase 06), Relics / RTL Upgrades (phase 07), item s
 ## Size
 
 Medium. It's almost all transcription (about 4× phase 02). The code changes are small: the Cursed label, the Collect button and validation.
+
+---
+
+## Build notes (what differed from the plan)
+
+- **Invulnerability Potion isn't a card.** Four Treasure Caches grant "1 invulnerability potion", but the store deck has only Healing, Vitality, Power and Invisibility Potions. For those caches, Collect adds the coins and the printed text still tells you to take the potion; you track it yourself. If you want, adding an Invulnerability Potion to `items.json` (store deck) and to those caches' `grants` would make Collect hand it out too.
+- **Collect** gives granted potions only if copies are left in the store deck (12 of each), and the cache goes back into its deck, as noted in the plan.
+- **Picker labels:** five "Treasure Cache" entries per deck were indistinguishable, so the picker now shows what each grants, e.g. "Treasure Cache (150 coins + Invisibility Potion)". Old cache names ("Treasure Cache 3") are kept as aliases so old saves still match.
+- **More printed names fixed:** Bow of Bones → **Bow of Bone**, along with the apostrophes (Archer's Charm, Falcon's Claw, Aldar's Mirror, Black Widow's Web, Dragon's Breath, Jinn's Lamp, The Knight's Ring). One printed typo, Star of Kellos's "ablity", was transcribed as "ability".
+- **The Knight's Ring** says "Your maximum number of wounds is increased by 1". Per 04-C, items stay text-only, so this isn't applied automatically. It's the one treasure item where adding `effects` would be easy if you want it.
+- **Art:** 100 new crops (99 items plus the shared cache image), checked visually. `tools/crop-art.py` now writes to each card's `art` path, so cards can share a picture.
+- **Card layout:** surge lines are always drawn before the rules text, but a few cards (Leviathan, Pacify, Petrify, …) print the text first. The content is the same; only the order differs.
+- **Cleanup:** three `Thumbs.db` files deleted (one more than planned, in Store), and `Thumbs.db` added to `.gitignore`.
+- **Validation:** `check-data.js` now rejects scan-only items and grants that point at unknown cards.
+- **Tests:** 55 checks, run at phone and desktop size, all pass (three clean runs, since the draws are random). They add a Collect test, a scan-only fallback test with a made-up card, and a check that the v3 fixture's treasure renders as full cards. A deliberate break (Collect not adding coins) failed the Collect check, as expected.
