@@ -1,13 +1,13 @@
-// Party save files. Since version 3, each hero's skills and feats are stored
-// as card ids, and their decks aren't saved (they're derived from the card
-// data). Older saves are migrated on load: any held card still stored as an
-// object is matched to an id by name and deck.
+// Party save files. Since version 4, each hero's skills and feats are stored
+// as card ids, and equipped/backpack items as { id, tapped }. Their decks
+// aren't saved (they're derived from the card data). Older saves are migrated
+// on load: any held card still stored the old way is matched to an id by name
+// and deck.
 app.factory('saveService', function (appData, cardService) {
-    var SAVE_VERSION = 3;
-    var DATA_KINDS = ['skills', 'feats'];
-    var STILL_SAVED_DECKS = [
-        'storeItems', 'copperItems', 'silverItems', 'goldItems', 'upgradeItems'
-    ];
+    var SAVE_VERSION = 4;
+    // Where each kind is held on a hero (see cardService.HOLDINGS).
+    var HELD_FIELDS = { skills: 'skills', feats: 'feats', equipped: 'items', bag: 'items' };
+    var STILL_SAVED_DECKS = ['upgradeItems'];
 
     function build() {
         var saveFile = {
@@ -22,15 +22,17 @@ app.factory('saveService', function (appData, cardService) {
 
     function migrate(saveFile) {
         (saveFile.characters || []).forEach(function (character) {
-            DATA_KINDS.forEach(function (kind) {
-                character[kind] = (character[kind] || []).map(function (card) {
-                    if (typeof card === 'string') return card;
-                    return cardService.idForLegacyName(kind, card.name, (card.type || '').toLowerCase());
+            Object.keys(HELD_FIELDS).forEach(function (field) {
+                var kind = HELD_FIELDS[field];
+                character[field] = (character[field] || []).map(function (entry) {
+                    if (typeof entry === 'string' || entry.id) return entry;
+                    var id = cardService.idForLegacyName(kind, entry.name, (entry.type || '').toLowerCase());
+                    return kind === 'items' ? { id: id, tapped: !!entry.isItemTapped } : id;
                 });
             });
         });
         // Character stats already include card effects, so nothing is reapplied.
-        // Old deck arrays (fighterSkills, fighterFeats, ...) are ignored: deck
+        // Old deck arrays (fighterSkills, storeItems, ...) are ignored: deck
         // counts are derived from what the party holds.
         saveFile.version = SAVE_VERSION;
         return saveFile;

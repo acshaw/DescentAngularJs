@@ -17,21 +17,35 @@ djCards.constant('CARD_ICONS', {
     gold: '<i class="dj-die dj-die-gold" title="gold die"></i>'
 });
 
-djCards.filter('cardText', function ($sce, CARD_ICONS) {
+djCards.factory('cardMarkup', function (CARD_ICONS) {
     function escape(s) {
         return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
-    return function (text) {
-        if (!text) return '';
-        var html = escape(String(text))
+    // Markup within one line: bold, italics and icons.
+    return function inline(text) {
+        return escape(String(text))
             .replace(/\*\*\*(.+?)\*\*\*/g, '<b><i>$1</i></b>')
             .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
             .replace(/\*(.+?)\*/g, '<i>$1</i>')
             .replace(/\{(\w+)\}/g, function (whole, token) {
                 return CARD_ICONS[token] || whole;
             });
-        return html.split(/\n\s*\n/).map(function (para) {
+    };
+});
+
+// Full card text: inline markup plus paragraphs.
+djCards.filter('cardText', function (cardMarkup) {
+    return function (text) {
+        if (!text) return '';
+        return cardMarkup(text).split(/\n\s*\n/).map(function (para) {
             return '<p>' + para.replace(/\n/g, '<br>') + '</p>';
         }).join('');
+    };
+});
+
+// A single line (e.g. a surge effect), no paragraphs.
+djCards.filter('cardInline', function (cardMarkup) {
+    return function (text) {
+        return text ? cardMarkup(text) : '';
     };
 });

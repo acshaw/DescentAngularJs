@@ -1,6 +1,6 @@
 # Dev Plan 03: Store Items (and the item machinery)
 
-**Status:** DRAFT, awaiting approval
+**Status:** DONE (see "Build notes" at the end). Approved with 03-A to 03-F as recommended.
 **Depends on:** Plan 02 (done, merged in PR #2)
 
 ## Goal
@@ -117,3 +117,16 @@ Typing up the Copper/Silver/Gold text (phase 04), upgrades (phase 05), heroes (p
 ## Size
 
 Medium-large: the biggest code change so far (items touch two tabs, the nav bar and saves), but only 27 cards to transcribe.
+
+---
+
+## Build notes (what differed from the plan)
+
+- **Surge icon (03-D):** I tried cropping it, but the symbol is only about 35 px in the scans and came out blurry. Instead it's redrawn as a small inline SVG in the same shape (a black starburst with a white bolt), so it stays sharp at any size and needs no image file. The "blue" die is drawn violet to match how it's printed.
+- **Treasure-cache ids:** Treasure Caches appear in the copper, silver and gold decks, so all of them carry the deck suffix (`treasure-cache-1-copper`, …), following the 02-A rule.
+- **Shadow Blade** (copper) has no scan in the repo, as noted on day one. Its record has a placeholder line of text until phase 04.
+- **Giving items:** a given item goes into the other hero's backpack (same as before) and keeps its tapped state. Card effects move with a card when it changes hero; no item has effects yet.
+- **"Untap all"** still only untaps *equipped* items, as before.
+- **Removed:** about 290 lines of item code from `charctrl.js` (it's now 368 lines, down from about 1,030 before phase 01) and 145 lines of item arrays from `main.js`.
+- **The text filter** gained an inline variant (`cardInline`) for surge effects such as "**Stun**".
+- **Tests:** `tests/e2e-cards.js` now has 51 checks, run at phone and desktop size, and all pass. They cover equip and backpack counts, tapping and untap-all, moves keeping tapped state, give-to showing only real party members, scan-only treasure, and loading the new v3 fixture (made from the phase 02 app). A deliberate break (migration dropping the tapped state) failed 2 checks, as expected. One test needed a short wait because ngAnimate applies the tapped class one frame later; that's not a bug in the app.

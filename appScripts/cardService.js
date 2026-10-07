@@ -3,7 +3,12 @@
 var djCards = angular.module('djCards', ['ngSanitize']);
 
 djCards.factory('cardService', function ($http, $q) {
-    var KINDS = ['skills', 'feats'];
+    var KINDS = ['skills', 'feats', 'items'];
+    // Where a hero holds each kind of card. Items can be equipped or in the backpack.
+    var HOLDINGS = { skills: ['skills'], feats: ['feats'], items: ['equipped', 'bag'] };
+    // Kinds whose held copies carry state (an item can be tapped), stored as
+    // { id, tapped } instead of a plain id.
+    var STATEFUL = { items: true };
     var EFFECT_KEYS = ['maxWounds', 'maxFatigue', 'speed'];
 
     var byKind = {};
@@ -25,6 +30,12 @@ djCards.factory('cardService', function ($http, $q) {
 
     var service = {
         EFFECT_KEYS: EFFECT_KEYS,
+        HOLDINGS: HOLDINGS,
+
+        // A held entry is either an id or { id, tapped }.
+        entryId: function (entry) {
+            return typeof entry === 'string' ? entry : entry && entry.id;
+        },
 
         // Resolves once every data file is loaded. Routes wait on this.
         ready: function () {
@@ -72,12 +83,14 @@ djCards.factory('cardService', function ($http, $q) {
         },
 
         // How many copies are left in the deck: deck size minus what the party
-        // holds. A hero's held cards of a kind live in character[kind] as ids.
+        // holds, across every place a hero can hold that kind (see HOLDINGS).
         remaining: function (card, characters) {
             var held = 0;
             (characters || []).forEach(function (character) {
-                (character[card.kind] || []).forEach(function (id) {
-                    if (id === card.id) held++;
+                HOLDINGS[card.kind].forEach(function (field) {
+                    (character[field] || []).forEach(function (entry) {
+                        if (service.entryId(entry) === card.id) held++;
+                    });
                 });
             });
             return card.qty - held;
@@ -99,14 +112,28 @@ djCards.factory('cardService', function ($http, $q) {
             return pool.length ? pool[Math.floor(Math.random() * pool.length)] : null;
         },
 
-        give: function (character, card) {
-            character[card.kind].push(card.id);
+        // field defaults to the kind's first holding (items: 'equipped').
+        give: function (character, card, field) {
+            field = field || HOLDINGS[card.kind][0];
+            character[field].push(STATEFUL[card.kind] ? { id: card.id, tapped: false } : card.id);
             service.applyEffects(character, card, +1);
         },
 
-        take: function (character, kind, index) {
-            var id = character[kind].splice(index, 1)[0];
-            service.applyEffects(character, service.byId(id), -1);
+        take: function (character, field, index) {
+            var entry = character[field].splice(index, 1)[0];
+            service.applyEffects(character, service.byId(service.entryId(entry)), -1);
+        },
+
+        // Moves a held copy (keeping its tapped state) between fields or heroes.
+        // Effects follow the card when it changes hero.
+        move: function (from, fromField, index, to, toField) {
+            var entry = from[fromField].splice(index, 1)[0];
+            to[toField].push(entry);
+            if (from !== to) {
+                var card = service.byId(service.entryId(entry));
+                service.applyEffects(from, card, -1);
+                service.applyEffects(to, card, +1);
+            }
         },
 
         // sign is +1 when a hero gains the card and -1 when they lose it.

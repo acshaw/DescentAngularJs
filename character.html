@@ -218,80 +218,44 @@
     <div uib-collapse="!appData.handSwitch[1]">
         <div class="well well-lg">
             <div class="row">
-                <div class="col-xs-12 col-sm-6 text-left input-group">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default"
-                                ng-class="{'store': appData.currentDeck === 'Store','copper': appData.currentDeck === 'Copper', 'silver': appData.currentDeck === 'Silver', 'gold': appData.currentDeck === 'Gold', 'mythic': appData.currentDeck === 'Mythic' }"
-                                ng-click="switchDeck(currentDeck)">
-                            {{appData.currentDeck}}
-                        </button>
-                    </span>
-                    <select class="form-control" ng-model="newEquipment" ng-change="addItemToEquipment()">
-                        <option ng-repeat="item in itemDeck" value="{{item}}" ng-if="item.qty > 0">{{item.name}}</option>
-                    </select>
-                    <span class="input-group-btn">
-                        <!--<button type="button" class="btn btn-primary" ng-disabled="!newEquipment" ng-click="addItemToEquipment()"><i class="fa fa-plus"></i></button>-->
-                        <button type="button" class="btn btn-success" ng-disabled="" ng-click="addRandomItemToEquipment()"><i class="fa fa-random"></i></button>
-                    </span>
-                </div>
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-sm-6 text-left">
+                    <dj-deck-picker kind="items" field="equipped" deck="appData.currentDeck" character="character" party="appData.characters" on-switch="switchDeck(currentDeck)"></dj-deck-picker>
                 </div>
             </div>
             <br />
-            <div class="DocumentList">
-                <ul class="list-inline">
-                    <li class="DocumentItem" ng-repeat="item in character.equipped track by $index">
-                        <div ng-class="{'store': item.type === 'store', 'copper': item.type === 'Copper', 'silver': item.type === 'Silver', 'gold': item.type === 'Gold'}" class="text-left">
-                            <span style="cursor:pointer; font-size: x-large; font-weight:bolder; color:white; margin: 3px 7px 3px 14px;" ng-click="giveEquippedItemAway($index, 0)"> 1 </span>
-                            <span style="cursor:pointer; font-size: x-large; font-weight:bolder; color:white; margin: 3px 7px 3px 7px;" ng-click="giveEquippedItemAway($index, 1)"> 2 </span>
-                            <span style="cursor:pointer; font-size: x-large; font-weight:bolder; color:white; margin: 3px 7px 3px 7px;" ng-click="giveEquippedItemAway($index, 2)"> 3 </span>
-                            <span style="cursor:pointer; font-size: x-large; font-weight:bolder; color:white;  margin: 3px 7px 3px 7px;" ng-click="giveEquippedItemAway($index, 3)"> 4 </span>
-                            <span style="cursor:pointer; font-size: x-large; font-weight:bolder; color:white;  margin: 3px 7px 3px 7px;" ng-click="moveItemToBag($index)"> B </span>
-                            <i class="fa fa-remove pull-right" style="cursor:pointer; font-size: x-large; color:white;  margin: 3px 14px 3px 7px;" ng-click="removeItemFromEquipment($index)"></i><br />
-                            <img class="img-rounded" ng-class="{'tapped': item.isItemTapped}" ng-click="item.isItemTapped = !item.isItemTapped" src="{{item.src + item.name + '.jpg'}}" height="350" />
-                        </div>
-                    </li>
-                </ul>
+            <div class="dj-card-row">
+                <div class="dj-held" ng-repeat="entry in character.equipped track by $index">
+                    <dj-card card="cards.byId(entry.id)" tapped="entry.tapped" on-tap="entry.tapped = !entry.tapped" on-remove="removeCard('equipped', $index)"></dj-card>
+                    <div class="dj-held-actions">
+                        <button type="button" class="dj-give" ng-repeat="hero in otherHeroes()" ng-click="giveCard('equipped', $parent.$index, hero)" title="Give to {{hero.name}}" aria-label="Give to {{hero.name}}">
+                            <img ng-src="{{'Images/Face Portraits/' + hero.name + '.JPG'}}" alt="" />
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm dj-move" ng-click="moveCard('equipped', $index, 'bag')">→ Backpack</button>
+                    </div>
+                </div>
+                <p class="text-muted" ng-if="!character.equipped.length">Nothing here yet.</p>
             </div>
         </div>
     </div>
     <div uib-collapse="!appData.handSwitch[2]">
         <div class="well well-lg">
             <div class="row">
-                <div class="col-xs-12 col-sm-6 text-left input-group">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default"
-                                ng-class="{'store': appData.currentDeck === 'Store','copper': appData.currentDeck === 'Copper', 'silver': appData.currentDeck === 'Silver', 'gold': appData.currentDeck === 'Gold', 'mythic': appData.currentDeck === 'Mythic' }"
-                                ng-click="switchDeck(currentDeck)">
-                            {{appData.currentDeck}}
-                        </button>
-                    </span>
-                    <select class="form-control" ng-model="newEquipment" ng-change="addItemToBag()">
-                        <option ng-repeat="item in itemDeck" value="{{item}}" ng-if="item.qty > 0">{{item.name}}</option>
-                    </select>
-                    <span class="input-group-btn">
-                        <!--<button type="button" class="btn btn-primary" ng-disabled="!newEquipment" ng-click="addItemToBag()"><i class="fa fa-plus"></i></button>-->
-                        <button type="button" class="btn btn-success" ng-click="addRandomItemToBag()"><i class="fa fa-random"></i></button>
-                    </span>
-                </div>
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-sm-6 text-left">
+                    <dj-deck-picker kind="items" field="bag" deck="appData.currentDeck" character="character" party="appData.characters" on-switch="switchDeck(currentDeck)"></dj-deck-picker>
                 </div>
             </div>
             <br />
-            <div class="DocumentList">
-                <ul class="list-inline">
-                    <li class="DocumentItem" ng-repeat="item in character.bag track by $index">
-                        <div ng-class="{'store': item.type === 'store', 'copper': item.type === 'Copper', 'silver': item.type === 'Silver', 'gold': item.type === 'Gold'}" class="text-left">
-                            <span style="cursor:pointer; font-size: x-large; font-weight:bolder; color:white; margin: 3px 7px 3px 14px;" ng-click="giveBaggedItemAway($index, 0)"> 1 </span>
-                            <span style="cursor:pointer; font-size: x-large; font-weight:bolder; color:white; margin: 3px 7px 3px 7px;" ng-click="giveBaggedItemAway($index, 1)"> 2 </span>
-                            <span style="cursor:pointer; font-size: x-large; font-weight:bolder; color:white; margin: 3px 7px 3px 7px;" ng-click="giveBaggedItemAway($index, 2)"> 3 </span>
-                            <span style="cursor:pointer; font-size: x-large; font-weight:bolder; color:white;  margin: 3px 7px 3px 7px;" ng-click="giveBaggedItemAway($index, 3)"> 4 </span>
-                            <span style="cursor:pointer; font-size: x-large; font-weight:bolder; color:white;  margin: 3px 7px 3px 7px;" ng-click="moveItemToEquipment($index)"> E </span>
-                            <i class="fa fa-remove pull-right" style="cursor:pointer; font-size: x-large; color:white;  margin: 3px 14px 3px 7px;" ng-click="removeItemFromBag($index)"></i><br />
-                            <img class="img-rounded" src="{{item.src + item.name + '.jpg'}}" height="350" />
-                        </div>
-                    </li>
-                </ul>
+            <div class="dj-card-row">
+                <div class="dj-held" ng-repeat="entry in character.bag track by $index">
+                    <dj-card card="cards.byId(entry.id)" tapped="entry.tapped" on-tap="entry.tapped = !entry.tapped" on-remove="removeCard('bag', $index)"></dj-card>
+                    <div class="dj-held-actions">
+                        <button type="button" class="dj-give" ng-repeat="hero in otherHeroes()" ng-click="giveCard('bag', $parent.$index, hero)" title="Give to {{hero.name}}" aria-label="Give to {{hero.name}}">
+                            <img ng-src="{{'Images/Face Portraits/' + hero.name + '.JPG'}}" alt="" />
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm dj-move" ng-click="moveCard('bag', $index, 'equipped')">→ Equip</button>
+                    </div>
+                </div>
+                <p class="text-muted" ng-if="!character.bag.length">Nothing here yet.</p>
             </div>
         </div>
     </div>

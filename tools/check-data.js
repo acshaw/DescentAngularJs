@@ -17,8 +17,18 @@ var SCHEMAS = {
         optional: ['aliases', 'scan'],
         decks: ['fighter', 'subterfuge', 'wizardry'],
         effectKeys: []
+    },
+    // Treasure items may be scan-only until transcribed (no text/category).
+    items: {
+        required: ['id', 'name', 'deck', 'qty'],
+        optional: ['category', 'rune', 'attack', 'subtitle', 'abilities', 'surges', 'text', 'cost', 'hands', 'dice', 'art', 'artBox', 'aliases', 'scan'],
+        decks: ['store', 'copper', 'silver', 'gold'],
+        effectKeys: [],
+        categories: ['Weapon', 'Armor', 'Shield', 'Other', 'Potion'],
+        attacks: ['Melee', 'Ranged', 'Magic']
     }
 };
+var DICE = ['red', 'blue', 'white', 'green', 'yellow', 'black', 'power', 'silver', 'gold'];
 
 var problems = [];
 var seenIds = {};
@@ -60,11 +70,20 @@ Object.keys(SCHEMAS).forEach(function (kind) {
             if (schema.effectKeys.indexOf(key) === -1) problems.push(where + ': unknown effect ' + key);
             if (!Number.isInteger(card.effects[key])) problems.push(where + ': effect ' + key + ' must be a whole number');
         });
-        (String(card.text).match(/\{(\w+)\}/g) || []).forEach(function (token) {
+        (String(card.text || '').concat((card.surges || []).map(function (x) { return x.effect; }).join(' ')).match(/\{(\w+)\}/g) || []).forEach(function (token) {
             if (ICONS.indexOf(token.slice(1, -1)) === -1) problems.push(where + ': unknown text token ' + token);
         });
-        if ((String(card.text).match(/\*/g) || []).length % 2) problems.push(where + ': unbalanced * in text');
+        if ((String(card.text || '').match(/\*/g) || []).length % 2) problems.push(where + ': unbalanced * in text');
         if (card.scan && !existsExact(card.scan)) problems.push(where + ': scan not found (check exact case): ' + card.scan);
+        if (card.art && !existsExact(card.art)) problems.push(where + ': art not found (check exact case): ' + card.art);
+        if (!card.text && !card.category && !card.scan) problems.push(where + ': needs text, a category, or a scan');
+        if (card.category && schema.categories && schema.categories.indexOf(card.category) === -1) problems.push(where + ': unknown category ' + card.category);
+        if (card.attack && schema.attacks.indexOf(card.attack) === -1) problems.push(where + ': unknown attack ' + card.attack);
+        (card.dice || []).forEach(function (d) { if (DICE.indexOf(d) === -1) problems.push(where + ': unknown die ' + d); });
+        (card.surges || []).forEach(function (s) {
+            if (!(Number.isInteger(s.cost) && s.cost > 0) || !s.effect) problems.push(where + ': surges need a positive cost and an effect');
+        });
+        if (card.hands !== undefined && [1, 2].indexOf(card.hands) === -1) problems.push(where + ': hands must be 1 or 2');
     });
     console.log(kind + ': ' + cards.length + ' cards');
 });
